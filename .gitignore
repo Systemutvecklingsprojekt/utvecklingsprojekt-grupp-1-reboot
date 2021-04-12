@@ -27,3 +27,4 @@ nbdist/
 ### IntelliJ ###
 .idea/
 *.iml
+.vscode/settings.json
