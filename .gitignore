@@ -1,7 +1,4 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/netbeans
-# Edit at https://www.toptal.com/developers/gitignore?templates=netbeans
-
 ### NetBeans ###
 **/nbproject/private/
 **/nbproject/Makefile-*.mk
@@ -13,3 +10,20 @@ nbdist/
 .nb-gradle/
 
 # End of https://www.toptal.com/developers/gitignore/api/netbeans
+
+### VSCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+
+.history/
+
+
+### IntelliJ ###
+.idea/
+*.iml
