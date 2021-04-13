@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import projekt.User;
 
 /**
@@ -54,8 +55,9 @@ public class MakeFormalPost extends javax.swing.JFrame
         jBAddTag = new javax.swing.JButton();
         jLTags = new javax.swing.JLabel();
         jlUplodedFile = new javax.swing.JLabel();
+        jBBack = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTAPost.setColumns(20);
         jTAPost.setRows(5);
@@ -101,6 +103,13 @@ public class MakeFormalPost extends javax.swing.JFrame
 
         jlUplodedFile.setText("Fil: ");
 
+        jBBack.setText("Tillbaka");
+        jBBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -121,11 +130,13 @@ public class MakeFormalPost extends javax.swing.JFrame
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLTags, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTFTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(96, 96, 96)
+                .addComponent(jBBack)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jBUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(205, 205, 205))
+                .addGap(81, 81, 81))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,9 +156,11 @@ public class MakeFormalPost extends javax.swing.JFrame
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbUploadFile)
                     .addComponent(jlUplodedFile))
-                .addGap(37, 37, 37)
-                .addComponent(jBUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBBack, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30))
         );
 
         pack();
@@ -247,6 +260,9 @@ public class MakeFormalPost extends javax.swing.JFrame
                     e.printStackTrace();
                     System.out.println("fel i dela");
                 }
+                JOptionPane.showMessageDialog(null,"Ditt inlägg har publicerats");
+        
+        this.dispose();
     }//GEN-LAST:event_jBUploadActionPerformed
 
     private void jTFNewTagMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFNewTagMouseReleased
@@ -258,6 +274,11 @@ public class MakeFormalPost extends javax.swing.JFrame
 		jCBTags.setEnabled(true);
 		jTFNewTag.setEnabled(false);
     }//GEN-LAST:event_jCBTagsMouseReleased
+
+    private void jBBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBackActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jBBackActionPerformed
 
 	private void insertTagsJosef(ArrayList<String> tagsToCheck) throws SQLException
 	{
@@ -302,6 +323,7 @@ public class MakeFormalPost extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAddTag;
+    private javax.swing.JButton jBBack;
     private javax.swing.JButton jBUpload;
     private javax.swing.JComboBox<String> jCBTags;
     private javax.swing.JFileChooser jFileChooser2;

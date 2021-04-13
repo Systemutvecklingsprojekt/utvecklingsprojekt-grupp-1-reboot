@@ -23,6 +23,7 @@ public class FormalBlog extends javax.swing.JFrame {
 
     private javax.swing.JTable jTable2;
 
+
     /**
      * Creates new form FormellBlogg
      */
@@ -30,9 +31,13 @@ public class FormalBlog extends javax.swing.JFrame {
 
     public FormalBlog(User user) {
 
+        this.user = user;
         String query = "SELECT  title , timeStamp, description, postID FROM Post";
         String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 1;";
         initComponents();
+
+
+    
 
         try {
             fillTable(Database.fetchRows(joinQuery));
@@ -42,6 +47,7 @@ public class FormalBlog extends javax.swing.JFrame {
         //jTable2.isCellEditable(3,3);
 
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
