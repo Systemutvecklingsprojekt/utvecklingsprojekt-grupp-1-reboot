@@ -40,15 +40,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
         }
         jScrollPane1.setViewportView(table2);
         table2.setVisible(true);
-
     }
-
-    public static void main(String[] args) {
-
-        new UpdateDeleteUser().setVisible(true);
-
-    }
-
     public void getResultset() {
         //Kör emot Databasen och hämtar raderna från User
         try {
@@ -104,6 +96,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
         changeInformationButton = new javax.swing.JButton();
         jtfID = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jBBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -147,6 +140,13 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
 
         jLabel1.setText("Vänlige ange UserID på användaren du vill ändra eller ta bort");
 
+        jBBack.setText("Tillbaka");
+        jBBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -158,13 +158,18 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtfID)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, Short.MAX_VALUE))
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(changeInformationButton))
-                        .addGap(132, 132, 132)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jBBack, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtfID)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, Short.MAX_VALUE))
+                                .addGap(36, 36, 36)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(changeInformationButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(132, 132, 132)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -176,11 +181,13 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deleteButton)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtfID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(changeInformationButton))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(jBBack)
+                .addContainerGap())
         );
 
         pack();
@@ -247,6 +254,10 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
         new EditUsers(tempId).setVisible(true);
     }//GEN-LAST:event_changeInformationButtonActionPerformed
 
+    private void jBBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBackActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jBBackActionPerformed
+
     private boolean idKoll() {
     int tempId = Integer.parseInt(jtfID.getText());
         try {
@@ -271,6 +282,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton changeInformationButton;
     private javax.swing.JButton deleteButton;
+    private javax.swing.JButton jBBack;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

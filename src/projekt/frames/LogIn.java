@@ -42,7 +42,7 @@ public class LogIn extends javax.swing.JFrame {
         jPFPasswordField = new javax.swing.JPasswordField();
         jLWelcomeLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jBLogInButton.setText("Logga in");
         jBLogInButton.addActionListener(new java.awt.event.ActionListener() {

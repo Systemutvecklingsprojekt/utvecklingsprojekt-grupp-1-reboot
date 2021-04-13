@@ -30,15 +30,23 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jtfID" max="32767" attributes="0"/>
-                          <Component id="jLabel1" pref="281" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="jBBack" min="-2" pref="88" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jtfID" max="32767" attributes="0"/>
+                                  <Component id="jLabel1" pref="281" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="deleteButton" max="32767" attributes="0"/>
+                                  <Component id="changeInformationButton" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="deleteButton" min="-2" pref="115" max="-2" attributes="0"/>
-                          <Component id="changeInformationButton" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -55,12 +63,14 @@
                   <Component id="deleteButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jtfID" min="-2" max="-2" attributes="0"/>
                   <Component id="changeInformationButton" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="17" max="32767" attributes="0"/>
+              <EmptySpace pref="11" max="32767" attributes="0"/>
+              <Component id="jBBack" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -148,6 +158,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="V&#xe4;nlige ange UserID p&#xe5; anv&#xe4;ndaren du vill &#xe4;ndra eller ta bort"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jBBack">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tillbaka"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBBackActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

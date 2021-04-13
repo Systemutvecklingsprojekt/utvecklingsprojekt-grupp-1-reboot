@@ -28,3 +28,4 @@ nbdist/
 .idea/
 *.iml
 .vscode/settings.json
+nbproject/genfiles.properties

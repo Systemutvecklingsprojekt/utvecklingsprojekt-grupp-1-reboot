@@ -9,10 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import projekt.User;
 
 /**
  *
@@ -23,15 +21,17 @@ public class MakeFormalPost extends javax.swing.JFrame
 
 	private int maxTags;
 	private ArrayList<String> chosenTags;
+        private User user;
 
-	public MakeFormalPost()
+	public MakeFormalPost(User user)
 	{
-		maxTags = 0;
-		chosenTags = new ArrayList<>();
+            this.user = user;
+            maxTags = 0;
+            chosenTags = new ArrayList<>();
 
-		initComponents();
-		fillTags();
-		jTFNewTag.setEnabled(true);
+            initComponents();
+            fillTags();
+            jTFNewTag.setEnabled(true);
 
 	}
 
@@ -55,8 +55,9 @@ public class MakeFormalPost extends javax.swing.JFrame
         jBAddTag = new javax.swing.JButton();
         jLTags = new javax.swing.JLabel();
         jlUplodedFile = new javax.swing.JLabel();
+        jBBack = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTAPost.setColumns(20);
         jTAPost.setRows(5);
@@ -102,6 +103,13 @@ public class MakeFormalPost extends javax.swing.JFrame
 
         jlUplodedFile.setText("Fil: ");
 
+        jBBack.setText("Tillbaka");
+        jBBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -122,11 +130,13 @@ public class MakeFormalPost extends javax.swing.JFrame
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLTags, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTFTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(96, 96, 96)
+                .addComponent(jBBack)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jBUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(205, 205, 205))
+                .addGap(81, 81, 81))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,15 +150,17 @@ public class MakeFormalPost extends javax.swing.JFrame
                     .addComponent(jBAddTag))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLTags)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbUploadFile)
                     .addComponent(jlUplodedFile))
-                .addGap(37, 37, 37)
-                .addComponent(jBUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBBack, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30))
         );
 
         pack();
@@ -181,7 +193,7 @@ public class MakeFormalPost extends javax.swing.JFrame
 				jLTags.setText(oldTag + "   " + tag);
 			} else {
 				for (String tagInList : chosenTags) {
-					if (tagInList.equals(tag)) {
+					if (tagInList.equalsIgnoreCase(tag)) {
 						found = true;
 					}
 				}
@@ -201,7 +213,7 @@ public class MakeFormalPost extends javax.swing.JFrame
 				jLTags.setText(oldTag + "   " + tag);
 			} else {
 				for (String tagInList : chosenTags) {
-					if (tagInList.equals(tag)) {
+					if (tagInList.equalsIgnoreCase(tag)) {
 						found = true;
 					}
 				}
@@ -217,13 +229,40 @@ public class MakeFormalPost extends javax.swing.JFrame
     private void jBUploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBUploadActionPerformed
 		String title = jTFTitle.getText();
 		String post = jTAPost.getText();
-		//String 
-		try {
-			insertTagsJosef(chosenTags);
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			System.out.println("error");
+		int userId = user.getUserID();
+                String stringPostId = "";
+                ArrayList<Integer> tagIds= new ArrayList<>();
+                
+		try{
+                    insertTagsJosef(chosenTags);
+                } catch(SQLException e){
+                    e.printStackTrace();
+                }
+                try {
+                    
+                    Database.executeUpdate("INSERT into Post (UserID, timeStamp, title, description, typeID) VALUES (" + userId + ", CURRENT_TIMESTAMP, '" + title + "','" + post +"', 1);");
+                    stringPostId = Database.fetchSingle("SELECT MAX(PostID) FROM Post;");
+                    for(String tagName : chosenTags){
+                        tagIds.add(Integer.parseInt(Database.fetchSingle("SELECT TagID FROM Tag WHERE TagName = '" + tagName + "';")));
+                    }
+                    
+		} catch (SQLException e) {
+                    e.printStackTrace();
+                    System.out.println("error");
 		}
+                int postId = Integer.parseInt(stringPostId);
+                try{
+                    for(Integer tag : tagIds){
+                        Database.executeUpdate("INSERT INTO Post_Tag (PostID, TagID) VALUES (" + postId + ", " + tag + ");");
+                    }
+                    
+                } catch (SQLException e){
+                    e.printStackTrace();
+                    System.out.println("fel i dela");
+                }
+                JOptionPane.showMessageDialog(null,"Ditt inlägg har publicerats");
+        
+        this.dispose();
     }//GEN-LAST:event_jBUploadActionPerformed
 
     private void jTFNewTagMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFNewTagMouseReleased
@@ -235,6 +274,11 @@ public class MakeFormalPost extends javax.swing.JFrame
 		jCBTags.setEnabled(true);
 		jTFNewTag.setEnabled(false);
     }//GEN-LAST:event_jCBTagsMouseReleased
+
+    private void jBBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBackActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jBBackActionPerformed
 
 	private void insertTagsJosef(ArrayList<String> tagsToCheck) throws SQLException
 	{
@@ -279,6 +323,7 @@ public class MakeFormalPost extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAddTag;
+    private javax.swing.JButton jBBack;
     private javax.swing.JButton jBUpload;
     private javax.swing.JComboBox<String> jCBTags;
     private javax.swing.JFileChooser jFileChooser2;

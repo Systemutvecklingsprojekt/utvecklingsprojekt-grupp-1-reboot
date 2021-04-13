@@ -21,25 +21,21 @@ import projekt.helpers.Database;
 public class Homescreen extends javax.swing.JFrame {
 
     private int id;
+    private String firstName;
+    private String lastName;
     private User user;
 
     /**
      * Creates new form Homescreen
      */
-    public Homescreen() {
-        initComponents();
-        jBAdminUsers.setVisible(true);
-
-    }
-
     public Homescreen(int id) {
         initComponents();
         jBAdminUsers.setVisible(false);
         this.id = id;
-        this.user = new User(this.id);
-
+        this.user = new User(this.id);    
+        
         adminCheck();
-        lblWelcome.setText("Välkommen : " + user.getFirstName());
+        lblWelcome.setText("VÄLKOMMEN: " + user.getFirstName() + " " + user.getLastName() + "!");
     }
 
     /**
@@ -61,8 +57,9 @@ public class Homescreen extends javax.swing.JFrame {
         jBsearch = new javax.swing.JButton();
         lblWelcome = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jBFormal.setBackground(new java.awt.Color(153, 153, 255));
         jBFormal.setText("Formell blogg");
         jBFormal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,6 +67,7 @@ public class Homescreen extends javax.swing.JFrame {
             }
         });
 
+        jBInformal.setBackground(new java.awt.Color(255, 153, 204));
         jBInformal.setText("Informell blogg");
         jBInformal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,6 +82,7 @@ public class Homescreen extends javax.swing.JFrame {
             }
         });
 
+        jBProfile.setBackground(new java.awt.Color(84, 255, 79));
         jBProfile.setText("Profil");
         jBProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,6 +90,7 @@ public class Homescreen extends javax.swing.JFrame {
             }
         });
 
+        jBAdminUsers.setBackground(new java.awt.Color(255, 50, 50));
         jBAdminUsers.setText("Hantera användare");
         jBAdminUsers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,7 +98,7 @@ public class Homescreen extends javax.swing.JFrame {
             }
         });
 
-        lblSearch.setText("Sök här");
+        lblSearch.setText("Sök på nyckelord i inlägg");
 
         jtfSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,63 +121,60 @@ public class Homescreen extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jBProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jBMeetings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jBFormal))
-                            .addComponent(jBInformal)
-                            .addComponent(jBAdminUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jtfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jBsearch)))
-                        .addGap(127, 127, 127))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(103, Short.MAX_VALUE)
-                .addComponent(lblWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74))
+                        .addComponent(jtfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblSearch)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(lblWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jBFormal, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBInformal, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jBProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBMeetings, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBAdminUsers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(lblWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
+                .addGap(28, 28, 28)
                 .addComponent(lblSearch)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBsearch))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jBFormal)
-                .addGap(18, 18, 18)
-                .addComponent(jBInformal)
-                .addGap(18, 18, 18)
-                .addComponent(jBMeetings)
-                .addGap(27, 27, 27)
-                .addComponent(jBProfile)
-                .addGap(26, 26, 26)
-                .addComponent(jBAdminUsers)
-                .addGap(42, 42, 42))
+                .addGap(46, 46, 46)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBFormal, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBInformal, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(57, 57, 57)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBMeetings, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(57, 57, 57)
+                .addComponent(jBAdminUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBFormalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFormalActionPerformed
-        new FormalBlog().setVisible(true);
+        new FormalBlog(user).setVisible(true);
 
     }//GEN-LAST:event_jBFormalActionPerformed
 
     private void jBInformalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInformalActionPerformed
-        new InformalBlog().setVisible(true);
+        new InformalBlog(user).setVisible(true);
 
 
     }//GEN-LAST:event_jBInformalActionPerformed
@@ -200,74 +197,8 @@ public class Homescreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfSearchActionPerformed
 
     private void jBsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsearchActionPerformed
-        String searchText = jtfSearch.getText();
-        try {
-            //Det man söker på är firstName, lastName, title, description, tagName och typeName
-            /*String sqlQuery = "SELECT firstName, lastName, title, description, tagName, typeName FROM User"
-                    + "JOIN Post ON User.UserID = Post.UserID"
-                    + "JOIN Post_Tag ON Post.PostID = Post_Tag.PostID"
-                    + "JOIN Tag ON Post_Tag.TagId = Tag.TagID"
-                    + "JOIN Type ON Post.typeID = Type.typeID;";
-             */
-            String queryFirstName = "SELECT firstName FROM User";
-            ResultSet rsFirstName = Database.fetchRows(queryFirstName);
-            ArrayList<String> fNameList = new ArrayList<>();
-            while (rsFirstName.next()) {
-                fNameList.add(rsFirstName.getString("firstName"));
-            }
-            for(String firstName: fNameList){
-                if(firstName.contains(searchText)){
-                    
-                    
-                }
-            }
-            
-            
-            
-            
-            
-            
-            
-            String queryLastName = "SELECT lastName FROM User";
-            ResultSet rsLastName = Database.fetchRows(queryLastName);
-            ArrayList<String> lNameList = new ArrayList<>();
-            while (rsLastName.next()) {
-                lNameList.add(rsLastName.getString("lastName"));
-            }
-            
-            String queryTitle = "SELECT title FROM Post";
-            ResultSet rsTitle = Database.fetchRows(queryTitle);
-            ArrayList<String> titleList = new ArrayList<>();
-            while (rsTitle.next()) {
-                titleList.add(rsTitle.getString("title"));
-            }
-            
-            String queryDescription = "SELECT description FROM Post";
-            ResultSet rsPost= Database.fetchRows(queryDescription);
-            ArrayList<String> descriptionList= new ArrayList<>();
-            while (rsPost.next()) {
-                descriptionList.add(rsPost.getString("description"));
-            }
-            
-            String queryTag = "SELECT TagName FROM Tag";
-            ResultSet rsTag= Database.fetchRows(queryTag);
-            ArrayList<String> tagList= new ArrayList<>();
-            while (rsTag.next()) {
-                tagList.add(rsPost.getString("TagName"));
-            }
-            
-            String queryTypeName = "SELECT TypeName FROM Type";
-            ResultSet rsTypeName = Database.fetchRows(queryTypeName);
-            ArrayList<String> tNameList = new ArrayList<>();
-            while (rsTypeName.next()) {
-                tNameList.add(rsTypeName.getString("typeName"));
-            }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(Homescreen.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        new SearchCopyTestShit(jtfSearch.getText()).setVisible(true);
-
+       new SearchResults(jtfSearch.getText().toLowerCase()).setVisible(true);
     }//GEN-LAST:event_jBsearchActionPerformed
 
     private void adminCheck() {
