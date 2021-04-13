@@ -28,7 +28,8 @@ public class SearchResults extends javax.swing.JFrame {
      */
     public SearchResults(String searchResult) {
         //String query = "SELECT Post.postID FROM Post";
-        String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.description FROM User, Post WHERE Post.UserID = User.UserID AND (User.firstName LIKE '%"+searchResult+"%'OR User.lastName LIKE '%"+searchResult+"%' OR Post.title LIKE '%"+searchResult+"%'OR Post.description LIKE '%"+searchResult+"%');";
+        //String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.description, TagName FROM User, Post WHERE Post.UserID = User.UserID AND (User.firstName LIKE '%"+searchResult+"%'OR User.lastName LIKE '%"+searchResult+"%' OR Post.title LIKE '%"+searchResult+"%'OR Post.description LIKE '%"+searchResult+"%');";
+        String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.description, Tag.TagName FROM User JOIN Post ON User.UserID = Post.UserID JOIN Post_Tag ON Post.PostID = Post_Tag.PostID JOIN Tag ON Post_Tag.TagId = Tag.TagId AND (User.firstName LIKE '%"+searchResult+"%'OR User.lastName LIKE '%"+searchResult+"%' OR Post.title LIKE '%"+searchResult+"%'OR Post.description LIKE '%"+searchResult+"%' OR Tag.TagName LIKE '%"+searchResult+"%') GROUP BY Post.PostID;";
         initComponents();
         
         try {
@@ -132,7 +133,7 @@ public class SearchResults extends javax.swing.JFrame {
     }//GEN-LAST:event_jBBackActionPerformed
 
     public static void main(String args[]) {
-        //new SearchResults("craFT").setVisible(true);
+        new SearchResults("hit").setVisible(true);
 
     }
 
