@@ -98,7 +98,7 @@ public class Homescreen extends javax.swing.JFrame {
             }
         });
 
-        lblSearch.setText("Sök efter nyckelord i systemet");
+        lblSearch.setText("Sök på nyckelord i inlägg");
 
         jtfSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
