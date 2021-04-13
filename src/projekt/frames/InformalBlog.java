@@ -23,9 +23,9 @@ public class InformalBlog extends javax.swing.JFrame {
      */
     private User user;
     FormalBlog blog;
-    public InformalBlog(){
+    public InformalBlog(User user){
         
-    
+        this.user = user;
         initComponents();
         blog = new FormalBlog(user);
         try{
@@ -146,7 +146,7 @@ public class InformalBlog extends javax.swing.JFrame {
 
     private void jbCreatePostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCreatePostActionPerformed
         // TODO add your handling code here:
-        new MakeInformalPost().setVisible(true);
+        new MakeInformalPost(user).setVisible(true);
     }//GEN-LAST:event_jbCreatePostActionPerformed
 
     private void jBShowPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBShowPostActionPerformed

@@ -30,7 +30,7 @@ public class FormalBlog extends javax.swing.JFrame
         private User user;
 	public FormalBlog(User user)
 	{
-
+            this.user = user;
 		String query = "SELECT  title , timeStamp, description, postID FROM Post";
 		String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 1;";
 		initComponents();
@@ -41,7 +41,6 @@ public class FormalBlog extends javax.swing.JFrame
 			e.printStackTrace();
 		}
                 //jTable2.isCellEditable(3,3);
-
 
 	}
 
