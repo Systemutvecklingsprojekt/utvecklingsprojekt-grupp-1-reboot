@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import javax.swing.JTable;
 import projekt.User;
 import projekt.helpers.Database;
+import projekt.frames.FormalBlog;
 
 
 /**
@@ -22,16 +23,19 @@ public class InformalBlog extends javax.swing.JFrame {
      * Creates new form InformalBlog
      */
     private User user;
+
+
     
-    public InformalBlog(){
+    public InformalBlog(User user){
+
         
-    
+        this.user = user;
         initComponents();
         
         try{
-        String query = "SELECT  title , timeStamp, description, postID FROM Post";
-        String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 2;";
-	fillTable(Database.fetchRows(joinQuery));
+            String query = "SELECT  title , timeStamp, description, postID FROM Post";
+            String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 2;";
+            fillTable(Database.fetchRows(joinQuery));
         }
         catch(SQLException e){
             e.printStackTrace();
@@ -41,13 +45,26 @@ public class InformalBlog extends javax.swing.JFrame {
         
     }
     
+    public InformalBlog(){
+        initComponents();
+        jbCreatePost.setVisible(false);
+        try{
+            String query = "SELECT  title , timeStamp, description, postID FROM Post";
+            String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 2;";
+            fillTable(Database.fetchRows(joinQuery));
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    
     public void fillTable(ResultSet rs)
 	{
 		try {
-			jTable1 = new JTable (FormalBlog.tableModelBuilder(rs));
-                        
-		} catch (SQLException e) {
-			e.printStackTrace();
+                    jTable1 = new JTable (FormalBlog.tableModelBuilder(rs));
+                       
+		} catch(SQLException e) {
+                    e.printStackTrace();
 		}
 
 		
@@ -154,7 +171,7 @@ public class InformalBlog extends javax.swing.JFrame {
 
     private void jbCreatePostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCreatePostActionPerformed
         // TODO add your handling code here:
-        new MakeInformalPost().setVisible(true);
+        new MakeInformalPost(user).setVisible(true);
     }//GEN-LAST:event_jbCreatePostActionPerformed
 
     private void jBShowPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBShowPostActionPerformed
