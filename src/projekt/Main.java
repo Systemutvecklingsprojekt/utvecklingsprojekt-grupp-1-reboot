@@ -5,7 +5,7 @@
  */
 package projekt;
 
-import projekt.frames.LogIn;
+import projekt.frames.NotLoggedInHomeScreen;
 
 /**
  *
@@ -19,7 +19,7 @@ public class Main
 	 */
 	public static void main(String[] args)
 	{
-		new LogIn().setVisible(true);
+		new NotLoggedInHomeScreen().setVisible(true);
 	}
 	
 }

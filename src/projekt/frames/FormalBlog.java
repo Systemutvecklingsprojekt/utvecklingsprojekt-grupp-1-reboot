@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import projekt.User;
 
 /**
  *
@@ -26,8 +27,10 @@ public class FormalBlog extends javax.swing.JFrame
 	/**
 	 * Creates new form FormellBlogg
 	 */
-	public FormalBlog()
+        private User user;
+	public FormalBlog(User user)
 	{
+
 		String query = "SELECT  title , timeStamp, description, postID FROM Post";
 		String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 1;";
 		initComponents();
@@ -37,6 +40,8 @@ public class FormalBlog extends javax.swing.JFrame
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+                //jTable2.isCellEditable(3,3);
+
 
 	}
 
@@ -47,8 +52,7 @@ public class FormalBlog extends javax.swing.JFrame
 	 */
 	@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jBBack = new javax.swing.JButton();
         jbCreatePost = new javax.swing.JButton();
@@ -59,54 +63,43 @@ public class FormalBlog extends javax.swing.JFrame
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jBBack.setText("Tillbaka");
-        jBBack.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jBBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBBackActionPerformed(evt);
             }
         });
 
         jbCreatePost.setText("Skapa inlägg");
-        jbCreatePost.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jbCreatePost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbCreatePostActionPerformed(evt);
             }
         });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
+            new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null}
             },
-            new String []
-            {
+            new String [] {
                 "ID", "Title 2", "Title 3", "Title 4"
             }
-        )
-        {
-            boolean[] canEdit = new boolean []
-            {
+        ) {
+            boolean[] canEdit = new boolean [] {
                 false, false, true, true
             };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex)
-            {
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Visa inlägg");
-        jButton1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
@@ -132,15 +125,12 @@ public class FormalBlog extends javax.swing.JFrame
             .addGroup(layout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jBBack)
-                            .addComponent(jbCreatePost))))
+                    .addComponent(jButton1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jBBack)
+                        .addComponent(jbCreatePost)))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
@@ -153,7 +143,7 @@ public class FormalBlog extends javax.swing.JFrame
 
     private void jbCreatePostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCreatePostActionPerformed
 		// TODO add your handling code here:
-		new MakeFormalPost().setVisible(true);
+		new MakeFormalPost(user).setVisible(true);
     }//GEN-LAST:event_jbCreatePostActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
@@ -164,13 +154,13 @@ public class FormalBlog extends javax.swing.JFrame
 		
 
     }//GEN-LAST:event_jButton1ActionPerformed
-
+/*
 	public static void main(String args[])
 	{
-		new FormalBlog().setVisible(true);
+		new FormalBlog(user).setVisible(true);
 
 	}
-
+*/
 	public DefaultTableModel buildTableModel(ResultSet rs)
 			throws SQLException
 	{
@@ -197,8 +187,8 @@ public class FormalBlog extends javax.swing.JFrame
 		return new DefaultTableModel(data, columnNames);
 
 	}
-
-	private void sattLabel()
+/*
+	public void sattLabel()
 	{
 		String query;
 		String qTitle = "Select TagName from Tag where TagID = (Select TagID from Post_Tag where PostID='2')";
@@ -219,13 +209,14 @@ public class FormalBlog extends javax.swing.JFrame
                     jTable5.getModel().setValueAt(100, i, 1);
 
                 }
-            }*/
+            }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+*/
 
-	private void fillTable(ResultSet rs)
+	public void fillTable(ResultSet rs)
 	{
 		try {
 			jTable2 = new JTable(fyll(rs));

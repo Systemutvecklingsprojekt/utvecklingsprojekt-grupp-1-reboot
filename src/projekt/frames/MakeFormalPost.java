@@ -9,10 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import projekt.User;
 
 /**
  *
@@ -23,15 +20,17 @@ public class MakeFormalPost extends javax.swing.JFrame
 
 	private int maxTags;
 	private ArrayList<String> chosenTags;
+        private User user;
 
-	public MakeFormalPost()
+	public MakeFormalPost(User user)
 	{
-		maxTags = 0;
-		chosenTags = new ArrayList<>();
+            this.user = user;
+            maxTags = 0;
+            chosenTags = new ArrayList<>();
 
-		initComponents();
-		fillTags();
-		jTFNewTag.setEnabled(true);
+            initComponents();
+            fillTags();
+            jTFNewTag.setEnabled(true);
 
 	}
 
@@ -181,7 +180,7 @@ public class MakeFormalPost extends javax.swing.JFrame
 				jLTags.setText(oldTag + "   " + tag);
 			} else {
 				for (String tagInList : chosenTags) {
-					if (tagInList.equals(tag)) {
+					if (tagInList.equalsIgnoreCase(tag)) {
 						found = true;
 					}
 				}
@@ -201,7 +200,7 @@ public class MakeFormalPost extends javax.swing.JFrame
 				jLTags.setText(oldTag + "   " + tag);
 			} else {
 				for (String tagInList : chosenTags) {
-					if (tagInList.equals(tag)) {
+					if (tagInList.equalsIgnoreCase(tag)) {
 						found = true;
 					}
 				}
@@ -217,13 +216,37 @@ public class MakeFormalPost extends javax.swing.JFrame
     private void jBUploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBUploadActionPerformed
 		String title = jTFTitle.getText();
 		String post = jTAPost.getText();
-		//String 
-		try {
-			insertTagsJosef(chosenTags);
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			System.out.println("error");
+		int userId = user.getUserID();
+                String stringPostId = "";
+                ArrayList<Integer> tagIds= new ArrayList<>();
+                
+		try{
+                    insertTagsJosef(chosenTags);
+                } catch(SQLException e){
+                    e.printStackTrace();
+                }
+                try {
+                    
+                    Database.executeUpdate("INSERT into Post (UserID, timeStamp, title, description, typeID) VALUES (" + userId + ", CURRENT_TIMESTAMP, '" + title + "','" + post +"', 1);");
+                    stringPostId = Database.fetchSingle("SELECT MAX(PostID) FROM Post;");
+                    for(String tagName : chosenTags){
+                        tagIds.add(Integer.parseInt(Database.fetchSingle("SELECT TagID FROM Tag WHERE TagName = '" + tagName + "';")));
+                    }
+                    
+		} catch (SQLException e) {
+                    e.printStackTrace();
+                    System.out.println("error");
 		}
+                int postId = Integer.parseInt(stringPostId);
+                try{
+                    for(Integer tag : tagIds){
+                        Database.executeUpdate("INSERT INTO Post_Tag (PostID, TagID) VALUES (" + postId + ", " + tag + ");");
+                    }
+                    
+                } catch (SQLException e){
+                    e.printStackTrace();
+                    System.out.println("fel i dela");
+                }
     }//GEN-LAST:event_jBUploadActionPerformed
 
     private void jTFNewTagMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFNewTagMouseReleased

@@ -172,7 +172,7 @@ public class Homescreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBFormalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFormalActionPerformed
-        new FormalBlog().setVisible(true);
+        new FormalBlog(user).setVisible(true);
 
     }//GEN-LAST:event_jBFormalActionPerformed
 
