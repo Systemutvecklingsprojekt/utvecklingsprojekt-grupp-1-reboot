@@ -26,34 +26,27 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="jBAdminUsers" min="-2" pref="138" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblSearch" alignment="0" min="-2" pref="87" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jBProfile" max="32767" attributes="0"/>
-                                  <Component id="jBFormal" pref="138" max="32767" attributes="0"/>
-                                  <Component id="jtfSearch" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jBInformal" min="-2" pref="138" max="-2" attributes="0"/>
-                                  <Component id="jBMeetings" min="-2" pref="138" max="-2" attributes="0"/>
-                                  <Component id="jBsearch" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                              <Component id="lblWelcome" min="-2" pref="261" max="-2" attributes="0"/>
-                          </Group>
+                  <Component id="lblSearch" alignment="0" min="-2" pref="87" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jBProfile" max="32767" attributes="0"/>
+                          <Component id="jBFormal" pref="138" max="32767" attributes="0"/>
+                          <Component id="jtfSearch" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="43" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jBInformal" min="-2" pref="138" max="-2" attributes="0"/>
+                          <Component id="jBMeetings" min="-2" pref="138" max="-2" attributes="0"/>
+                          <Component id="jBsearch" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                      <Component id="lblWelcome" min="-2" pref="261" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="jBAdminUsers" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace pref="43" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -130,6 +123,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBAdminUsers">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="32" green="32" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Hantera anv&#xe4;ndare"/>
       </Properties>
       <Events>
