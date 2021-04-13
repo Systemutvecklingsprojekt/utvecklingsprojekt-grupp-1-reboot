@@ -170,7 +170,7 @@ public class Homescreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBFormalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFormalActionPerformed
-        new FormalBlog().setVisible(true);
+        new FormalBlog(user).setVisible(true);
 
     }//GEN-LAST:event_jBFormalActionPerformed
 
@@ -198,65 +198,8 @@ public class Homescreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfSearchActionPerformed
 
     private void jBsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsearchActionPerformed
-        String searchText = jtfSearch.getText();
-        try {
-            //Det man söker på är firstName, lastName, title, description, tagName och typeName
-            /*String sqlQuery = "SELECT firstName, lastName, title, description, tagName, typeName FROM User"
-                    + "JOIN Post ON User.UserID = Post.UserID"
-                    + "JOIN Post_Tag ON Post.PostID = Post_Tag.PostID"
-                    + "JOIN Tag ON Post_Tag.TagId = Tag.TagID"
-                    + "JOIN Type ON Post.typeID = Type.typeID;";
-             */
-            String queryFirstName = "SELECT firstName FROM User";
-            ResultSet rsFirstName = Database.fetchRows(queryFirstName);
-            ArrayList<String> fNameList = new ArrayList<>();
-            while (rsFirstName.next()) {
-                fNameList.add(rsFirstName.getString("firstName"));
-            }
-            for(String firstName: fNameList){
-                if(firstName.contains(searchText)){     
-                }
-            }
-            
-            String queryLastName = "SELECT lastName FROM User";
-            ResultSet rsLastName = Database.fetchRows(queryLastName);
-            ArrayList<String> lNameList = new ArrayList<>();
-            while (rsLastName.next()) {
-                lNameList.add(rsLastName.getString("lastName"));
-            }
-            
-            String queryTitle = "SELECT title FROM Post";
-            ResultSet rsTitle = Database.fetchRows(queryTitle);
-            ArrayList<String> titleList = new ArrayList<>();
-            while (rsTitle.next()) {
-                titleList.add(rsTitle.getString("title"));
-            }
-            
-            String queryDescription = "SELECT description FROM Post";
-            ResultSet rsPost= Database.fetchRows(queryDescription);
-            ArrayList<String> descriptionList= new ArrayList<>();
-            while (rsPost.next()) {
-                descriptionList.add(rsPost.getString("description"));
-            }
-            
-            String queryTag = "SELECT TagName FROM Tag";
-            ResultSet rsTag= Database.fetchRows(queryTag);
-            ArrayList<String> tagList= new ArrayList<>();
-            while (rsTag.next()) {
-                tagList.add(rsPost.getString("TagName"));
-            }
-            
-            String queryTypeName = "SELECT TypeName FROM Type";
-            ResultSet rsTypeName = Database.fetchRows(queryTypeName);
-            ArrayList<String> tNameList = new ArrayList<>();
-            while (rsTypeName.next()) {
-                tNameList.add(rsTypeName.getString("typeName"));
-            }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(Homescreen.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        new SearchCopyTestShit(jtfSearch.getText()).setVisible(true);
+       new SearchResults(jtfSearch.getText().toLowerCase()).setVisible(true);
     }//GEN-LAST:event_jBsearchActionPerformed
 
     private void adminCheck() {
