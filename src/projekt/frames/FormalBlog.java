@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import projekt.User;
 
 /**
  *
@@ -26,8 +27,10 @@ public class FormalBlog extends javax.swing.JFrame
 	/**
 	 * Creates new form FormellBlogg
 	 */
-	public FormalBlog()
+        private User user;
+	public FormalBlog(User user)
 	{
+
 		String query = "SELECT  title , timeStamp, description, postID FROM Post";
 		String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 1;";
 		initComponents();
@@ -38,6 +41,7 @@ public class FormalBlog extends javax.swing.JFrame
 			e.printStackTrace();
 		}
                 //jTable2.isCellEditable(3,3);
+
 
 	}
 
@@ -139,7 +143,7 @@ public class FormalBlog extends javax.swing.JFrame
 
     private void jbCreatePostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCreatePostActionPerformed
 		// TODO add your handling code here:
-		new MakeFormalPost().setVisible(true);
+		new MakeFormalPost(user).setVisible(true);
     }//GEN-LAST:event_jbCreatePostActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
@@ -150,13 +154,13 @@ public class FormalBlog extends javax.swing.JFrame
 		
 
     }//GEN-LAST:event_jButton1ActionPerformed
-
+/*
 	public static void main(String args[])
 	{
-		new FormalBlog().setVisible(true);
+		new FormalBlog(user).setVisible(true);
 
 	}
-
+*/
 	public DefaultTableModel buildTableModel(ResultSet rs)
 			throws SQLException
 	{

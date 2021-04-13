@@ -8,6 +8,7 @@ package projekt.frames;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JTable;
+import projekt.User;
 import projekt.helpers.Database;
 
 
@@ -20,12 +21,13 @@ public class InformalBlog extends javax.swing.JFrame {
     /**
      * Creates new form InformalBlog
      */
+    private User user;
     FormalBlog blog;
     public InformalBlog(){
         
     
         initComponents();
-        blog = new FormalBlog();
+        blog = new FormalBlog(user);
         try{
         String query = "SELECT  title , timeStamp, description, postID FROM Post";
         String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 2;";
