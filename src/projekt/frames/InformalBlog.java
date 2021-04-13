@@ -5,6 +5,11 @@
  */
 package projekt.frames;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JTable;
+import projekt.helpers.Database;
+
 
 /**
  *
@@ -15,10 +20,39 @@ public class InformalBlog extends javax.swing.JFrame {
     /**
      * Creates new form InformalBlog
      */
-    public InformalBlog() {
+    FormalBlog blog;
+    public InformalBlog(){
+        
+    
         initComponents();
+        blog = new FormalBlog();
+        try{
+        String query = "SELECT  title , timeStamp, description, postID FROM Post";
+        String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 2;";
+	fillTable(Database.fetchRows(joinQuery));
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+
+		
         
     }
+    
+    public void fillTable(ResultSet rs)
+	{
+		try {
+			jTable1 = new JTable (blog.fyll(rs));
+                        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		
+		jScrollPane1.setViewportView(jTable1);
+		jTable1.setVisible(true);
+		//Kör emot Databasen och hämtar raderna från User
+      }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,6 +65,9 @@ public class InformalBlog extends javax.swing.JFrame {
 
         jBBack = new javax.swing.JButton();
         jbCreatePost = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jBShowPost = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -48,24 +85,53 @@ public class InformalBlog extends javax.swing.JFrame {
             }
         });
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jBShowPost.setText("Visa inlägg");
+        jBShowPost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBShowPostActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(33, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBBack, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbCreatePost, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(291, Short.MAX_VALUE))
+                .addComponent(jBBack, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jbCreatePost, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBShowPost)
+                .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jbCreatePost)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 196, Short.MAX_VALUE)
-                .addComponent(jBBack)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBBack)
+                    .addComponent(jbCreatePost)
+                    .addComponent(jBShowPost))
                 .addGap(22, 22, 22))
         );
 
@@ -81,10 +147,20 @@ public class InformalBlog extends javax.swing.JFrame {
         new MakeInformalPost().setVisible(true);
     }//GEN-LAST:event_jbCreatePostActionPerformed
 
+    private void jBShowPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBShowPostActionPerformed
+
+    int id = (int) (jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+    new ShowPost(id).setVisible(true);
+		
+    }//GEN-LAST:event_jBShowPostActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBBack;
+    private javax.swing.JButton jBShowPost;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JButton jbCreatePost;
     // End of variables declaration//GEN-END:variables
 }
