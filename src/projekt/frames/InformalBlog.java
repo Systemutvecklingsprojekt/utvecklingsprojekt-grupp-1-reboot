@@ -33,9 +33,9 @@ public class InformalBlog extends javax.swing.JFrame {
         initComponents();
         
         try{
-        String query = "SELECT  title , timeStamp, description, postID FROM Post";
-        String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 2;";
-	fillTable(Database.fetchRows(joinQuery));
+            String query = "SELECT  title , timeStamp, description, postID FROM Post";
+            String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 2;";
+            fillTable(Database.fetchRows(joinQuery));
         }
         catch(SQLException e){
             e.printStackTrace();
@@ -43,6 +43,18 @@ public class InformalBlog extends javax.swing.JFrame {
 
 		
         
+    }
+    
+    public InformalBlog(){
+        initComponents();
+        try{
+            String query = "SELECT  title , timeStamp, description, postID FROM Post";
+            String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 2;";
+            fillTable(Database.fetchRows(joinQuery));
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
     }
     
     public void fillTable(ResultSet rs)

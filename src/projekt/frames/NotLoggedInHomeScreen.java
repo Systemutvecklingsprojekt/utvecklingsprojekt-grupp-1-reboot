@@ -6,6 +6,7 @@
 package projekt.frames;
 
 import java.awt.Container;
+import projekt.User;
 
 /**
  *
@@ -18,7 +19,9 @@ public class NotLoggedInHomeScreen extends javax.swing.JFrame {
     /**
      * Creates new form NotLoggedInHomeScreen
      */
+   
     public NotLoggedInHomeScreen() {
+        
         initComponents();
         Container c = new InformalBlog().getContentPane();
         c.setSize(800, 1500);
