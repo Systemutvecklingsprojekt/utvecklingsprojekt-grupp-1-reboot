@@ -22,12 +22,12 @@ public class InformalBlog extends javax.swing.JFrame {
      * Creates new form InformalBlog
      */
     private User user;
-    FormalBlog blog;
+    
     public InformalBlog(){
         
     
         initComponents();
-        blog = new FormalBlog(user);
+        
         try{
         String query = "SELECT  title , timeStamp, description, postID FROM Post";
         String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 2;";
@@ -44,7 +44,7 @@ public class InformalBlog extends javax.swing.JFrame {
     public void fillTable(ResultSet rs)
 	{
 		try {
-			jTable1 = new JTable (blog.fyll(rs));
+			jTable1 = new JTable (FormalBlog.tableModelBuilder(rs));
                         
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -97,7 +97,15 @@ public class InformalBlog extends javax.swing.JFrame {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jBShowPost.setText("Visa inlägg");
