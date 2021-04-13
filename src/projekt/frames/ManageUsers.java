@@ -29,6 +29,7 @@ public class ManageUsers extends javax.swing.JFrame {
 
         jBAddUser = new javax.swing.JButton();
         jBUpdateDelete = new javax.swing.JButton();
+        jBBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -46,15 +47,27 @@ public class ManageUsers extends javax.swing.JFrame {
             }
         });
 
+        jBBack.setText("Tiilbaka");
+        jBBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(93, 93, 93)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBUpdateDelete)
-                    .addComponent(jBAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(93, 93, 93)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jBUpdateDelete)
+                            .addComponent(jBAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jBBack, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(110, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -64,7 +77,9 @@ public class ManageUsers extends javax.swing.JFrame {
                 .addComponent(jBAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(jBUpdateDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addComponent(jBBack)
+                .addContainerGap())
         );
 
         pack();
@@ -78,11 +93,16 @@ public class ManageUsers extends javax.swing.JFrame {
         new UpdateDeleteUser().setVisible(true);
     }//GEN-LAST:event_jBUpdateDeleteActionPerformed
 
+    private void jBBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBackActionPerformed
+       this.dispose();
+    }//GEN-LAST:event_jBBackActionPerformed
+
    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAddUser;
+    private javax.swing.JButton jBBack;
     private javax.swing.JButton jBUpdateDelete;
     // End of variables declaration//GEN-END:variables
 }
