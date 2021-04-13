@@ -27,12 +27,12 @@ public class SearchResults extends javax.swing.JFrame {
      * Creates new form FormellBlogg
      */
     public SearchResults(String searchResult) {
-        //String query = "SELECT  title , timeStamp, description, postID FROM Post";
-        String joinQuery = "SELECT User.firstName, User.lastName, Post.title, Post.description FROM User, Post WHERE Post.UserID = User.UserID;";
+        //String query = "SELECT Post.postID FROM Post";
+        String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.description FROM User, Post WHERE Post.UserID = User.UserID AND (User.firstName LIKE '%"+searchResult+"%'OR User.lastName LIKE '%"+searchResult+"%' OR Post.title LIKE '%"+searchResult+"%'OR Post.description LIKE '%"+searchResult+"%');";
         initComponents();
         
         try {
-            fillTable(Database.fetchRows(joinQuery), searchResult);
+            fillTable(Database.fetchRows(joinQuery));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -132,7 +132,7 @@ public class SearchResults extends javax.swing.JFrame {
     }//GEN-LAST:event_jBBackActionPerformed
 
     public static void main(String args[]) {
-        //new SearchResults("searchWord").setVisible(true);
+        //new SearchResults("craFT").setVisible(true);
 
     }
 
@@ -164,10 +164,10 @@ public class SearchResults extends javax.swing.JFrame {
 
     
 
-    private void fillTable(ResultSet rs, String searchWord) {
+    private void fillTable(ResultSet rs) {
         
         try {
-            jTable2 = new JTable(fyll(rs, searchWord));
+            jTable2 = new JTable(fyll(rs));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -178,44 +178,29 @@ public class SearchResults extends javax.swing.JFrame {
 //       
     }
 
-    public DefaultTableModel fyll(ResultSet rs, String searchWord) throws SQLException {
-        ResultSetMetaData metaData = rs.getMetaData();
-        //kör igenom metadatan (ex hur många columner, och hämtar namnen)
-        Vector<String> columnNames = new Vector<String>();
-        int columnCount = metaData.getColumnCount();
-        for (int column = 1; column <= columnCount; column++) {
-            columnNames.add(metaData.getColumnName(column));
-        }
+    public DefaultTableModel fyll(ResultSet rs) throws SQLException {
+		ResultSetMetaData metaData = rs.getMetaData();
 
-        // data of the table
-        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-        while (rs.next()) {
-            Vector<Object> vector = new Vector<Object>();
-            ArrayList<Object> row = new ArrayList<>();
-            boolean rowIsCorrect = false;
-            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
-                row.add(rs.getObject(columnIndex));
-                
-                //System.out.println((String) rs.getObject(columnIndex)+ " does not contain " + searchWord);
-                searchWord.toLowerCase();
-               
-                if (((String)rs.getObject(columnIndex)).contains(searchWord)) {
-                    rowIsCorrect = true;
-                    
-                }
-            }
-            if (rowIsCorrect) {
-                for (Object cell : row) {
-                    vector.add(cell);
-                }
-                data.add(vector);
-            }
+		//kör igenom metadatan (ex hur många columner, och hämtar namnen)
+		Vector<String> columnNames = new Vector<String>();
+		int columnCount = metaData.getColumnCount();
+		for (int column = 1; column <= columnCount; column++) {
+			columnNames.add(metaData.getColumnName(column));
+		}
 
-        }
+		// data of the table
+		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+		while (rs.next()) {
+			Vector<Object> vector = new Vector<Object>();
+			for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+				vector.add(rs.getObject(columnIndex));
+			}
+			data.add(vector);
+		}
 
-        return new DefaultTableModel(data, columnNames);
+		return new DefaultTableModel(data, columnNames);
 
-    }
+	}
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
