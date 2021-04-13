@@ -26,61 +26,62 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jBProfile" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jBMeetings" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jBFormal" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jBInformal" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jBAdminUsers" alignment="0" min="-2" pref="138" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="jBAdminUsers" min="-2" pref="138" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblSearch" min="-2" pref="65" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Component id="jtfSearch" min="-2" pref="107" max="-2" attributes="0"/>
+                          <Component id="lblSearch" alignment="0" min="-2" pref="87" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jBProfile" max="32767" attributes="0"/>
+                                  <Component id="jBFormal" pref="138" max="32767" attributes="0"/>
+                                  <Component id="jtfSearch" max="32767" attributes="0"/>
+                              </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jBsearch" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jBInformal" min="-2" pref="138" max="-2" attributes="0"/>
+                                  <Component id="jBMeetings" min="-2" pref="138" max="-2" attributes="0"/>
+                                  <Component id="jBsearch" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                              <Component id="lblWelcome" min="-2" pref="261" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="127" pref="127" max="-2" attributes="0"/>
+                      <EmptySpace pref="43" max="32767" attributes="0"/>
                   </Group>
               </Group>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="103" max="32767" attributes="0"/>
-              <Component id="lblWelcome" min="-2" pref="274" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="lblWelcome" min="-2" pref="21" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="lblSearch" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jtfSearch" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jBsearch" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="jBFormal" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jBInformal" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jBMeetings" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-              <Component id="jBProfile" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-              <Component id="jBAdminUsers" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jBFormal" min="-2" pref="33" max="-2" attributes="0"/>
+                  <Component id="jBInformal" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jBProfile" min="-2" pref="33" max="-2" attributes="0"/>
+                  <Component id="jBMeetings" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+              <Component id="jBAdminUsers" min="-2" pref="33" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -88,6 +89,9 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="jBFormal">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="99" red="99" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Formell blogg"/>
       </Properties>
       <Events>
@@ -96,6 +100,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBInformal">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="cc" green="99" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Informell blogg"/>
       </Properties>
       <Events>
@@ -112,6 +119,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBProfile">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="4f" green="ff" red="54" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Profil"/>
       </Properties>
       <Events>
@@ -128,7 +138,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblSearch">
       <Properties>
-        <Property name="text" type="java.lang.String" value="S&#xf6;k h&#xe4;r"/>
+        <Property name="text" type="java.lang.String" value="S&#xf6;k i systemet"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtfSearch">
