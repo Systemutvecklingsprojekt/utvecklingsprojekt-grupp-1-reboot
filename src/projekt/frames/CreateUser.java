@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
 public class CreateUser extends javax.swing.JFrame {
 
     private String sqlQuery;
-    private boolean jRBSelected;
 
     /**
      * Creates new form CreateUser
@@ -33,14 +32,8 @@ public class CreateUser extends javax.swing.JFrame {
         String adminStatus = "";
         if (jRBAdminJa.isSelected()) {
             adminStatus = "J";
-            jRBSelected = true;
-        } else if (jRBAdminNej.isSelected()) {
-            adminStatus = "N";
-            jRBSelected = true;
         } else {
-            JOptionPane.showMessageDialog(null, "Vänligen ange Adminstatus.");
-            jRBSelected = false;
-            return;
+            adminStatus = "N";
         }
         sqlQuery = "INSERT INTO User (password, eMail, firstName, lastName, adminStatus) VALUES ( '" + password + "','" + email + "','" + firstName + "','" + lastName + "','" + adminStatus + "');";
 
@@ -66,8 +59,8 @@ public class CreateUser extends javax.swing.JFrame {
         jLPassword = new javax.swing.JLabel();
         jLAdmin = new javax.swing.JLabel();
         jRBAdminJa = new javax.swing.JRadioButton();
-        jRBAdminNej = new javax.swing.JRadioButton();
         jBSave = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -103,17 +96,17 @@ public class CreateUser extends javax.swing.JFrame {
             }
         });
 
-        jRBAdminNej.setText("Nej");
-        jRBAdminNej.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRBAdminNejActionPerformed(evt);
-            }
-        });
-
-        jBSave.setText("Spara");
+        jBSave.setText("Skapa användare");
         jBSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBSaveActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Tillbaka");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -124,36 +117,36 @@ public class CreateUser extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(109, 109, 109)
+                        .addGap(121, 121, 121)
                         .addComponent(jLTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLPassword)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLFirstName)
-                                .addComponent(jLLastName)
-                                .addComponent(jTFLastName)
-                                .addComponent(jTFFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-                                .addComponent(jLEmail)
-                                .addComponent(jTFEmail)
-                                .addComponent(jTFPassword))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jBSave, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(jLFirstName)
                             .addComponent(jLAdmin)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jRBAdminJa)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRBAdminNej))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(154, 154, 154)
-                        .addComponent(jBSave, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(154, Short.MAX_VALUE))
+                            .addComponent(jRBAdminJa)
+                            .addComponent(jTFPassword)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLPassword)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jTFEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTFLastName, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLLastName, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTFFirstName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))))))
+                .addContainerGap(142, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(4, 4, 4)
+                .addGap(7, 7, 7)
                 .addComponent(jLTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLFirstName)
                 .addGap(2, 2, 2)
                 .addComponent(jTFFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -161,23 +154,23 @@ public class CreateUser extends javax.swing.JFrame {
                 .addComponent(jLLastName)
                 .addGap(5, 5, 5)
                 .addComponent(jTFLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLEmail)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTFEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLPassword)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTFPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLAdmin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRBAdminJa, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRBAdminNej, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addComponent(jBSave)
-                .addContainerGap())
+                .addComponent(jLAdmin)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRBAdminJa, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jBSave, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(13, 13, 13))
         );
 
         pack();
@@ -195,7 +188,6 @@ public class CreateUser extends javax.swing.JFrame {
     private void jBSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSaveActionPerformed
 
         createVariables();
-        if (jRBSelected == true) {
             try {
                 String sqlEmail = Database.fetchSingle("SELECT eMail FROM User WHERE eMail = '" + jTFEmail.getText() + "';");
                 if (sqlEmail != null) {
@@ -203,24 +195,29 @@ public class CreateUser extends javax.swing.JFrame {
                     return;
                 }
                 Database.executeUpdate(sqlQuery);
-                JOptionPane.showMessageDialog(null, jTFFirstName.getText() + " är nu skapad!");
+                JOptionPane.showMessageDialog(null, "Användare " + jTFFirstName.getText() +" "+ jTFLastName.getText() + " är nu skapad!");
+                jTFPassword.setText("");
+                jTFEmail.setText("");
+                jTFFirstName.setText("");
+                jTFLastName.setText("");
             } catch (Exception e) {
                 System.out.println("fel");
             }
-        }
     }//GEN-LAST:event_jBSaveActionPerformed
 
     private void jRBAdminJaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBAdminJaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRBAdminJaActionPerformed
 
-    private void jRBAdminNejActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBAdminNejActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRBAdminNejActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBSave;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLAdmin;
     private javax.swing.JLabel jLEmail;
     private javax.swing.JLabel jLFirstName;
@@ -228,7 +225,6 @@ public class CreateUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLPassword;
     private javax.swing.JLabel jLTitle;
     private javax.swing.JRadioButton jRBAdminJa;
-    private javax.swing.JRadioButton jRBAdminNej;
     private javax.swing.JTextField jTFEmail;
     private javax.swing.JTextField jTFFirstName;
     private javax.swing.JTextField jTFLastName;
