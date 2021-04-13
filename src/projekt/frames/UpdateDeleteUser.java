@@ -40,15 +40,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
         }
         jScrollPane1.setViewportView(table2);
         table2.setVisible(true);
-
     }
-
-    public static void main(String[] args) {
-
-        new UpdateDeleteUser().setVisible(true);
-
-    }
-
     public void getResultset() {
         //Kör emot Databasen och hämtar raderna från User
         try {

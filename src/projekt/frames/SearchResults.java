@@ -132,11 +132,6 @@ public class SearchResults extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jBBackActionPerformed
 
-    public static void main(String args[]) {
-        new SearchResults("hit").setVisible(true);
-
-    }
-
     public DefaultTableModel buildTableModel(ResultSet rs)
             throws SQLException {
 
