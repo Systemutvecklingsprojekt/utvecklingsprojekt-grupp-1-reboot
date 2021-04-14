@@ -167,8 +167,6 @@ public class Profile extends javax.swing.JFrame {
         String password = jtfPassword.getText();
         String email = jtfEmail.getText();
         String tempId;
-        String convertedInt = Integer.toString(id);
-        boolean emailExists = false;
         
         try {
             String sqlEmail = Database.fetchSingle("SELECT eMail FROM User WHERE eMail = '" + email + "';");
@@ -186,7 +184,7 @@ public class Profile extends javax.swing.JFrame {
             
             JOptionPane.showMessageDialog(null, "Dina användaruppgifter är nu uppdaterade!");
         } catch (Exception e) {
-            System.out.println("fel");
+            e.printStackTrace();
         }
     }//GEN-LAST:event_changeInfoButtonActionPerformed
 
