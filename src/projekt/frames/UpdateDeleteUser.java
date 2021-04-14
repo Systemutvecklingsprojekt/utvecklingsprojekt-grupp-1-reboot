@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import projekt.helpers.Database;
+import projekt.helpers.Validation;
 
 /**
  *
@@ -194,46 +195,48 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        int tempId = Integer.parseInt(jtfID.getText());
-        String updatePost = "Update Post SET UserID = 11 Where UserID = " + tempId;
-        String delUser = "Delete from User where UserID =" + tempId;
-        String delMeeting = "Delete from Meeting where UserID =" + tempId;
-        String delMetAt = "Delete from Meeting_Attandence where UserID =" + tempId;
-        String delPost = "Delete from Post where UserID =" + tempId;
-        
-        if(idKoll() == false) {
-        return;
-        }
-        int dialog = JOptionPane.showConfirmDialog(null, "Är säker på att du vill ta bort denna användaren");
-        if (dialog == JOptionPane.YES_OPTION) {
-            int dialog2 = JOptionPane.showConfirmDialog(null, "Vill du spara användarens inlägg?");
+        if(Validation.isInt(jtfID) && Validation.isStringNull(jtfID.getText())){
+            int tempId = Integer.parseInt(jtfID.getText());
+            String updatePost = "Update Post SET UserID = 11 Where UserID = " + tempId;
+            String delUser = "Delete from User where UserID =" + tempId;
+            String delMeeting = "Delete from Meeting where UserID =" + tempId;
+            String delMetAt = "Delete from Meeting_Attandence where UserID =" + tempId;
+            String delPost = "Delete from Post where UserID =" + tempId;
 
-            try {
-                
-                if (dialog2 == JOptionPane.YES_OPTION) {
-                    Database.executeUpdate(updatePost);
-                    Database.executeUpdate(delUser);
-                    Database.executeUpdate(delMeeting);
-                    Database.executeUpdate(delMetAt);
-                    JOptionPane.showMessageDialog(null, "Användaren är nu borttagen");
-                    new UpdateDeleteUser().setVisible(true);
-                    this.dispose();
+            if(idKoll() == false) {
+                return;
+            }
+            int dialog = JOptionPane.showConfirmDialog(null, "Är säker på att du vill ta bort denna användaren");
+            if (dialog == JOptionPane.YES_OPTION) {
+                int dialog2 = JOptionPane.showConfirmDialog(null, "Vill du spara användarens inlägg?");
 
-                } else if (dialog2 == JOptionPane.NO_OPTION) {
-                    Database.executeUpdate(delPost);
-                    Database.executeUpdate(delUser);
-                    Database.executeUpdate(delMeeting);
-                    Database.executeUpdate(delMetAt);
-                    JOptionPane.showMessageDialog(null, "Användaren och dess inlägg är nu borttagna");
-                    new UpdateDeleteUser().setVisible(true);
-                    this.dispose();
+                try {
 
+                    if (dialog2 == JOptionPane.YES_OPTION) {
+                        Database.executeUpdate(updatePost);
+                        Database.executeUpdate(delUser);
+                        Database.executeUpdate(delMeeting);
+                        Database.executeUpdate(delMetAt);
+                        JOptionPane.showMessageDialog(null, "Användaren är nu borttagen");
+                        new UpdateDeleteUser().setVisible(true);
+                        this.dispose();
+
+                    } else if (dialog2 == JOptionPane.NO_OPTION) {
+                        Database.executeUpdate(delPost);
+                        Database.executeUpdate(delUser);
+                        Database.executeUpdate(delMeeting);
+                        Database.executeUpdate(delMetAt);
+                        JOptionPane.showMessageDialog(null, "Användaren och dess inlägg är nu borttagna");
+                        new UpdateDeleteUser().setVisible(true);
+                        this.dispose();
+
+                    }
+
+                } catch (Exception e) {
+                    System.out.print("Fel på sql");
                 }
 
-            } catch (Exception e) {
-                System.out.print("Fel på sql");
             }
-
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
@@ -242,16 +245,22 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfIDActionPerformed
 
     private void changeInformationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeInformationButtonActionPerformed
-        int tempId = Integer.parseInt(jtfID.getText());
-        try {
-            String validId = Database.fetchSingle("SELECT UserID FROM User WHERE UserID =" + tempId);
-            if (validId == null) {
-                JOptionPane.showMessageDialog(null, "Vänligen ange ett valid ID");
-                return;
+        int tempId = -1;
+        if(Validation.isInt(jtfID) && Validation.isStringNull(jtfID.getText())){
+            tempId = Integer.parseInt(jtfID.getText());
+            try {
+                String validId = Database.fetchSingle("SELECT UserID FROM User WHERE UserID =" + tempId);
+                if (validId != null) {
+                    new EditUsers(tempId).setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Var god ange ett giltigt UserID!");
+                }
+            } catch (Exception e) {
+            
             }
-        } catch (Exception e) {
         }
-        new EditUsers(tempId).setVisible(true);
+            
+        
     }//GEN-LAST:event_changeInformationButtonActionPerformed
 
     private void jBBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBackActionPerformed
@@ -263,7 +272,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
         try {
             String validId = Database.fetchSingle("SELECT UserID FROM User WHERE UserID =" + tempId);
             if (validId == null) {
-                JOptionPane.showMessageDialog(null, "Vänligen ange ett valid ID");
+                JOptionPane.showMessageDialog(null, "Var god ange ett giltigt UserID!");
                 new UpdateDeleteUser().setVisible(true);
                 this.dispose();
                 return false;

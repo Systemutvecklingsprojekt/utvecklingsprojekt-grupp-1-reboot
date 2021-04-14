@@ -43,9 +43,7 @@ public class EditUsers extends javax.swing.JFrame {
         jtfEmail.setText(user.getEmail());
         if(user.getAdmin().equals("J")) {
             jRadioAdmin.setSelected(true);
-        }
-        
-        
+        } 
     }
 
     /**
