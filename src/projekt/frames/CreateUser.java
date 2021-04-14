@@ -40,7 +40,8 @@ public class CreateUser extends javax.swing.JFrame
 		} else {
 			adminStatus = "N";
 		}
-		sqlQuery = "INSERT INTO User (password, eMail, firstName, lastName, adminStatus) VALUES ( '" + password + "','" + email + "','" + firstName + "','" + lastName + "','" + adminStatus + "');";
+		sqlQuery = "INSERT INTO User (password, eMail, firstName, lastName, adminStatus) VALUES "
+                        + "( '" + password + "','" + email + "','" + firstName + "','" + lastName + "','" + adminStatus + "');";
 	}
 
 	private void clearTextFields()
