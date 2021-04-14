@@ -5,19 +5,35 @@
  */
 package projekt.frames;
 
+import projekt.User;
+
 /**
  *
  * @author Amand
  */
 public class PersonalMeetings extends javax.swing.JFrame {
-
+    
+    private int id;
+    private User user;
     /**
      * Creates new form PersonalMeetings
      */
-    public PersonalMeetings() {
+    public PersonalMeetings(int id) {
         initComponents();
+        
+        this.id = id;
+        this.user = new User(this.id); 
+        jbNewMeeting.setVisible(false);
+        adminCheck();
     }
+    
+    private void adminCheck() {
 
+        if (user.getAdmin().equals("J")) {
+            jbNewMeeting.setVisible(true);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,6 +44,7 @@ public class PersonalMeetings extends javax.swing.JFrame {
     private void initComponents() {
 
         jBBack = new javax.swing.JButton();
+        jbNewMeeting = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -38,6 +55,13 @@ public class PersonalMeetings extends javax.swing.JFrame {
             }
         });
 
+        jbNewMeeting.setText("Skapa nytt möte");
+        jbNewMeeting.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNewMeetingActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -45,14 +69,18 @@ public class PersonalMeetings extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jBBack, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(289, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
+                .addComponent(jbNewMeeting)
+                .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(256, Short.MAX_VALUE)
-                .addComponent(jBBack)
-                .addGap(21, 21, 21))
+                .addContainerGap(253, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBBack)
+                    .addComponent(jbNewMeeting))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -62,10 +90,15 @@ public class PersonalMeetings extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jBBackActionPerformed
 
+    private void jbNewMeetingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNewMeetingActionPerformed
+        new NewMeeting().setVisible(true);
+    }//GEN-LAST:event_jbNewMeetingActionPerformed
+
     
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBBack;
+    private javax.swing.JButton jbNewMeeting;
     // End of variables declaration//GEN-END:variables
 }

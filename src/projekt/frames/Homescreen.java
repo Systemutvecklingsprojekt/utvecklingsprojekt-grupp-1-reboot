@@ -180,7 +180,7 @@ public class Homescreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jBInformalActionPerformed
 
     private void jBMeetingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMeetingsActionPerformed
-        new PersonalMeetings().setVisible(true);
+        new PersonalMeetings(id).setVisible(true);
     }//GEN-LAST:event_jBMeetingsActionPerformed
 
     private void jBProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBProfileActionPerformed
