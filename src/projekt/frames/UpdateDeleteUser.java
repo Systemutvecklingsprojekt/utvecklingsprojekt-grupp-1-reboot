@@ -171,8 +171,6 @@ public class UpdateDeleteUser extends javax.swing.JFrame
 			String delMeeting = "Delete from Meeting where UserID =" + tempId;
 			String delMetAt = "Delete from Meeting_Attandence where UserID =" + tempId;
 			String delPost = "Delete from Post where UserID =" + tempId;
-                        String delCom = "Delete from Comments where UserID=" + tempId;
-                        String updatCom = "Update Comments SET UserID =11 where UserID =" + tempId;
 
 			if (idKoll() == false) {
 				return;
@@ -188,7 +186,6 @@ public class UpdateDeleteUser extends javax.swing.JFrame
 						Database.executeUpdate(delUser);
 						Database.executeUpdate(delMetAt);
 						Database.executeUpdate(delMeeting);
-                                                Database.executeUpdate(updatCom);
 
 						JOptionPane.showMessageDialog(null, "Användaren är nu borttagen");
 						new UpdateDeleteUser().setVisible(true);
@@ -200,7 +197,6 @@ public class UpdateDeleteUser extends javax.swing.JFrame
 						Database.executeUpdate(delUser);
 						Database.executeUpdate(delMetAt);
 						Database.executeUpdate(delMeeting);
-                                                Database.executeUpdate(delCom);
 
 						JOptionPane.showMessageDialog(null, "Användaren och dess inlägg är nu borttagna");
 						new UpdateDeleteUser().setVisible(true);
