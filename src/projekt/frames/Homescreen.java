@@ -57,7 +57,7 @@ public class Homescreen extends javax.swing.JFrame {
         jBsearch = new javax.swing.JButton();
         lblWelcome = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jBFormal.setBackground(new java.awt.Color(153, 153, 255));
         jBFormal.setText("Formell blogg");
