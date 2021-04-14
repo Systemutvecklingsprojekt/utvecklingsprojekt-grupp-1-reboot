@@ -186,7 +186,7 @@ public class Profile extends javax.swing.JFrame {
             
             JOptionPane.showMessageDialog(null, "Dina användaruppgifter är nu uppdaterade!");
         } catch (Exception e) {
-            System.out.println("fel");
+            e.printStackTrace();
         }
     }//GEN-LAST:event_changeInfoButtonActionPerformed
 
