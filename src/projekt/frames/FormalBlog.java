@@ -22,7 +22,7 @@ import projekt.Refactor;
  */
 public class FormalBlog extends javax.swing.JFrame
 {
-
+	
 	private javax.swing.JTable jTable2;
 
 	/**
@@ -152,10 +152,17 @@ public class FormalBlog extends javax.swing.JFrame
     private void jBShowPostActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBShowPostActionPerformed
     {//GEN-HEADEREND:event_jBShowPostActionPerformed
 		try {
-			int id = (int) (jTable2.getValueAt(jTable2.getSelectedRow(), 0));
-			new ShowPost(id).setVisible(true);
+			if (user == null) {
+				int id = (int) (jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+				new ShowPost(id).setVisible(true);
+			} else {
+				int id = (int) (jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+				new ShowPost(user, id).setVisible(true);
+			}
+
 		} catch (ArrayIndexOutOfBoundsException e) {
-			JOptionPane.showMessageDialog(null, "Vänligen välj ett inlägg!");
+			JOptionPane.showMessageDialog(null, "Vänligen välj ett inlägg att visa!");
+
 		}
 
 
