@@ -75,11 +75,13 @@ public class Validation {
         
         for(JTextField falt : textFalt){
             if(falt.getText().isEmpty()){
-                JOptionPane.showMessageDialog(null, "Du har l?mnat n?got f?lt tomt!");
+                
                 result = false;
             }
         }
-        
+        if(!result){
+            JOptionPane.showMessageDialog(null, "Du har lämnat något fält tomt!");
+        }
         return result;
     }
     
