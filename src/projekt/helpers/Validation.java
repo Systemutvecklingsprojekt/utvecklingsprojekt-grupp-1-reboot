@@ -23,12 +23,12 @@ import javax.swing.JTextField;
 public class Validation {
     
     
-    public static boolean textFaltHarVarde(JTextField textfield){
+    public static boolean checkTextField(JTextField textfield){
         
         boolean result = true;
         
         if(textfield.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "En eller flera rutor ?r tomma!");
+            JOptionPane.showMessageDialog(null, "En eller flera rutor är tomma!");
             result = false;
         }
         
@@ -47,15 +47,11 @@ public class Validation {
     public static boolean checkPasswordField(JPasswordField passwordField){
         
         boolean result = true;
-        if(!passwordField.getText().isEmpty()){
-            if(passwordField.getText().length() > 6){
-                JOptionPane.showMessageDialog(null, "L?senordet f?r max vara 6 karakt?rer l?ngt!");
+        if(passwordField.getText().isEmpty()){            
+                JOptionPane.showMessageDialog(null, "Något av fälten är tomt!");
                 result = false;
-            } 
-        } else {
-            JOptionPane.showMessageDialog(null, "L?senordsrutan ?r tom!");
-            result = false;
-        }
+             
+        } 
         return result;
     }
     

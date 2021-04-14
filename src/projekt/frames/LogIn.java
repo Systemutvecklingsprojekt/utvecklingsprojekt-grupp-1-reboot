@@ -11,6 +11,7 @@ import projekt.helpers.Database;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import projekt.helpers.Validation;
 
 /**
  *
@@ -111,20 +112,20 @@ public class LogIn extends javax.swing.JFrame {
             String userIDQuery = Database.fetchSingle("SELECT USERID FROM User WHERE EMAIL ='" + eMail + "'");
             String eMailQuery = Database.fetchSingle("SELECT EMAIL FROM User WHERE USERID =" + userIDQuery);
             String passwordQuery = Database.fetchSingle("SELECT PASSWORD FROM User WHERE USERID ="+ userIDQuery);
-            if (eMailQuery == null || passwordQuery == null) {
-                            JOptionPane.showMessageDialog(null, "Du har angivit fel inloggningsuppgifter!");
-                            return;
-                            }
-                else if(eMailQuery.equals(eMail) && passwordQuery.equals(password)){            
-                    int ID = Integer.parseInt(userIDQuery);
-                    new Homescreen(ID).setVisible(true);
-                    this.dispose();  
-              }
-        
-                
+            if (Validation.checkTextField(jTFEmailField)) {
+                if(Validation.checkPasswordField(jPFPasswordField)){
+                    if(eMailQuery.equals(eMail) && passwordQuery.equals(password)){
+                        int ID = Integer.parseInt(userIDQuery);
+                        new Homescreen(ID).setVisible(true);
+                        this.dispose(); 
+                    }
+                }
+            }
         } catch (SQLException ex) {
             Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
             
+        } catch(NullPointerException e){
+            JOptionPane.showMessageDialog(null, "Användarnamn eller lösenord är felaktigt!");
         }    
     }                                           
 
