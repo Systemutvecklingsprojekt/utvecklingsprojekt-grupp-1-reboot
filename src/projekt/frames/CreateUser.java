@@ -5,8 +5,11 @@
  */
 package projekt.frames;
 
+import java.util.ArrayList;
 import projekt.helpers.Database;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import projekt.helpers.Validation;
 
 /**
  *
@@ -16,6 +19,7 @@ public class CreateUser extends javax.swing.JFrame
 {
 
 	private String sqlQuery;
+        private ArrayList<JTextField> textFields;
 
 	/**
 	 * Creates new form CreateUser
@@ -23,6 +27,8 @@ public class CreateUser extends javax.swing.JFrame
 	public CreateUser()
 	{
 		initComponents();
+                textFields = new ArrayList<>();
+                insertFields();
 	}
 
 	/*
@@ -46,11 +52,18 @@ public class CreateUser extends javax.swing.JFrame
 
 	private void clearTextFields()
 	{
-		jTFPassword.setText("");
-		jTFEmail.setText("");
-		jTFFirstName.setText("");
-		jTFLastName.setText("");
+            jTFPassword.setText("");
+            jTFEmail.setText("");
+            jTFFirstName.setText("");
+            jTFLastName.setText("");
 	}
+        
+        private void insertFields(){
+            textFields.add(jTFPassword);
+            textFields.add(jTFEmail);
+            textFields.add(jTFFirstName);
+            textFields.add(jTFLastName);
+        }
 
 	/**
 	 * This method is called from within the constructor to initialize the form.
@@ -201,19 +214,21 @@ public class CreateUser extends javax.swing.JFrame
 
     private void jBSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSaveActionPerformed
 
-		createVariables();
-		try {
-			String sqlEmail = Database.fetchSingle("SELECT eMail FROM User WHERE eMail = '" + jTFEmail.getText() + "';");
-			if (sqlEmail != null) {
-				JOptionPane.showMessageDialog(null, "Denna Email används redan!");
-				return;
-			}
-			Database.executeUpdate(sqlQuery);
-			JOptionPane.showMessageDialog(null, "Användare " + jTFFirstName.getText() + " " + jTFLastName.getText() + " är nu skapad!");
-			clearTextFields();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        if(Validation.multibleTextFieldEmpty(textFields)){
+            createVariables();
+            try {
+                    String sqlEmail = Database.fetchSingle("SELECT eMail FROM User WHERE eMail = '" + jTFEmail.getText() + "';");
+                    if (sqlEmail != null) {
+                            JOptionPane.showMessageDialog(null, "Denna Email används redan!");
+                            return;
+                    }
+                    Database.executeUpdate(sqlQuery);
+                    JOptionPane.showMessageDialog(null, "Användare " + jTFFirstName.getText() + " " + jTFLastName.getText() + " är nu skapad!");
+                    clearTextFields();
+            } catch (Exception e) {
+                    e.printStackTrace();
+            }
+        }
     }//GEN-LAST:event_jBSaveActionPerformed
 
     private void jRBAdminJaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBAdminJaActionPerformed

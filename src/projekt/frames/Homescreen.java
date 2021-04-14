@@ -6,13 +6,6 @@
 package projekt.frames;
 
 import projekt.User;
-import java.sql.ResultSetMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import projekt.helpers.Database;
 
 /**
  *
@@ -57,7 +50,7 @@ public class Homescreen extends javax.swing.JFrame {
         jBsearch = new javax.swing.JButton();
         lblWelcome = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jBFormal.setBackground(new java.awt.Color(153, 153, 255));
         jBFormal.setText("Formell blogg");

@@ -148,6 +148,7 @@ public class FormalBlog extends javax.swing.JFrame {
 
     private void jbCreatePostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCreatePostActionPerformed
         // TODO add your handling code here:
+        this.dispose();
         new MakeFormalPost(user).setVisible(true);
     }//GEN-LAST:event_jbCreatePostActionPerformed
 
