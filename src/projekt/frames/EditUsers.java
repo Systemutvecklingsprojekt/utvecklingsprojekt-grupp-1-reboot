@@ -15,7 +15,6 @@ import projekt.helpers.Validation;
 /**
  *
  * @author Amand
- * @version 21.4.14.14.06
  */
 public class EditUsers extends javax.swing.JFrame {
     
