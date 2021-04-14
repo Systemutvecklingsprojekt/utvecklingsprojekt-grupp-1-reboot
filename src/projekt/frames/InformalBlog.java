@@ -13,7 +13,6 @@ import projekt.User;
 import projekt.helpers.Database;
 import projekt.frames.FormalBlog;
 
-
 /**
  *
  * @author Amand
@@ -25,54 +24,45 @@ public class InformalBlog extends javax.swing.JFrame {
      */
     private User user;
 
+    public InformalBlog(User user) {
 
-    
-    public InformalBlog(User user){
-
-        
         this.user = user;
         initComponents();
-        
-        try{
+
+        try {
             String query = "SELECT  title , timeStamp, description, postID FROM Post";
             String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 2;";
             fillTable(Database.fetchRows(joinQuery));
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-		
-        
     }
-    
-    public InformalBlog(){
+
+    public InformalBlog() {
         initComponents();
         jbCreatePost.setVisible(false);
-        try{
+        try {
             String query = "SELECT  title , timeStamp, description, postID FROM Post";
             String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 2;";
             fillTable(Database.fetchRows(joinQuery));
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    public void fillTable(ResultSet rs)
-	{
-		try {
-                    jTable1 = new JTable (FormalBlog.tableModelBuilder(rs));
-                       
-		} catch(SQLException e) {
-                    e.printStackTrace();
-		}
 
-		
-		jScrollPane1.setViewportView(jTable1);
-		jTable1.setVisible(true);
-		//Kör emot Databasen och hämtar raderna från User
-      }
+    public void fillTable(ResultSet rs) {
+        try {
+            jTable1 = new JTable(FormalBlog.tableModelBuilder(rs));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        jScrollPane1.setViewportView(jTable1);
+        jTable1.setVisible(true);
+        //Kör emot Databasen och hämtar raderna från User
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -178,13 +168,19 @@ public class InformalBlog extends javax.swing.JFrame {
     private void jBShowPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBShowPostActionPerformed
 
         try {
-            int id = (int) (jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-            new ShowPost(id).setVisible(true);
+            if (user == null) {
+                int id = (int) (jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+                new ShowPost(id).setVisible(true);
+            } else {
+                int id = (int) (jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+                new ShowPost(user, id).setVisible(true);
+            }
+
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "Vänligen välj ett inlägg att visa!");
+
         }
     }//GEN-LAST:event_jBShowPostActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
