@@ -11,6 +11,7 @@ import projekt.helpers.Database;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import projekt.User;
+import projekt.helpers.Validation;
 
 /**
  *
@@ -231,38 +232,36 @@ public class MakeFormalPost extends javax.swing.JFrame {
         ArrayList<Integer> tagIds = new ArrayList<>();
         if (chosenTags.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Vänligen välj minst en tagg!");
-            return;
-        }
-        try {
-            insertTagsJosef(chosenTags);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-
-            Database.executeUpdate("INSERT into Post (UserID, timeStamp, title, description, typeID) VALUES (" + userId + ", CURRENT_TIMESTAMP, '" + title + "','" + post + "', 1);");
-            stringPostId = Database.fetchSingle("SELECT MAX(PostID) FROM Post;");
-            for (String tagName : chosenTags) {
-                tagIds.add(Integer.parseInt(Database.fetchSingle("SELECT TagID FROM Tag WHERE TagName = '" + tagName + "';")));
+        } else if(Validation.checkTextField(jTFTitle) && Validation.checkTextArea(jTAPost)){
+            try {
+                insertTagsJosef(chosenTags);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+            try {
+                Database.executeUpdate("INSERT into Post (UserID, timeStamp, title, description, typeID) VALUES (" + userId + ", CURRENT_TIMESTAMP, '" + title + "','" + post + "', 1);");
+                stringPostId = Database.fetchSingle("SELECT MAX(PostID) FROM Post;");
+                for(String tagName : chosenTags) {
+                    tagIds.add(Integer.parseInt(Database.fetchSingle("SELECT TagID FROM Tag WHERE TagName = '" + tagName + "';")));
+                }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("error");
-        }
-        int postId = Integer.parseInt(stringPostId);
-        try {
-            for (Integer tag : tagIds) {
-                Database.executeUpdate("INSERT INTO Post_Tag (PostID, TagID) VALUES (" + postId + ", " + tag + ");");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("error");
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("fel i dela");
-        }
-        JOptionPane.showMessageDialog(null, "Ditt inlägg har publicerats");
-
-        this.dispose();
+            int postId = Integer.parseInt(stringPostId);
+            try {
+                for (Integer tag : tagIds) {
+                    Database.executeUpdate("INSERT INTO Post_Tag (PostID, TagID) VALUES (" + postId + ", " + tag + ");");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("fel i dela");
+            }
+            JOptionPane.showMessageDialog(null, "Ditt inlägg har publicerats");
+            new FormalBlog(user).setVisible(true);
+            this.dispose();
+        } 
     }//GEN-LAST:event_jBUploadActionPerformed
 
     private void jTFNewTagMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFNewTagMouseReleased
@@ -278,6 +277,7 @@ public class MakeFormalPost extends javax.swing.JFrame {
     private void jBBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBackActionPerformed
         // TODO add your handling code here:
         this.dispose();
+        new FormalBlog(user).setVisible(true);
     }//GEN-LAST:event_jBBackActionPerformed
 
     private void insertTagsJosef(ArrayList<String> tagsToCheck) throws SQLException {

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /*
@@ -35,6 +36,15 @@ public class Validation {
         return result;
     }
     
+    public static boolean checkTextArea(JTextArea textArea){
+        boolean result = true;
+        if(textArea.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "En eller flera rutor är tomma!");
+            result = false;
+        }
+        return result;
+    }
+    
     public static boolean checkDate(JTextField textFalt){
         boolean result = true;
         String pattern = "[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]";
@@ -48,8 +58,8 @@ public class Validation {
         
         boolean result = true;
         if(passwordField.getText().isEmpty()){            
-                JOptionPane.showMessageDialog(null, "Något av fälten är tomt!");
-                result = false;
+            JOptionPane.showMessageDialog(null, "Något av fälten är tomt!");
+            result = false;
              
         } 
         return result;
