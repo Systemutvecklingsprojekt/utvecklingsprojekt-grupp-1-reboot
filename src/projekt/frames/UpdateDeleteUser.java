@@ -21,7 +21,6 @@ public class UpdateDeleteUser extends javax.swing.JFrame
 
 	ResultSet rs;
 	private javax.swing.JTable table2;
-	
 
 	/**
 	 * Creates new form UpdateDeleteUser
@@ -47,12 +46,10 @@ public class UpdateDeleteUser extends javax.swing.JFrame
 		try {
 			rs = Database.fetchRows("SELECT * FROM User");
 		} catch (Exception ex) {
-			System.out.println("Databasfel");
+			ex.printStackTrace();
 		}
 
 	}
-
-	
 
 	/**
 	 * This method is called from within the constructor to initialize the form.
@@ -195,7 +192,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame
 						this.dispose();
 
 					} else if (dialog2 == JOptionPane.NO_OPTION) {
-						Database.executeUpdate("DELETE FROM Post_Tag WHERE PostID in (SELECT PostID FROM Post WHERE UserID = "+tempId+")");
+						Database.executeUpdate("DELETE FROM Post_Tag WHERE PostID in (SELECT PostID FROM Post WHERE UserID = " + tempId + ")");
 						Database.executeUpdate(delPost);
 						Database.executeUpdate(delUser);
 						Database.executeUpdate(delMetAt);
