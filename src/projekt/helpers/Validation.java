@@ -75,7 +75,6 @@ public class Validation {
         
         for(JTextField falt : textFalt){
             if(falt.getText().isEmpty()){
-                
                 result = false;
             }
         }

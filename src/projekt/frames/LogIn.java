@@ -114,15 +114,19 @@ public class LogIn extends javax.swing.JFrame {
             String passwordQuery = Database.fetchSingle("SELECT PASSWORD FROM User WHERE USERID ="+ userIDQuery);
             if (Validation.checkTextField(jTFEmailField)) {
                 if(Validation.checkPasswordField(jPFPasswordField)){
-                    if(eMailQuery.equals(eMail) && passwordQuery.equals(password)){
-                        int ID = Integer.parseInt(userIDQuery);
-                        new Homescreen(ID).setVisible(true);
-                        this.dispose(); 
-                    }
+                    if(eMailQuery.equals(eMail)){
+                        if(passwordQuery.equals(password)){
+                            int ID = Integer.parseInt(userIDQuery);
+                            new Homescreen(ID).setVisible(true);
+                            this.dispose(); 
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Användarnamn eller lösenord är felaktigt!");
+                        }
+                    } 
                 }
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(SQLException ex) {
+            System.out.println("error");
             
         } catch(NullPointerException e){
             JOptionPane.showMessageDialog(null, "Användarnamn eller lösenord är felaktigt!");
