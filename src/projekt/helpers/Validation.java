@@ -90,7 +90,7 @@ public class Validation {
             Integer.parseInt(inString);
             
         } catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(null, "Var god ange ett heltal!");
+            JOptionPane.showMessageDialog(null, "Var god ange ett giltigt UserID!");
             result = false;
         }
         return result;
@@ -98,8 +98,8 @@ public class Validation {
     
     public static boolean isStringNull(String text){
         boolean result = true;
-        if(text == null){
-            JOptionPane.showMessageDialog(null, "Din s?kning gav inga tr?ffar.");
+        if(text.equals("")){
+            JOptionPane.showMessageDialog(null, "Din sökning gav inga träffar.");
             result = false;
         }
         return result;

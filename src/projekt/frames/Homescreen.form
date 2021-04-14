@@ -140,9 +140,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtfSearch">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtfSearchActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jBsearch">
       <Properties>

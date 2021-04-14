@@ -7,6 +7,7 @@ package projekt.frames;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import projekt.User;
 import projekt.helpers.Database;
@@ -176,9 +177,12 @@ public class InformalBlog extends javax.swing.JFrame {
 
     private void jBShowPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBShowPostActionPerformed
 
-    int id = (int) (jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-    new ShowPost(id).setVisible(true);
-		
+        try {
+            int id = (int) (jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+            new ShowPost(id).setVisible(true);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Vänligen välj ett inlägg att visa!");
+        }
     }//GEN-LAST:event_jBShowPostActionPerformed
 
 

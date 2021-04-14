@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import projekt.User;
@@ -62,7 +63,7 @@ public class FormalBlog extends javax.swing.JFrame {
         jbCreatePost = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        jBShowPost = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -101,10 +102,10 @@ public class FormalBlog extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Visa inlägg");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jBShowPost.setText("Visa inlägg");
+        jBShowPost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBShowPostActionPerformed(evt);
             }
         });
 
@@ -120,7 +121,7 @@ public class FormalBlog extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jbCreatePost)
                         .addGap(188, 188, 188)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jBShowPost, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(58, Short.MAX_VALUE))
         );
@@ -131,7 +132,7 @@ public class FormalBlog extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
+                    .addComponent(jBShowPost)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jBBack)
                         .addComponent(jbCreatePost)))
@@ -150,14 +151,17 @@ public class FormalBlog extends javax.swing.JFrame {
         new MakeFormalPost(user).setVisible(true);
     }//GEN-LAST:event_jbCreatePostActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
-    {//GEN-HEADEREND:event_jButton1ActionPerformed
-
+    private void jBShowPostActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBShowPostActionPerformed
+    {//GEN-HEADEREND:event_jBShowPostActionPerformed
+        try{
         int id = (int) (jTable2.getValueAt(jTable2.getSelectedRow(), 0));
         new ShowPost(id).setVisible(true);
+        }catch(ArrayIndexOutOfBoundsException e){
+        JOptionPane.showMessageDialog(null,"Vänligen välj ett inlägg!");
+        }
+        
 
-
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jBShowPostActionPerformed
     /*
 	public static void main(String args[])
 	{
@@ -260,7 +264,7 @@ public class FormalBlog extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBBack;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jBShowPost;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbCreatePost;

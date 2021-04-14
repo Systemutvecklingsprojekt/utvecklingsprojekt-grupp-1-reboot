@@ -14,6 +14,7 @@ import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -121,9 +122,12 @@ public class SearchResults extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
-
-        int id = (int) (jTable2.getValueAt(jTable2.getSelectedRow(), 0));
-        new ShowPost(id).setVisible(true);
+        try {
+            int id = (int) (jTable2.getValueAt(jTable2.getSelectedRow(), 0));
+            new ShowPost(id).setVisible(true);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Vänligen välj ett inlägg!");
+        }
 
 
     }//GEN-LAST:event_jButton1ActionPerformed

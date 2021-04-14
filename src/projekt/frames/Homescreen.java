@@ -100,12 +100,6 @@ public class Homescreen extends javax.swing.JFrame {
 
         lblSearch.setText("Sök på nyckelord i inlägg");
 
-        jtfSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfSearchActionPerformed(evt);
-            }
-        });
-
         jBsearch.setText("Sök");
         jBsearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,10 +185,6 @@ public class Homescreen extends javax.swing.JFrame {
 
         new ManageUsers().setVisible(true);
     }//GEN-LAST:event_jBAdminUsersActionPerformed
-
-    private void jtfSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfSearchActionPerformed
 
     private void jBsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsearchActionPerformed
 
