@@ -156,7 +156,7 @@ public class FormalBlog extends javax.swing.JFrame {
     {//GEN-HEADEREND:event_jBShowPostActionPerformed
         try{
         int id = (int) (jTable2.getValueAt(jTable2.getSelectedRow(), 0));
-        new ShowPost(id).setVisible(true);
+        new ShowPost(user,id).setVisible(true);
         }catch(ArrayIndexOutOfBoundsException e){
         JOptionPane.showMessageDialog(null,"Vänligen välj ett inlägg!");
         }
