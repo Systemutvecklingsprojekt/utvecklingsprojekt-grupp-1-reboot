@@ -26,36 +26,47 @@
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
-                              <Component id="lbinfo" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="lblAdmin" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jRadioAdmin" min="-2" pref="93" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                              <Component id="jBSave" min="-2" pref="150" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="lblFirstName" min="-2" pref="60" max="-2" attributes="0"/>
-                                  <Component id="lblEfterNamn" alignment="0" min="-2" pref="77" max="-2" attributes="0"/>
-                                  <Component id="lblPassword" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
-                                  <Component id="lblEmail" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
-                                  <Component id="jRadioAdmin" alignment="0" min="-2" pref="93" max="-2" attributes="0"/>
-                                  <Component id="lblAdmin" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jBSave" alignment="0" pref="150" max="32767" attributes="0"/>
-                                  <Component id="jtfFirstName" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jtfLastName" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jtfEmail" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jtfPassword" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="lblFirstName" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="jtfFirstName" min="-2" pref="150" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="lblPassword" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="jtfPassword" min="-2" pref="150" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="lblEmail" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                                      <Component id="jtfEmail" min="-2" pref="150" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="lblEfterNamn" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="jtfLastName" min="-2" pref="150" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
+                          <Component id="jBBack" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="197" max="32767" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="jBBack" min="-2" pref="90" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
+                      <Component id="lbinfo" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace pref="123" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -63,32 +74,37 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="lbinfo" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="lblFirstName" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jtfFirstName" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="lblEfterNamn" min="-2" pref="23" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jtfLastName" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="lblEmail" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jtfEmail" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="lblPassword" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jtfPassword" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="lblAdmin" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jRadioAdmin" min="-2" max="-2" attributes="0"/>
+              <Component id="lbinfo" min="-2" pref="31" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jBSave" min="-2" pref="35" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jtfFirstName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFirstName" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblEfterNamn" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="jtfLastName" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jtfEmail" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblEmail" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jtfPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblAdmin" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jRadioAdmin" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <Component id="jBSave" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="40" max="32767" attributes="0"/>
               <Component id="jBBack" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -96,6 +112,9 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="jBBack">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Tillbaka"/>
       </Properties>
       <Events>
@@ -104,6 +123,9 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lbinfo">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="18" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Redigera anv&#xe4;ndare:"/>
       </Properties>
     </Component>
@@ -126,12 +148,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblPassword">
       <Properties>
-        <Property name="text" type="java.lang.String" value="L&#xf6;senord"/>
+        <Property name="text" type="java.lang.String" value="L&#xf6;senord:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblAdmin">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Admin Status"/>
+        <Property name="text" type="java.lang.String" value="Adminstatus:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblEmail">
@@ -153,6 +175,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBSave">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Spara &#xc4;ndringar"/>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[100, 25]"/>

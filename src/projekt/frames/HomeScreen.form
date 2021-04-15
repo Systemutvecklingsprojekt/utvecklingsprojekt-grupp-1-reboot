@@ -26,16 +26,7 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jtfSearch" min="-2" pref="169" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                      <Component id="jBsearch" min="-2" pref="62" max="-2" attributes="0"/>
-                  </Group>
                   <Component id="lblSearch" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                      <Component id="lblWelcome" min="-2" pref="261" max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jBFormal" min="-2" pref="169" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -47,17 +38,27 @@
                       <Component id="jBMeetings" min="-2" pref="169" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jBAdminUsers" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jtfSearch" min="-2" pref="169" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <Component id="jBsearch" min="-2" pref="62" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="lblWelcome" min="-2" pref="146" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblWelcome" min="-2" pref="21" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+              <Component id="lblWelcome" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="lblSearch" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -85,7 +86,7 @@
     <Component class="javax.swing.JButton" name="jBFormal">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="99" red="99" type="rgb"/>
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Formell blogg"/>
       </Properties>
@@ -96,7 +97,7 @@
     <Component class="javax.swing.JButton" name="jBInformal">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="cc" green="99" red="ff" type="rgb"/>
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Informell blogg"/>
       </Properties>
@@ -106,6 +107,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBMeetings">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="M&#xf6;ten"/>
       </Properties>
       <Events>
@@ -115,9 +119,10 @@
     <Component class="javax.swing.JButton" name="jBProfile">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="4f" green="ff" red="54" type="rgb"/>
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Profil"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBProfileActionPerformed"/>
@@ -126,7 +131,7 @@
     <Component class="javax.swing.JButton" name="jBAdminUsers">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="32" green="32" red="ff" type="rgb"/>
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Hantera anv&#xe4;ndare"/>
       </Properties>
@@ -143,6 +148,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBsearch">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="S&#xf6;k"/>
       </Properties>
       <Events>
@@ -151,6 +159,9 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblWelcome">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="24" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="V&#xc4;LKOMMEN"/>
       </Properties>
     </Component>

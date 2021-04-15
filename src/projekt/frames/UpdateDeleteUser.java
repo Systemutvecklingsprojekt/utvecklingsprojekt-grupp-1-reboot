@@ -88,6 +88,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame
         });
         jScrollPane1.setViewportView(jTable1);
 
+        deleteButton.setBackground(new java.awt.Color(204, 204, 255));
         deleteButton.setText("Ta bort");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,6 +96,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame
             }
         });
 
+        changeInformationButton.setBackground(new java.awt.Color(204, 204, 255));
         changeInformationButton.setText("Ändra information");
         changeInformationButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,6 +112,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame
 
         jLabel1.setText("Vänlige ange UserID på användaren du vill ändra eller ta bort");
 
+        jBBack.setBackground(new java.awt.Color(204, 204, 255));
         jBBack.setText("Tillbaka");
         jBBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,9 +158,9 @@ public class UpdateDeleteUser extends javax.swing.JFrame
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtfID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(changeInformationButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jBBack)
-                .addContainerGap())
+                .addGap(21, 21, 21))
         );
 
         pack();

@@ -68,9 +68,9 @@
                   <Component id="jtfID" min="-2" max="-2" attributes="0"/>
                   <Component id="changeInformationButton" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="11" max="32767" attributes="0"/>
+              <EmptySpace pref="24" max="32767" attributes="0"/>
               <Component id="jBBack" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -135,6 +135,9 @@
     </Container>
     <Component class="javax.swing.JButton" name="deleteButton">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Ta bort"/>
       </Properties>
       <Events>
@@ -143,6 +146,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="changeInformationButton">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="&#xc4;ndra information"/>
       </Properties>
       <Events>
@@ -161,6 +167,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBBack">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Tillbaka"/>
       </Properties>
       <Events>
