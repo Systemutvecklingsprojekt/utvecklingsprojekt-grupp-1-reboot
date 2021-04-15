@@ -9,7 +9,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Vector;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import projekt.frames.ShowPost;
 
 /**
  *
@@ -17,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Refactor
 {
+
 	public static DefaultTableModel tableModelBuilder(ResultSet rs) throws SQLException
 	{
 		ResultSetMetaData metaData = rs.getMetaData();
@@ -40,5 +43,32 @@ public class Refactor
 
 		return new DefaultTableModel(data, columnNames);
 	}
-	
+
+	public static int getTableValueFirstColumn(JTable table) throws ArrayIndexOutOfBoundsException
+	{
+		return (int) table.getValueAt(table.getSelectedRow(), 0);
+	}
+
+	public static void showPostByPostID(User user, JTable table) throws ArrayIndexOutOfBoundsException
+	{
+		if (user == null) {
+			int id = Refactor.getTableValueFirstColumn(table);
+			new ShowPost(id).setVisible(true);
+		} else {
+			int id = Refactor.getTableValueFirstColumn(table);
+			new ShowPost(user, id).setVisible(true);
+		}
+	}
+
+	public static JTable populateTable(ResultSet resultSet)
+	{
+		JTable table = null;
+		try {
+			table = new JTable(Refactor.tableModelBuilder(resultSet));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return table;
+	}
+
 }
