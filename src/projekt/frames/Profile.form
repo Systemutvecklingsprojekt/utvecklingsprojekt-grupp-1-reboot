@@ -56,7 +56,7 @@
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
-                      <Component id="meetingsButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="jbCalender" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -85,7 +85,7 @@
               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jBBack" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="meetingsButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbCalender" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
           </Group>
@@ -141,12 +141,12 @@
         <Property name="text" type="java.lang.String" value="V&#xe4;lkommen till din profil!"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="meetingsButton">
+    <Component class="javax.swing.JButton" name="jbCalender">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Mina m&#xf6;ten"/>
+        <Property name="text" type="java.lang.String" value="Kalender"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="meetingsButtonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbCalenderActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -53,7 +53,7 @@ public class Profile extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        meetingsButton = new javax.swing.JButton();
+        jbCalender = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -91,10 +91,10 @@ public class Profile extends javax.swing.JFrame {
 
         jLabel5.setText("Välkommen till din profil!");
 
-        meetingsButton.setText("Mina möten");
-        meetingsButton.addActionListener(new java.awt.event.ActionListener() {
+        jbCalender.setText("Kalender");
+        jbCalender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                meetingsButtonActionPerformed(evt);
+                jbCalenderActionPerformed(evt);
             }
         });
 
@@ -128,7 +128,7 @@ public class Profile extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(jtfPassword)))
                         .addGap(91, 91, 91)
-                        .addComponent(meetingsButton)))
+                        .addComponent(jbCalender)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -152,7 +152,7 @@ public class Profile extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBBack)
-                    .addComponent(meetingsButton))
+                    .addComponent(jbCalender))
                 .addGap(19, 19, 19))
         );
 
@@ -188,9 +188,9 @@ public class Profile extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_changeInfoButtonActionPerformed
 
-    private void meetingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meetingsButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_meetingsButtonActionPerformed
+    private void jbCalenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCalenderActionPerformed
+        new Calendar().setVisible(true);
+    }//GEN-LAST:event_jbCalenderActionPerformed
 
     private void jtfPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfPasswordActionPerformed
         // TODO add your handling code here:
@@ -210,8 +210,8 @@ public class Profile extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JButton jbCalender;
     private javax.swing.JTextField jtfEmail;
     private javax.swing.JTextField jtfPassword;
-    private javax.swing.JButton meetingsButton;
     // End of variables declaration//GEN-END:variables
 }
