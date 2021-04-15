@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import projekt.helpers.Validation;
 
+
 /**
  *
  * @author Amand
@@ -20,6 +21,7 @@ public class CreateUser extends javax.swing.JFrame
 
 	private String sqlQuery;
         private ArrayList<JTextField> textFields;
+       
 
 	/**
 	 * Creates new form CreateUser
@@ -222,6 +224,9 @@ public class CreateUser extends javax.swing.JFrame
                             JOptionPane.showMessageDialog(null, "Denna Email används redan!");
                             return;
                     }
+                    
+                    
+                    
                     Database.executeUpdate(sqlQuery);
                     JOptionPane.showMessageDialog(null, "Användare " + jTFFirstName.getText() + " " + jTFLastName.getText() + " är nu skapad!");
                     clearTextFields();
