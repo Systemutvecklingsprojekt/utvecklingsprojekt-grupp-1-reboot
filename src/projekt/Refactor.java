@@ -20,6 +20,11 @@ import projekt.frames.ShowPost;
 public class Refactor
 {
 
+	private static String capitalize(final String line)
+	{
+		return Character.toUpperCase(line.charAt(0)) + line.substring(1);
+	}
+
 	public static DefaultTableModel tableModelBuilder(ResultSet rs) throws SQLException
 	{
 		ResultSetMetaData metaData = rs.getMetaData();
@@ -28,7 +33,13 @@ public class Refactor
 		Vector<String> columnNames = new Vector<String>();
 		int columnCount = metaData.getColumnCount();
 		for (int column = 1; column <= columnCount; column++) {
-			columnNames.add(metaData.getColumnName(column));
+			String header = metaData.getColumnName(column);
+			/*
+                    Först tar vi bort eventuella siffror, sedan lägger vi in ett whitespace framför kapitaliserade karaktärer
+                    som inte är den första karaktären.
+			 */
+			String refactoredHeader = header.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2");
+			columnNames.add(capitalize(refactoredHeader));
 		}
 
 		// data of the table
