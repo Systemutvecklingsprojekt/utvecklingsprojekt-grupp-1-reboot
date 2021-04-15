@@ -58,6 +58,7 @@ public final class FormalBlog extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jBBack.setBackground(new java.awt.Color(204, 204, 255));
         jBBack.setText("Tillbaka");
         jBBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,6 +66,7 @@ public final class FormalBlog extends javax.swing.JFrame
             }
         });
 
+        jbCreatePost.setBackground(new java.awt.Color(204, 204, 255));
         jbCreatePost.setText("Skapa inlägg");
         jbCreatePost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,6 +95,7 @@ public final class FormalBlog extends javax.swing.JFrame
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jBShowPost.setBackground(new java.awt.Color(204, 204, 255));
         jBShowPost.setText("Visa inlägg");
         jBShowPost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,9 +112,9 @@ public final class FormalBlog extends javax.swing.JFrame
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jBBack, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbCreatePost)
                         .addGap(188, 188, 188)
+                        .addComponent(jbCreatePost)
+                        .addGap(18, 18, 18)
                         .addComponent(jBShowPost, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(58, Short.MAX_VALUE))
@@ -123,11 +126,11 @@ public final class FormalBlog extends javax.swing.JFrame
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBShowPost)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jBBack)
-                        .addComponent(jbCreatePost)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                        .addComponent(jBShowPost)
+                        .addComponent(jbCreatePost))
+                    .addComponent(jBBack))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();

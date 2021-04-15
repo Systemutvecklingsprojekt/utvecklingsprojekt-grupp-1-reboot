@@ -36,7 +36,7 @@
                       <Component id="jScrollPane1" min="-2" pref="245" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       <Component id="jbBack" min="-2" pref="84" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -89,6 +89,9 @@
     </Container>
     <Component class="javax.swing.JButton" name="jbBack">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Tillbaka"/>
       </Properties>
       <Events>
