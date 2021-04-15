@@ -5,7 +5,6 @@
  */
 package projekt.frames;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import projekt.helpers.Database;
 
@@ -14,6 +13,7 @@ import projekt.helpers.Database;
  * @author anton
  */
 public class ShowComment extends javax.swing.JFrame {
+
     int id;
 
     /**
@@ -23,27 +23,25 @@ public class ShowComment extends javax.swing.JFrame {
         initComponents();
         this.id = id;
         fillComment(id);
-        
-        
+
     }
-    
+
     public void fillComment(int id) {
-        
-        
+
         try {
             String firstName = Database.fetchSingle("Select firstName from User where UserID IN (Select UserID from Comments where CommentID =" + id + ")");
             String lastName = Database.fetchSingle("Select lastName from User where UserID IN (Select UserID from Comments where CommentID =" + id + ")");
-            jLblForfattare.setText("Författare : " + firstName + " " + lastName );
+            jLblForfattare.setText("Författare : " + firstName + " " + lastName);
             String timeStamp = Database.fetchSingle("Select timeStamp FROM Comments where CommentID=" + id);
             jLblTime.setText(timeStamp);
             jTextArea1.setText(Database.fetchSingle("Select Text from Comments where CommentID=" + id));
             jTextArea1.setEditable(false);
-                     
+
         } catch (SQLException e) {
             System.out.println("?");
-            
+
         }
-        
+
     }
 
     /**
@@ -118,7 +116,6 @@ public class ShowComment extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jbBackActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLblForfattare;

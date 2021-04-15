@@ -6,8 +6,6 @@
 package projekt.frames;
 
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import projekt.User;
 import projekt.helpers.Database;
@@ -17,15 +15,16 @@ import projekt.helpers.Database;
  * @author anton
  */
 public class NewComment extends javax.swing.JFrame {
-    
+
     private User user;
     private int postId;
+
     /**
      * Creates new form NewComment
      */
     public NewComment(User user, int postId) {
         initComponents();
-        
+
         this.user = user;
         this.postId = postId;
     }
@@ -107,7 +106,7 @@ public class NewComment extends javax.swing.JFrame {
         int userId = user.getUserID();
         System.out.println(comment + " " + userId + " " + postId);
         String query = "INSERT INTO Comments (UserID, PostID, Text) VALUES(" + userId + ", " + postId + ",'" + comment + "')";
-        
+
         try {
             Database.executeUpdate(query);
         } catch (SQLException ex) {
@@ -117,7 +116,6 @@ public class NewComment extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jbPublishCommentActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbBack;
