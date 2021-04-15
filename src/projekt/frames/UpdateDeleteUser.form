@@ -35,10 +35,7 @@
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jtfID" max="32767" attributes="0"/>
-                                  <Component id="jLabel1" pref="281" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="jLabel1" pref="281" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="deleteButton" max="32767" attributes="0"/>
@@ -64,10 +61,7 @@
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jtfID" min="-2" max="-2" attributes="0"/>
-                  <Component id="changeInformationButton" alignment="0" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="changeInformationButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="24" max="32767" attributes="0"/>
               <Component id="jBBack" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
@@ -155,14 +149,9 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeInformationButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="jtfID">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtfIDActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="V&#xe4;nlige ange UserID p&#xe5; anv&#xe4;ndaren du vill &#xe4;ndra eller ta bort"/>
+        <Property name="text" type="java.lang.String" value="V&#xe4;nligen marker en anv&#xe4;ndare du vill ta bort eller &#xe4;ndra."/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jBBack">
