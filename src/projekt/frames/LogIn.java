@@ -117,7 +117,7 @@ public class LogIn extends javax.swing.JFrame {
                     if(eMailQuery.equals(eMail)){
                         if(passwordQuery.equals(password)){
                             int ID = Integer.parseInt(userIDQuery);
-                            new Homescreen(ID).setVisible(true);
+                            new HomeScreen(ID).setVisible(true);
                             this.dispose(); 
                         } else {
                             JOptionPane.showMessageDialog(null, "Användarnamn eller lösenord är felaktigt!");
