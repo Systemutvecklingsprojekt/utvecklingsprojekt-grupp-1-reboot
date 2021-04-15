@@ -139,5 +139,14 @@ public class Validation {
         return resultat;
     }
     
+    public static boolean emailVerification(JTextField textField){
+        boolean result = true;
+        
+        if(!textField.getText().matches("[a-zA-Z@.]*")){
+            result = false;
+        }
+        return result;
+    }
+    
 }
 
