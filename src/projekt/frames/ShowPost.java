@@ -212,7 +212,7 @@ public class ShowPost extends javax.swing.JFrame {
     }//GEN-LAST:event_jbShowCommentsActionPerformed
 
     private void jbNewCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNewCommentActionPerformed
-        // TODO add your handling code here:
+        new NewComment(user, id).setVisible(true);
     }//GEN-LAST:event_jbNewCommentActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

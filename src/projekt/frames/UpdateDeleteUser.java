@@ -171,7 +171,9 @@ public class UpdateDeleteUser extends javax.swing.JFrame
 			String delMeeting = "Delete from Meeting where UserID =" + tempId;
 			String delMetAt = "Delete from Meeting_Attandence where UserID =" + tempId;
 			String delPost = "Delete from Post where UserID =" + tempId;
-
+                        String delCom = "Delete from Comments where UserID =" + tempId;
+                        String updatCom = "Update Comments Set UserID = 11 Where UserID = " + tempId;
+                        
 			if (idKoll() == false) {
 				return;
 			}
@@ -183,9 +185,10 @@ public class UpdateDeleteUser extends javax.swing.JFrame
 
 					if (dialog2 == JOptionPane.YES_OPTION) {
 						Database.executeUpdate(updatePost);//set posts ownership to deleted user
-						Database.executeUpdate(delUser);
-						Database.executeUpdate(delMetAt);
+                                                Database.executeUpdate(updatCom);
+                                                Database.executeUpdate(delMetAt);
 						Database.executeUpdate(delMeeting);
+						Database.executeUpdate(delUser);
 
 						JOptionPane.showMessageDialog(null, "Användaren är nu borttagen");
 						new UpdateDeleteUser().setVisible(true);
@@ -193,10 +196,12 @@ public class UpdateDeleteUser extends javax.swing.JFrame
 
 					} else if (dialog2 == JOptionPane.NO_OPTION) {
 						Database.executeUpdate("DELETE FROM Post_Tag WHERE PostID in (SELECT PostID FROM Post WHERE UserID = " + tempId + ")");
-						Database.executeUpdate(delPost);
-						Database.executeUpdate(delUser);
-						Database.executeUpdate(delMetAt);
+                                                Database.executeUpdate(delCom);
+                                                Database.executeUpdate(delPost);
+                                                Database.executeUpdate(delMetAt);
 						Database.executeUpdate(delMeeting);
+						Database.executeUpdate(delUser);
+						
 
 						JOptionPane.showMessageDialog(null, "Användaren och dess inlägg är nu borttagna");
 						new UpdateDeleteUser().setVisible(true);

@@ -5,17 +5,28 @@
  */
 package projekt.frames;
 
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import projekt.User;
+import projekt.helpers.Database;
+
 /**
  *
  * @author anton
  */
 public class NewComment extends javax.swing.JFrame {
 
+    private User user;
+    private int postId;
+
     /**
      * Creates new form NewComment
      */
-    public NewComment() {
+    public NewComment(User user, int postId) {
         initComponents();
+
+        this.user = user;
+        this.postId = postId;
     }
 
     /**
@@ -27,57 +38,88 @@ public class NewComment extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jtfComment = new javax.swing.JTextField();
+        jbPublishComment = new javax.swing.JButton();
+        jbBack = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jtfComment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfCommentActionPerformed(evt);
+            }
+        });
+
+        jbPublishComment.setText("Publicera kommentar");
+        jbPublishComment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbPublishCommentActionPerformed(evt);
+            }
+        });
+
+        jbBack.setText("Tillbaka");
+        jbBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jbBack)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbPublishComment))
+                    .addComponent(jtfComment, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jtfComment, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbBack)
+                    .addComponent(jbPublishComment))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewComment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewComment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewComment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewComment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jtfCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCommentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfCommentActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new NewComment().setVisible(true);
-            }
-        });
-    }
+    private void jbBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBackActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jbBackActionPerformed
+
+    private void jbPublishCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPublishCommentActionPerformed
+        String comment = jtfComment.getText();
+        int userId = user.getUserID();
+        System.out.println(comment + " " + userId + " " + postId);
+        String query = "INSERT INTO Comments (UserID, PostID, Text) VALUES(" + userId + ", " + postId + ",'" + comment + "')";
+
+        try {
+            Database.executeUpdate(query);
+        } catch (SQLException ex) {
+            System.out.println(query);
+        }
+        JOptionPane.showMessageDialog(null, "Kommentar är nu tillagd!");
+        this.dispose();
+    }//GEN-LAST:event_jbPublishCommentActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jbBack;
+    private javax.swing.JButton jbPublishComment;
+    private javax.swing.JTextField jtfComment;
     // End of variables declaration//GEN-END:variables
 }
