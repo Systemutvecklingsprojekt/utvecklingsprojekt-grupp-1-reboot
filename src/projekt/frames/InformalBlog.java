@@ -32,13 +32,14 @@ public class InformalBlog extends javax.swing.JFrame
 		initComponents();
 
 		try {
-			String query = "SELECT  title , timeStamp, description, postID FROM Post";
+
 			String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 2;";
-			fillTable(Database.fetchRows(joinQuery));
+			jTable1 = Refactor.populateTable(Database.fetchRows(joinQuery));
+//			fillTable(Database.fetchRows(joinQuery));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		showTable();
 	}
 
 	public InformalBlog()
@@ -46,26 +47,19 @@ public class InformalBlog extends javax.swing.JFrame
 		initComponents();
 		jbCreatePost.setVisible(false);
 		try {
-			String query = "SELECT  title , timeStamp, description, postID FROM Post";
 			String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 2;";
-			fillTable(Database.fetchRows(joinQuery));
+//			fillTable(Database.fetchRows(joinQuery));
+			jTable1 = Refactor.populateTable(Database.fetchRows(joinQuery));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		showTable();
 	}
 
-	public void fillTable(ResultSet rs)
+	public void showTable()
 	{
-		try {
-			jTable1 = new JTable(Refactor.tableModelBuilder(rs));
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
 		jScrollPane1.setViewportView(jTable1);
 		jTable1.setVisible(true);
-		//Kör emot Databasen och hämtar raderna från User
 	}
 
 	/**
@@ -173,13 +167,7 @@ public class InformalBlog extends javax.swing.JFrame
     private void jBShowPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBShowPostActionPerformed
 
 		try {
-			if (user == null) {
-				int id = (int) (jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-				new ShowPost(id).setVisible(true);
-			} else {
-				int id = (int) (jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-				new ShowPost(user, id).setVisible(true);
-			}
+			Refactor.showPostByPostID(user, jTable1);
 
 		} catch (ArrayIndexOutOfBoundsException e) {
 			JOptionPane.showMessageDialog(null, "Vänligen välj ett inlägg att visa!");
