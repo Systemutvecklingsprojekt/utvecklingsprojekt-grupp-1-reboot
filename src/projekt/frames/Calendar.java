@@ -5,7 +5,11 @@
  */
 package projekt.frames;
 
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import projekt.helpers.Database;
+import java.sql.ResultSet;
 
 /**
  *
@@ -32,7 +36,6 @@ public class Calendar extends javax.swing.JFrame {
         jBBack = new javax.swing.JButton();
         jBChooseDate = new javax.swing.JButton();
         jCalendar1 = new com.toedter.calendar.JCalendar();
-        jBSQL = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,40 +48,29 @@ public class Calendar extends javax.swing.JFrame {
             }
         });
 
-        jBSQL.setText("SQL");
-        jBSQL.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBSQLActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jCalendar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jBBack)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(462, 462, 462)
                 .addComponent(jBChooseDate)
-                .addGap(28, 28, 28))
-            .addComponent(jCalendar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(306, 306, 306)
-                .addComponent(jBSQL)
-                .addContainerGap(378, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBBack)
                     .addComponent(jBChooseDate))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBSQL)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -87,20 +79,27 @@ public class Calendar extends javax.swing.JFrame {
     private void jBChooseDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBChooseDateActionPerformed
 
         Date day = jCalendar1.getDate();
-         
-       
-      
-        ArrayList <Date> dagar = new ArrayList <>();
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        String date1 = format1.format(day);
+        
+        
+        String sqlQuery = ("SELECT MeetingID from Meeting where Date = '" + date1 + "'");
+//        System.out.println(date1);
+//        System.out.println(sqlQuery);
+        try{
+        ResultSet MeetingID = Database.fetchRows(sqlQuery);
+        
+        new CurrentMeeting(date1).setVisible(true);
+        }
+        catch(SQLException e){
+        e.printStackTrace();
+        System.out.println("fel i dela");
+        }
+        
         
         
 
     }//GEN-LAST:event_jBChooseDateActionPerformed
-
-    private void jBSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSQLActionPerformed
-
-       
-
-    }//GEN-LAST:event_jBSQLActionPerformed
 
     /**
      * @param args the command line arguments
@@ -141,7 +140,6 @@ public class Calendar extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBBack;
     private javax.swing.JButton jBChooseDate;
-    private javax.swing.JToggleButton jBSQL;
     private com.toedter.calendar.JCalendar jCalendar1;
     // End of variables declaration//GEN-END:variables
 }
