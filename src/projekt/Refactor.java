@@ -19,7 +19,7 @@ import projekt.frames.ShowPost;
  */
 public class Refactor
 {
-<<<<<<< HEAD
+
 
 	private static String capitalize(final String line)
 	{
@@ -27,13 +27,7 @@ public class Refactor
 	}
 
 	public static DefaultTableModel tableModelBuilder(ResultSet rs) throws SQLException
-=======
-	
-    private static String capitalize(final String line){
-        return Character.toUpperCase(line.charAt(0)) + line.substring(1);
-    }
-    public static DefaultTableModel tableModelBuilder(ResultSet rs) throws SQLException
->>>>>>> 0e8f34f4ebe232039b44aa8dc300aa6d67cc7ac9
+
 	{
 		ResultSetMetaData metaData = rs.getMetaData();
 
@@ -41,15 +35,7 @@ public class Refactor
 		Vector<String> columnNames = new Vector<String>();
 		int columnCount = metaData.getColumnCount();
 		for (int column = 1; column <= columnCount; column++) {
-<<<<<<< HEAD
-			String header = metaData.getColumnName(column);
-			/*
-                    Först tar vi bort eventuella siffror, sedan lägger vi in ett whitespace framför kapitaliserade karaktärer
-                    som inte är den första karaktären.
-			 */
-			String refactoredHeader = header.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2");
-			columnNames.add(capitalize(refactoredHeader));
-=======
+
                     String header = metaData.getColumnName(column);
                     /*
                     Först tar vi bort eventuella siffror, sedan lägger vi in ett whitespace framför kapitaliserade karaktärer
@@ -57,7 +43,6 @@ public class Refactor
                     */
                     String refactoredHeader = header.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2");
                     columnNames.add(capitalize(refactoredHeader));
->>>>>>> 0e8f34f4ebe232039b44aa8dc300aa6d67cc7ac9
 		}
 
 		// data of the table
