@@ -8,6 +8,7 @@ package projekt.frames;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import projekt.Refactor;
 import projekt.frames.Calendar;
@@ -117,7 +118,15 @@ public class CurrentMeeting extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBSeeMeetingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSeeMeetingActionPerformed
-        // TODO add your handling code here:
+        try {
+
+            int id = (int) (jTMeeting.getValueAt(jTMeeting.getSelectedRow(), 0));
+            new ShowMeeting(id).setVisible(true);
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Vänligen välj ett möte att visa!");
+
+        }
     }//GEN-LAST:event_jBSeeMeetingActionPerformed
 
     /**
