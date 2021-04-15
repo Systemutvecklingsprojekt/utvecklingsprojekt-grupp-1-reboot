@@ -35,7 +35,6 @@ public class InformalBlog extends javax.swing.JFrame
 
 			String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 2;";
 			jTable1 = Refactor.populateTable(Database.fetchRows(joinQuery));
-//			fillTable(Database.fetchRows(joinQuery));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -48,7 +47,6 @@ public class InformalBlog extends javax.swing.JFrame
 		jbCreatePost.setVisible(false);
 		try {
 			String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 2;";
-//			fillTable(Database.fetchRows(joinQuery));
 			jTable1 = Refactor.populateTable(Database.fetchRows(joinQuery));
 		} catch (SQLException e) {
 			e.printStackTrace();
