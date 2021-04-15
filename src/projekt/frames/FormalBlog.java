@@ -7,12 +7,9 @@ package projekt.frames;
 
 import projekt.helpers.Database;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import projekt.User;
 import projekt.Refactor;
 
@@ -20,30 +17,26 @@ import projekt.Refactor;
  *
  * @author Amand
  */
-public class FormalBlog extends javax.swing.JFrame
+public final class FormalBlog extends javax.swing.JFrame
 {
-	
-	private javax.swing.JTable jTable2;
 
-	/**
-	 * Creates new form FormellBlogg
-	 */
+	private javax.swing.JTable jTable2;
 	private User user;
 
 	public FormalBlog(User user)
 	{
 
 		this.user = user;
-		String query = "SELECT  title , timeStamp, description, postID FROM Post";
 		String joinQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 1;";
 		initComponents();
 
 		try {
-			fillTable(Database.fetchRows(joinQuery));
+			jTable2 = Refactor.populateTable(Database.fetchRows(joinQuery));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		//jTable2.isCellEditable(3,3);
+		jScrollPane1.setViewportView(jTable2);
+		jTable2.setVisible(true);
 
 	}
 
@@ -144,44 +137,22 @@ public class FormalBlog extends javax.swing.JFrame
     }//GEN-LAST:event_jBBackActionPerformed
 
     private void jbCreatePostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCreatePostActionPerformed
-		// TODO add your handling code here:
 		this.dispose();
 		new MakeFormalPost(user).setVisible(true);
     }//GEN-LAST:event_jbCreatePostActionPerformed
 
+
     private void jBShowPostActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBShowPostActionPerformed
     {//GEN-HEADEREND:event_jBShowPostActionPerformed
 		try {
-			if (user == null) {
-				int id = (int) (jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-				new ShowPost(id).setVisible(true);
-			} else {
-				int id = (int) (jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-				new ShowPost(user, id).setVisible(true);
-			}
+			Refactor.showPostByPostID(user, jTable2);
 
 		} catch (ArrayIndexOutOfBoundsException e) {
 			JOptionPane.showMessageDialog(null, "Vänligen välj ett inlägg att visa!");
 
 		}
 
-
     }//GEN-LAST:event_jBShowPostActionPerformed
-
-	public void fillTable(ResultSet rs)
-	{
-		try {
-			jTable2 = new JTable(Refactor.tableModelBuilder(rs));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		jScrollPane1.setViewportView(jTable2);
-		jTable2.setVisible(true);
-		//Kör emot Databasen och hämtar raderna från User
-//       
-	}
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBBack;
