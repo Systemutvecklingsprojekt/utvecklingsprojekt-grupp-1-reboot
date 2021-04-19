@@ -24,15 +24,10 @@ public class PersonalMeetings extends javax.swing.JFrame {
         this.id = id;
         this.user = new User(this.id); 
         jbNewMeeting.setVisible(false);
-        adminCheck();
+        
     }
     
-    private void adminCheck() {
 
-        if (user.getAdmin().equals("J")) {
-            jbNewMeeting.setVisible(true);
-        }
-    }
     
     /**
      * This method is called from within the constructor to initialize the form.
