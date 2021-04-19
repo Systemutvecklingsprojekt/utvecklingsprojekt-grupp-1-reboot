@@ -135,7 +135,7 @@
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="cc" red="cc" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Hantera anv&#xe4;ndare"/>
+        <Property name="text" type="java.lang.String" value="Hantera anv&#xe4;ndare och inl&#xe4;gg"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBAdminUsersActionPerformed"/>
