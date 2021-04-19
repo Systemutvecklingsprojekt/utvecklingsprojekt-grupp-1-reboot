@@ -21,7 +21,6 @@ import projekt.frames.ShowPost;
 public class Refactor
 {
 
-
 	private static String capitalize(final String line)
 	{
 		return Character.toUpperCase(line.charAt(0)) + line.substring(1);
@@ -37,13 +36,13 @@ public class Refactor
 		int columnCount = metaData.getColumnCount();
 		for (int column = 1; column <= columnCount; column++) {
 
-                    String header = metaData.getColumnName(column);
-                    /*
+			String header = metaData.getColumnName(column);
+			/*
                     Först tar vi bort eventuella siffror, sedan lägger vi in ett whitespace framför kapitaliserade karaktärer
                     som inte är den första karaktären.
-                    */
-                    String refactoredHeader = header.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2");
-                    columnNames.add(capitalize(refactoredHeader));
+			 */
+			String refactoredHeader = header.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2");
+			columnNames.add(capitalize(refactoredHeader));
 		}
 
 		// data of the table
@@ -66,13 +65,9 @@ public class Refactor
 
 	public static void showPostByPostID(User user, JTable table) throws ArrayIndexOutOfBoundsException
 	{
-		if (user == null) {
-			int id = Refactor.getTableValueFirstColumn(table);
-			new ShowPost(id).setVisible(true);
-		} else {
-			int id = Refactor.getTableValueFirstColumn(table);
-			new ShowPost(user, id).setVisible(true);
-		}
+		int id = Refactor.getTableValueFirstColumn(table);
+		new ShowPost(user, id).setVisible(true);
+
 	}
 
 	public static JTable populateTable(ResultSet resultSet)
@@ -85,9 +80,10 @@ public class Refactor
 		}
 		return table;
 	}
-        
-        public static void setFocus(JFrame frame){
-            frame.setLocationRelativeTo(null);
-        }
+
+	public static void setFocus(JFrame frame)
+	{
+		frame.setLocationRelativeTo(null);
+	}
 
 }
