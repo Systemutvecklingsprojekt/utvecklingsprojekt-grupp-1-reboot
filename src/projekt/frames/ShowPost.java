@@ -36,7 +36,8 @@ public class ShowPost extends javax.swing.JFrame {
         try {
             String joinQuery = "SELECT CommentID, firstName, lastName, Comments.timeStamp, Text FROM User JOIN Comments ON User.UserID = Comments.UserID WHERE PostID =" + id;
 
-            fillTable(Database.fetchRows(joinQuery));
+            fillComments(Database.fetchRows(joinQuery));
+            System.out.println("ShowPost");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -46,7 +47,7 @@ public class ShowPost extends javax.swing.JFrame {
         }
     }
     
-    public void fillTable(ResultSet rs) {
+    public void fillComments(ResultSet rs) {
         try {
             jTableComments = new JTable(Refactor.tableModelBuilder(rs));
 
@@ -302,7 +303,7 @@ public class ShowPost extends javax.swing.JFrame {
         String insertQuery = "INSERT INTO Post_Likes (UserID, PostID, likes) VALUES (" + userId + ", " + id + ", 1)";
         String nameQuery = "SELECT firstName FROM User JOIN Post ON User.UserID = Post.UserID WHERE PostID = " + id;
         try {
-            String tempId = Database.fetchSingle("SELECT UserID FROM Post_Likes WHERE UserID = " + userId);
+            String tempId = Database.fetchSingle("SELECT UserID FROM Post_Likes WHERE PostID = " + id);
             System.out.println(tempId);
             if (tempId == null) {
                 Database.executeUpdate(insertQuery);
