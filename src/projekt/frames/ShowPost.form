@@ -39,8 +39,6 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jButton1" min="-2" pref="86" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jBEditPost" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jbShowComments" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jbNewComment" min="-2" max="-2" attributes="0"/>
@@ -101,7 +99,6 @@
                   <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbNewComment" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbShowComments" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jBEditPost" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
           </Group>
@@ -235,14 +232,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBLike1ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="jBEditPost">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Redigera inl&#xe4;gg"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBEditPostActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
