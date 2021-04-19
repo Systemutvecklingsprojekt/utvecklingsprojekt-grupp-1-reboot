@@ -171,7 +171,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame
 		int userID = -1;
 		try {
 			userID = Refactor.getTableValueFirstColumn(table2);
-		String namn = Database.fetchSingle("Select firstName where UserID = "+userID+";") + " " +Database.fetchSingle("Select lastName where UserID = "+userID+";");
+		String namn = Database.fetchSingle("Select firstName from User where UserID = "+userID+";") + " " +Database.fetchSingle("Select lastName from User where UserID = "+userID+";");
 
 		if (true) {
 			String updatePost = "Update Post SET UserID = 11 Where UserID = " + userID;
