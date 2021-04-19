@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import projekt.User;
 import projekt.Refactor;
 
@@ -37,6 +39,21 @@ public final class FormalBlog extends javax.swing.JFrame
 		}
 		jScrollPane1.setViewportView(jTable2);
 		jTable2.setVisible(true);
+		jTable2.getSelectionModel().addListSelectionListener(new ListSelectionListener()
+		{
+
+			public void valueChanged(ListSelectionEvent event)
+			{
+				if (event.getValueIsAdjusting()) {
+
+				} else {
+					Refactor.showPostByPostID(user, jTable2);
+				}
+				// do some actions here, for example
+				// print first column value from selected row
+
+			}
+		});
 
 	}
 
@@ -48,60 +65,61 @@ public final class FormalBlog extends javax.swing.JFrame
 	@SuppressWarnings("unchecked")
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jBBack = new javax.swing.JButton();
         jbCreatePost = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jBShowPost = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jBBack.setBackground(new java.awt.Color(204, 204, 255));
         jBBack.setText("Tillbaka");
-        jBBack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jBBack.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jBBackActionPerformed(evt);
             }
         });
 
         jbCreatePost.setBackground(new java.awt.Color(204, 204, 255));
         jbCreatePost.setText("Skapa inlägg");
-        jbCreatePost.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jbCreatePost.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jbCreatePostActionPerformed(evt);
             }
         });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+            new Object [][]
+            {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null}
             },
-            new String [] {
+            new String []
+            {
                 "ID", "Title 2", "Title 3", "Title 4"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
+        )
+        {
+            boolean[] canEdit = new boolean []
+            {
                 false, false, false, false
             };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
+            public boolean isCellEditable(int rowIndex, int columnIndex)
+            {
                 return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(jTable1);
-
-        jBShowPost.setBackground(new java.awt.Color(204, 204, 255));
-        jBShowPost.setText("Visa inlägg");
-        jBShowPost.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBShowPostActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -112,10 +130,8 @@ public final class FormalBlog extends javax.swing.JFrame
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jBBack, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(188, 188, 188)
-                        .addComponent(jbCreatePost)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBShowPost, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(302, 302, 302)
+                        .addComponent(jbCreatePost))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(58, Short.MAX_VALUE))
         );
@@ -125,11 +141,9 @@ public final class FormalBlog extends javax.swing.JFrame
                 .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jBShowPost)
-                        .addComponent(jbCreatePost))
-                    .addComponent(jBBack))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBBack)
+                    .addComponent(jbCreatePost))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
@@ -148,26 +162,9 @@ public final class FormalBlog extends javax.swing.JFrame
     }//GEN-LAST:event_jbCreatePostActionPerformed
 
 
-    private void jBShowPostActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBShowPostActionPerformed
-    {//GEN-HEADEREND:event_jBShowPostActionPerformed
-
-		try {
-			Refactor.showPostByPostID(user, jTable2);
-
-			int id = (int) (jTable2.getValueAt(jTable2.getSelectedRow(), 0));
-			new ShowPost(user, id).setVisible(true);
-
-		} catch (ArrayIndexOutOfBoundsException e) {
-			JOptionPane.showMessageDialog(null, "Vänligen välj ett inlägg att visa!");
-
-		}
-
-    }//GEN-LAST:event_jBShowPostActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBBack;
-    private javax.swing.JButton jBShowPost;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbCreatePost;
