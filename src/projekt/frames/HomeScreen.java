@@ -177,7 +177,7 @@ public class HomeScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jBMeetingsActionPerformed
 
     private void jBProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBProfileActionPerformed
-        new Profile(this.id,user).setVisible(true);
+        new Profile(this.id).setVisible(true);
     }//GEN-LAST:event_jBProfileActionPerformed
 
     private void jBAdminUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAdminUsersActionPerformed

@@ -8,8 +8,6 @@ package projekt.frames;
 import projekt.helpers.Database;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import projekt.Refactor;
@@ -30,9 +28,9 @@ public class ShowPost extends javax.swing.JFrame {
     public ShowPost(User user, int id) {
         initComponents();
         fillPost(id);
-        this.id = id;
+        this.id = id;      
         this.user = user;
-
+        
         try {
             String joinQuery = "SELECT CommentID, firstName, lastName, Comments.timeStamp, Text FROM User JOIN Comments ON User.UserID = Comments.UserID WHERE PostID =" + id;
 
@@ -40,9 +38,8 @@ public class ShowPost extends javax.swing.JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        Refactor.setFocus(this);
     }
-
+    
     public void fillTable(ResultSet rs) {
         try {
             jTableComments = new JTable(Refactor.tableModelBuilder(rs));
@@ -54,17 +51,16 @@ public class ShowPost extends javax.swing.JFrame {
         jspComments.setViewportView(jTableComments);
         jTableComments.setVisible(true);
     }
-
+    
     public ShowPost(int id) {
-
+        
         initComponents();
         fillPost(id);
         this.id = id;
         if (user == null) {
             jbNewComment.setVisible(false);
-            jBLike.setVisible(false);
         }
-
+        
         try {
             String joinQuery = "SELECT CommentID, firstName, lastName, Comments.timeStamp, Text FROM User JOIN Comments ON User.UserID = Comments.UserID WHERE PostID =" + id;
 
@@ -73,29 +69,28 @@ public class ShowPost extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-
+    
     public void fillPost(int id) {
-
+        
         try {
             jTextField4.setText(Database.fetchSingle("Select title from Post where PostID=" + id));
             jTextField2.setText(Database.fetchSingle("Select User.firstName FROM User, Post WHERE Post.UserID = User.UserID AND PostID = " + id) + " " + Database.fetchSingle("Select User.lastName FROM User, Post WHERE Post.UserID = User.UserID AND PostID = " + id));
             jTextField3.setText(Database.fetchSingle("Select timeStamp FROM Post where PostID=" + id));
             jTextArea1.setText(Database.fetchSingle("Select description from Post where PostID=" + id));
-            jtfLikeCount.setText(Database.fetchSingle("SELECT count(likes) FROM Post_Likes WHERE PostID =" + id));
-
+            
             ResultSet tagsRs = Database.fetchRows("Select tagName from Tag where tagID in (Select tagID from Post_Tag where PostID=" + id + ")");
             String tags = "";
             while (tagsRs.next()) {
-
+                
                 tags = tags + tagsRs.getString(1);
                 tags = tags + ", ";
             }
-
-            jTextField1.setText(tags);
+            
+            jTextField1.setText(tags);            
         } catch (SQLException e) {
-
+            
         }
-
+        
     }
 
     /**
@@ -116,14 +111,11 @@ public class ShowPost extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
-        jtfLikeCount = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jbNewComment = new javax.swing.JButton();
         jbShowComments = new javax.swing.JButton();
         jspComments = new javax.swing.JScrollPane();
         jTableComments = new javax.swing.JTable();
-        jBLike = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -160,8 +152,6 @@ public class ShowPost extends javax.swing.JFrame {
                 jTextField4ActionPerformed(evt);
             }
         });
-
-        jtfLikeCount.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jButton1.setBackground(new java.awt.Color(204, 204, 255));
         jButton1.setText("Tillbaka");
@@ -200,38 +190,23 @@ public class ShowPost extends javax.swing.JFrame {
         ));
         jspComments.setViewportView(jTableComments);
 
-        jBLike.setText("Gilla!");
-        jBLike.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBLikeActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("Gillningar:");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfLikeCount, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBLike))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane1)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(38, 38, 38)
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -242,9 +217,9 @@ public class ShowPost extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(8, 8, 8))
-                        .addComponent(jTextField4)
-                        .addComponent(jspComments)))
+                            .addGap(8, 8, 8)))
+                    .addComponent(jTextField4)
+                    .addComponent(jspComments))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -264,14 +239,9 @@ public class ShowPost extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBLike)
-                    .addComponent(jtfLikeCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addComponent(jspComments, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jbNewComment)
@@ -312,31 +282,8 @@ public class ShowPost extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
 
-    private void jBLikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLikeActionPerformed
-        int userId = user.getUserID();
-        String insertQuery = "INSERT INTO Post_Likes (UserID, PostID, likes) VALUES (" + userId + ", " + id + ", 1)";
-        String nameQuery = "SELECT firstName FROM User JOIN Post ON User.UserID = Post.UserID WHERE PostID = " + id;
-
-        try {
-            String tempId = Database.fetchSingle("SELECT UserID FROM Post_Likes WHERE UserID = " + userId);
-            System.out.println(tempId);
-            if (tempId == null) {
-                Database.executeUpdate(insertQuery);
-                jtfLikeCount.setText(Database.fetchSingle("SELECT count(likes) FROM Post_Likes WHERE PostID =" + id));
-                JOptionPane.showMessageDialog(null, "Du gillade precis " + Database.fetchSingle(nameQuery) + "s inlägg!");
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Du har redan gillat detta inlägg!");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jBLikeActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBLike;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -350,6 +297,5 @@ public class ShowPost extends javax.swing.JFrame {
     private javax.swing.JButton jbNewComment;
     private javax.swing.JButton jbShowComments;
     private javax.swing.JScrollPane jspComments;
-    private javax.swing.JTextField jtfLikeCount;
     // End of variables declaration//GEN-END:variables
 }
