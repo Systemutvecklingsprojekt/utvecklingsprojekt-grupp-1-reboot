@@ -40,6 +40,10 @@ public class ShowPost extends javax.swing.JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        if (user == null) {
+            jbNewComment.setVisible(false);
+            jBLike.setVisible(false);
+        }
     }
     
     public void fillTable(ResultSet rs) {
@@ -54,24 +58,7 @@ public class ShowPost extends javax.swing.JFrame {
         jTableComments.setVisible(true);
     }
     
-    public ShowPost(int id) {
-        
-        initComponents();
-        fillPost(id);
-        this.id = id;
-        if (user == null) {
-            jbNewComment.setVisible(false);
-            jBLike.setVisible(false);
-        }
-        
-        try {
-            String joinQuery = "SELECT CommentID, firstName, lastName, Comments.timeStamp, Text FROM User JOIN Comments ON User.UserID = Comments.UserID WHERE PostID =" + id;
-
-            fillTable(Database.fetchRows(joinQuery));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    
     
     public void fillPost(int id) {
         
