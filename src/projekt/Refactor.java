@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Vector;
+import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import projekt.frames.ShowPost;
@@ -84,5 +85,9 @@ public class Refactor
 		}
 		return table;
 	}
+        
+        public static void setFocus(JFrame frame){
+            frame.setLocationRelativeTo(null);
+        }
 
 }
