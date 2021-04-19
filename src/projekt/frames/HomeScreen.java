@@ -167,7 +167,7 @@ public class HomeScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jBFormalActionPerformed
 
     private void jBInformalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInformalActionPerformed
-        new InformalBlog(user).setVisible(true);
+        new Blog(user, false).setVisible(true);
 
 
     }//GEN-LAST:event_jBInformalActionPerformed

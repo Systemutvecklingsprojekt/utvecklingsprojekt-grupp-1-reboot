@@ -297,7 +297,7 @@ public class MakeInformalPost extends javax.swing.JFrame {
             }
             JOptionPane.showMessageDialog(null, "Ditt inlägg har publicerats");
 
-            new InformalBlog(user).setVisible(true);
+            new Blog(user, false).setVisible(true);
             this.dispose();
         }
 
@@ -319,7 +319,7 @@ public class MakeInformalPost extends javax.swing.JFrame {
     private void jBBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBackActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        new InformalBlog(user).setVisible(true);
+        new Blog(user, false).setVisible(true);
     }//GEN-LAST:event_jBBackActionPerformed
 
     private void fillTags() {
