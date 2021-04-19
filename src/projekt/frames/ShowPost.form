@@ -59,7 +59,7 @@
                               <Component id="jBDeletePost" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="jLabel1" min="-2" pref="56" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jtfLikeCount" min="-2" pref="55" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                               <Component id="jBLike1" min="-2" max="-2" attributes="0"/>
@@ -68,7 +68,7 @@
                       <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="8" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -253,6 +253,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Ta bort inl&#xe4;gg"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBDeletePostActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
