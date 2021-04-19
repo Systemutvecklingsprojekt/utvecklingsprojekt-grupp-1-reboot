@@ -5,48 +5,17 @@
  */
 package projekt.frames;
 
-import java.sql.*;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import projekt.helpers.Database;
-import projekt.helpers.Validation;
-import projekt.Refactor;
-
 /**
  *
  * @author anton
  */
 public class NewMeeting extends javax.swing.JFrame {
 
-    private ResultSet rs;
-    private javax.swing.JTable table2;
-    private ArrayList <String> days;
     /**
      * Creates new form NewMeeting
      */
-    public NewMeeting(ArrayList<String> days) {
-        
-
-		initComponents();
-                this.days = days;
-                jComboDays.removeAllItems();
-                for(String dag : days) {
-                jComboDays.addItem(dag);
-                }
-
-		getResultset();
-		try {
-			table2 = new JTable(Refactor.tableModelBuilder(rs));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		jScrollPane1.setViewportView(table2);
-		table2.setVisible(true);
-    }
-    
-    public NewMeeting () {
-    initComponents();
+    public NewMeeting() {
+        initComponents();
     }
 
     /**
@@ -58,177 +27,57 @@ public class NewMeeting extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jComboDays = new javax.swing.JComboBox<>();
-        jTxtTid = new javax.swing.JTextField();
-        jButtonTime = new javax.swing.JButton();
-        jLblInbjudna = new javax.swing.JLabel();
-        jLblMeet = new javax.swing.JLabel();
-        jLblPers = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jButton1.setText("lägg t pers");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jComboDays.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboDays.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboDaysActionPerformed(evt);
-            }
-        });
-
-        jTxtTid.setText("Skriv in tid för mötet");
-
-        jButtonTime.setText("lägg in tid");
-        jButtonTime.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonTimeActionPerformed(evt);
-            }
-        });
-
-        jLblInbjudna.setText("Inbjudna Personer: ");
-
-        jLblMeet.setText("Mötestider: ");
-
-        jButton2.setText("Bjud in till möte");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(jLblPers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jLblInbjudna, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboDays, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTxtTid, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(172, 172, 172)
-                                        .addComponent(jLblMeet, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jButtonTime, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton2))))
-                        .addGap(0, 19, Short.MAX_VALUE)))
-                .addGap(18, 18, 18))
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)
-                        .addGap(41, 41, 41)
-                        .addComponent(jComboDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTxtTid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                        .addComponent(jButtonTime)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLblInbjudna)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLblPers, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLblMeet, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addGap(31, 31, 31))))
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboDaysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboDaysActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboDaysActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int id = Refactor.getTableValueFirstColumn(table2);
-        String oldTag = "";
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
         try {
-        oldTag = jLblPers.getText();
-        String firstName = Database.fetchSingle("Select firstName from User where UserID =" + id);
-        String lastName = Database.fetchSingle("Select lastName from User where UserID =" + id);
-        jLblPers.setText(oldTag + " " + firstName + " " + lastName);
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(NewMeeting.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(NewMeeting.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(NewMeeting.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(NewMeeting.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        catch (Exception e) {
-            System.out.println("sqllll");
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        //</editor-fold>
 
-    private void jButtonTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTimeActionPerformed
-        String oldtag = jLabel1.getText();
-        
-        String day= jComboDays.getSelectedItem().toString();
-        String time = jTxtTid.getText();
-        jLabel1.setText(oldtag + " " + day + " " + time);
-    }//GEN-LAST:event_jButtonTimeActionPerformed
-
-  public void getResultset()
-	{
-		//Kör emot Databasen och hämtar raderna från User
-		try {
-			rs = Database.fetchRows("SELECT UserID,firstName, lastName FROM User");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-	}
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new NewMeeting().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButtonTime;
-    private javax.swing.JComboBox<String> jComboDays;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLblInbjudna;
-    private javax.swing.JLabel jLblMeet;
-    private javax.swing.JLabel jLblPers;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTxtTid;
     // End of variables declaration//GEN-END:variables
 }
