@@ -6,6 +6,8 @@
 package projekt.frames;
 
 import java.sql.SQLException;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import projekt.Refactor;
 import projekt.User;
 import projekt.helpers.Database;
@@ -16,32 +18,43 @@ import projekt.helpers.Database;
  */
 public class YourPosts extends javax.swing.JFrame {
 
-   private User user;
+    private User user;
+
     /**
      * Creates new form YourPosts
      */
     public YourPosts(User user) {
-        
+
         this.user = user;
         int id = user.getUserID();
-        
+
         String query = "Select Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID and User.UserID =" + id;
         initComponents();
-        
-        try{
+
+        try {
             jTable1 = Refactor.populateTable(Database.fetchRows(query));
-            
-        }
-        catch (SQLException e) {
-			e.printStackTrace();   
-           
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
         }
         jScrollPane1.setViewportView(jTable1);
-		jTable1.setVisible(true);
-    }
-    
+        jTable1.setVisible(true);
+        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
-  
+            public void valueChanged(ListSelectionEvent event) {
+                if (event.getValueIsAdjusting()) {
+
+                } else {
+                    Refactor.showPostByPostID(user, jTable1);
+                }
+                // do some actions here, for example
+                // print first column value from selected row
+
+            }
+        });
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -104,12 +117,9 @@ public class YourPosts extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        new YourPosts(user).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-  
-    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
