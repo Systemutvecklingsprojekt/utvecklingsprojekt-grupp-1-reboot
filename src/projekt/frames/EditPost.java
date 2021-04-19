@@ -17,15 +17,17 @@ import projekt.helpers.Validation;
  *
  * @author albin
  */
-public class EditPostFormal extends javax.swing.JFrame {
+public class EditPost extends javax.swing.JFrame {
 
     private int maxTags;
     private ArrayList<String> chosenTags;
     private User user;
     private String oldTag;
+    private int id;
 
-    public EditPostFormal(User user) {
+    public EditPost(User user, int id) {
         this.user = user;
+        this.id = id;
         maxTags = 0;
         chosenTags = new ArrayList<>();
         oldTag = "";

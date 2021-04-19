@@ -108,6 +108,7 @@ public class ShowPost extends javax.swing.JFrame {
         jtfLikeCount = new javax.swing.JTextField();
         jBLike1 = new javax.swing.JButton();
         jBEditPost = new javax.swing.JButton();
+        jBDeletePost = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -192,6 +193,13 @@ public class ShowPost extends javax.swing.JFrame {
         });
 
         jBEditPost.setText("Redigera inlägg");
+        jBEditPost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEditPostActionPerformed(evt);
+            }
+        });
+
+        jBDeletePost.setText("Ta bort inlägg");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -211,26 +219,29 @@ public class ShowPost extends javax.swing.JFrame {
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
+                        .addGap(18, 18, 18)
                         .addComponent(jBEditPost)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbShowComments)
                         .addGap(18, 18, 18)
                         .addComponent(jbNewComment))
                     .addComponent(jTextField4)
-                    .addComponent(jspComments, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
+                    .addComponent(jspComments, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jBDeletePost)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jtfLikeCount, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(25, 25, 25)
-                                .addComponent(jBLike1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jBLike1)))
                         .addGap(8, 8, 8)))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
@@ -251,11 +262,12 @@ public class ShowPost extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jtfLikeCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBLike1))
+                    .addComponent(jBLike1)
+                    .addComponent(jBDeletePost))
                 .addGap(18, 18, 18)
                 .addComponent(jspComments, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -324,8 +336,14 @@ public class ShowPost extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jBEditPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditPostActionPerformed
+        // TODO add your handling code here:
+        new EditPost(user, id).setVisible(true);
+    }//GEN-LAST:event_jBEditPostActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBDeletePost;
     private javax.swing.JButton jBEditPost;
     private javax.swing.JButton jBLike1;
     private javax.swing.JButton jButton1;
