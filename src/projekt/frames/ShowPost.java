@@ -107,6 +107,7 @@ public class ShowPost extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jtfLikeCount = new javax.swing.JTextField();
         jBLike1 = new javax.swing.JButton();
+        jBEditPost = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -190,6 +191,8 @@ public class ShowPost extends javax.swing.JFrame {
             }
         });
 
+        jBEditPost.setText("Redigera inlägg");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -208,6 +211,8 @@ public class ShowPost extends javax.swing.JFrame {
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(jBEditPost)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbShowComments)
                         .addGap(18, 18, 18)
@@ -257,7 +262,8 @@ public class ShowPost extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jbNewComment)
-                    .addComponent(jbShowComments))
+                    .addComponent(jbShowComments)
+                    .addComponent(jBEditPost))
                 .addGap(19, 19, 19))
         );
 
@@ -320,6 +326,7 @@ public class ShowPost extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBEditPost;
     private javax.swing.JButton jBLike1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
