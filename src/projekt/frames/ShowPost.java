@@ -30,9 +30,9 @@ public class ShowPost extends javax.swing.JFrame {
     public ShowPost(User user, int id) {
         initComponents();
         fillPost(id);
-        this.id = id;      
+        this.id = id;
         this.user = user;
-        
+
         try {
             String joinQuery = "SELECT CommentID, firstName, lastName, Comments.timeStamp, Text FROM User JOIN Comments ON User.UserID = Comments.UserID WHERE PostID =" + id;
 
@@ -41,7 +41,7 @@ public class ShowPost extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     public void fillTable(ResultSet rs) {
         try {
             jTableComments = new JTable(Refactor.tableModelBuilder(rs));
@@ -53,9 +53,9 @@ public class ShowPost extends javax.swing.JFrame {
         jspComments.setViewportView(jTableComments);
         jTableComments.setVisible(true);
     }
-    
+
     public ShowPost(int id) {
-        
+
         initComponents();
         fillPost(id);
         this.id = id;
@@ -63,7 +63,7 @@ public class ShowPost extends javax.swing.JFrame {
             jbNewComment.setVisible(false);
             jBLike.setVisible(false);
         }
-        
+
         try {
             String joinQuery = "SELECT CommentID, firstName, lastName, Comments.timeStamp, Text FROM User JOIN Comments ON User.UserID = Comments.UserID WHERE PostID =" + id;
 
@@ -72,29 +72,29 @@ public class ShowPost extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     public void fillPost(int id) {
-        
+
         try {
             jTextField4.setText(Database.fetchSingle("Select title from Post where PostID=" + id));
             jTextField2.setText(Database.fetchSingle("Select User.firstName FROM User, Post WHERE Post.UserID = User.UserID AND PostID = " + id) + " " + Database.fetchSingle("Select User.lastName FROM User, Post WHERE Post.UserID = User.UserID AND PostID = " + id));
             jTextField3.setText(Database.fetchSingle("Select timeStamp FROM Post where PostID=" + id));
             jTextArea1.setText(Database.fetchSingle("Select description from Post where PostID=" + id));
-            jtfLikeCount.setText(Database.fetchSingle("Select likes from Post where PostID=" + id));
-            
+            jtfLikeCount.setText(Database.fetchSingle("SELECT count(likes) FROM Post_Likes WHERE PostID =" + id));
+
             ResultSet tagsRs = Database.fetchRows("Select tagName from Tag where tagID in (Select tagID from Post_Tag where PostID=" + id + ")");
             String tags = "";
             while (tagsRs.next()) {
-                
+
                 tags = tags + tagsRs.getString(1);
                 tags = tags + ", ";
             }
-            
-            jTextField1.setText(tags);            
+
+            jTextField1.setText(tags);
         } catch (SQLException e) {
-            
+
         }
-        
+
     }
 
     /**
@@ -312,13 +312,21 @@ public class ShowPost extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField4ActionPerformed
 
     private void jBLikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLikeActionPerformed
-        String updateQuery = "UPDATE Post SET likes = likes + 1 WHERE PostID = " + id;
+        int userId = user.getUserID();
+        String insertQuery = "INSERT INTO Post_Likes (UserID, PostID, likes) VALUES (" + userId + ", " + id + ", 1)";
         String nameQuery = "SELECT firstName FROM User JOIN Post ON User.UserID = Post.UserID WHERE PostID = " + id;
+
         try {
-            
-            Database.executeUpdate(updateQuery);
-            jtfLikeCount.setText(Database.fetchSingle("Select likes from Post where PostID=" + id));
-            JOptionPane.showMessageDialog(null, "Du gillade precis " + Database.fetchSingle(nameQuery) + "s inlägg!");
+            String tempId = Database.fetchSingle("SELECT UserID FROM Post_Likes WHERE UserID = " + userId);
+            System.out.println(tempId);
+            if (tempId == null) {
+                Database.executeUpdate(insertQuery);
+                jtfLikeCount.setText(Database.fetchSingle("SELECT count(likes) FROM Post_Likes WHERE PostID =" + id));
+                JOptionPane.showMessageDialog(null, "Du gillade precis " + Database.fetchSingle(nameQuery) + "s inlägg!");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Du har redan gillat detta inlägg!");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
         }
