@@ -25,13 +25,11 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jBBack" min="-2" pref="99" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="jbCreatePost" min="-2" pref="99" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="169" max="-2" attributes="0"/>
-                      <Component id="jBShowPost" min="-2" pref="102" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane1" min="-2" pref="490" max="-2" attributes="0"/>
               </Group>
@@ -43,12 +41,11 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="264" max="32767" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jBBack" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jbCreatePost" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jBShowPost" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" pref="276" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jbCreatePost" min="-2" max="-2" attributes="0"/>
+                  <Component id="jBBack" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
           </Group>
@@ -123,16 +120,5 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jBShowPost">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="cc" red="cc" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Visa inl&#xe4;gg"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBShowPostActionPerformed"/>
-      </Events>
-    </Component>
   </SubComponents>
 </Form>
