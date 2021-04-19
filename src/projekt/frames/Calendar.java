@@ -10,22 +10,18 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 /**
  *
  * @author Victor
  */
 public class Calendar extends javax.swing.JFrame {
-    
-    private ArrayList<String> days;
 
     /**
      * Creates new form test52
      */
     public Calendar() {
         initComponents();
-        days = new ArrayList();
     }
 
     /**
@@ -40,8 +36,6 @@ public class Calendar extends javax.swing.JFrame {
         jBBack = new javax.swing.JButton();
         jBChooseDate = new javax.swing.JButton();
         jCalendar1 = new com.toedter.calendar.JCalendar();
-        jBtnMeetDagar = new javax.swing.JButton();
-        jButtonNewMeeting = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,33 +48,12 @@ public class Calendar extends javax.swing.JFrame {
             }
         });
 
-        jBtnMeetDagar.setText("Lägg till dagar för möten");
-        jBtnMeetDagar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnMeetDagarActionPerformed(evt);
-            }
-        });
-
-        jButtonNewMeeting.setText("Skapa möte");
-        jButtonNewMeeting.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonNewMeetingActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jCalendar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jBtnMeetDagar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jButtonNewMeeting, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
@@ -92,15 +65,8 @@ public class Calendar extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButtonNewMeeting)
-                        .addGap(27, 27, 27)
-                        .addComponent(jBtnMeetDagar)
-                        .addGap(71, 71, 71)))
+                .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jBChooseDate)
                     .addComponent(jBBack))
@@ -134,17 +100,6 @@ public class Calendar extends javax.swing.JFrame {
         
 
     }//GEN-LAST:event_jBChooseDateActionPerformed
-
-    private void jBtnMeetDagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMeetDagarActionPerformed
-        Date day = jCalendar1.getDate();
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-        String date1 = format1.format(day);
-        days.add(date1);
-    }//GEN-LAST:event_jBtnMeetDagarActionPerformed
-
-    private void jButtonNewMeetingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewMeetingActionPerformed
-        new NewMeeting(days).setVisible(true);
-    }//GEN-LAST:event_jButtonNewMeetingActionPerformed
 
     /**
      * @param args the command line arguments
@@ -185,8 +140,6 @@ public class Calendar extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBBack;
     private javax.swing.JButton jBChooseDate;
-    private javax.swing.JButton jBtnMeetDagar;
-    private javax.swing.JButton jButtonNewMeeting;
     private com.toedter.calendar.JCalendar jCalendar1;
     // End of variables declaration//GEN-END:variables
 }
