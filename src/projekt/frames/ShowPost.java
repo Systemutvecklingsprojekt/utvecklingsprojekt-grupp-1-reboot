@@ -38,6 +38,7 @@ public class ShowPost extends javax.swing.JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        Refactor.setFocus(this);
     }
     
     public void fillTable(ResultSet rs) {

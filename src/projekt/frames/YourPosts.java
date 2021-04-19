@@ -30,6 +30,7 @@ public class YourPosts extends javax.swing.JFrame {
 
         String query = "Select Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID and User.UserID =" + id;
         initComponents();
+        
 
         try {
             jTable1 = Refactor.populateTable(Database.fetchRows(query));
@@ -47,13 +48,15 @@ public class YourPosts extends javax.swing.JFrame {
 
                 } else {
                     Refactor.showPostByPostID(user, jTable1);
+                    
+                    
                 }
                 // do some actions here, for example
                 // print first column value from selected row
-
+                
             }
         });
-
+       
     }
 
     /**
@@ -70,6 +73,7 @@ public class YourPosts extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAutoRequestFocus(false);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -121,6 +125,7 @@ public class YourPosts extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
