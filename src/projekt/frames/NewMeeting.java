@@ -44,6 +44,10 @@ public class NewMeeting extends javax.swing.JFrame {
 		jScrollPane1.setViewportView(table2);
 		table2.setVisible(true);
     }
+    
+    public NewMeeting () {
+    initComponents();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
