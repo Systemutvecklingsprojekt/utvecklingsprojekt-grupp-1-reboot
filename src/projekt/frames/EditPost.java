@@ -9,9 +9,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import projekt.User;
 import projekt.helpers.Validation;
+import java.lang.StringBuilder;
 
 /**
  *
@@ -35,6 +38,7 @@ public class EditPost extends javax.swing.JFrame {
         initComponents();
         fillTags();
         jTFNewTag.setEnabled(true);
+        fillOldInfo();
 
     }
 
@@ -352,6 +356,30 @@ public class EditPost extends javax.swing.JFrame {
 
         for (String tag : tags) {
             jCBTags.addItem(tag);
+        }
+    }
+    
+    private void fillOldInfo(){
+        ArrayList<String> oldChosenTags = new ArrayList<>();
+        StringBuilder str = new StringBuilder(jLTags.getText());
+        
+        try {
+            jTFTitle.setText(Database.fetchSingle("SELECT Title FROM Post WHERE PostID = " + id));
+            jTAPost.setText(Database.fetchSingle("SELECT Description FROM Post WHERE PostID = " + id));
+            
+            ResultSet rs = Database.fetchRows("SELECT TagName FROM Tag WHERE TagID IN (SELECT TagID FROM Post_Tag WHERE PostID IN (SELECT PostID FROM Post WHERE PostID = " + id + "))");
+            while(rs.next()){
+                oldChosenTags.add(rs.getString(1));
+            }
+            System.out.println(oldChosenTags);
+            
+            for(String tag : oldChosenTags){
+                str.append(tag + "   ");
+            }
+            
+            jLTags.setText(str.toString());
+        } catch (SQLException e) {
+            
         }
     }
 
