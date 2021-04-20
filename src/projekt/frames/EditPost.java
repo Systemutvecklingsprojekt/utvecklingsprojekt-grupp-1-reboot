@@ -303,7 +303,7 @@ public class EditPost extends javax.swing.JFrame {
     private void jBBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBackActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        new FormalBlog(user).setVisible(true);
+        new Profile(id, user).setVisible(true);
     }//GEN-LAST:event_jBBackActionPerformed
 
     private void jBRemoveTagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemoveTagActionPerformed
