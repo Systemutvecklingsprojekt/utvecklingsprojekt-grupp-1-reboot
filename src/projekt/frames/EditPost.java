@@ -23,23 +23,31 @@ import java.lang.StringBuilder;
 public class EditPost extends javax.swing.JFrame {
 
     private int maxTags;
-    private ArrayList<String> chosenTags;
+    
+    private ArrayList<String> oldChosenTags;
     private User user;
     private String oldTag;
-    private int id;
+    private int postId;
+    private int postType;
 
-    public EditPost(User user, int id) {
+    public EditPost(User user, int postId) {
         this.user = user;
-        this.id = id;
+        this.postId = postId;
         maxTags = 0;
-        chosenTags = new ArrayList<>();
+        
+        oldChosenTags = new ArrayList<>();
         oldTag = "";
 
         initComponents();
         fillTags();
         jTFNewTag.setEnabled(true);
         fillOldInfo();
-
+        System.out.println(oldChosenTags);
+        try {
+            postType = Integer.parseInt(Database.fetchSingle("SELECT TypeID FROM Post WHERE PostID = " + postId + ";"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -211,18 +219,18 @@ public class EditPost extends javax.swing.JFrame {
         if (jCBTags.isEnabled()) {
             tag = jCBTags.getSelectedItem().toString();
             oldTag = jLTags.getText();
-            if (chosenTags.isEmpty()) {
-                chosenTags.add(tag);
+            if (oldChosenTags.isEmpty()) {
+                oldChosenTags.add(tag);
                 found = true;
                 jLTags.setText(oldTag + "   " + tag);
             } else {
-                for (String tagInList : chosenTags) {
+                for (String tagInList : oldChosenTags) {
                     if (tagInList.equalsIgnoreCase(tag)) {
                         found = true;
                     }
                 }
                 if (!found) {
-                    chosenTags.add(tag);
+                    oldChosenTags.add(tag);
                     maxTags++;
                     jLTags.setText(oldTag + "   " + tag);
                 }
@@ -231,18 +239,18 @@ public class EditPost extends javax.swing.JFrame {
         } else if (jTFNewTag.isEnabled()) {
             tag = jTFNewTag.getText();
             oldTag = jLTags.getText();
-            if (chosenTags.isEmpty()) {
-                chosenTags.add(tag);
+            if (oldChosenTags.isEmpty()) {
+                oldChosenTags.add(tag);
                 found = true;
                 jLTags.setText(oldTag + "   " + tag);
             } else {
-                for (String tagInList : chosenTags) {
+                for (String tagInList : oldChosenTags) {
                     if (tagInList.equalsIgnoreCase(tag)) {
                         found = true;
                     }
                 }
                 if (!found) {
-                    chosenTags.add(tag);
+                    oldChosenTags.add(tag);
                     maxTags++;
                     jLTags.setText(oldTag + "   " + tag);
                 }
@@ -251,23 +259,25 @@ public class EditPost extends javax.swing.JFrame {
     }//GEN-LAST:event_jBAddTagActionPerformed
 
     private void jBUploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBUploadActionPerformed
+        
         String title = jTFTitle.getText();
         String post = jTAPost.getText();
         int userId = user.getUserID();
         String stringPostId = "";
         ArrayList<Integer> tagIds = new ArrayList<>();
-        if (chosenTags.isEmpty()) {
+        if (oldChosenTags.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Vänligen välj minst en tagg!");
         } else if(Validation.checkTextField(jTFTitle) && Validation.checkTextArea(jTAPost)){
             try {
-                insertTagsJosef(chosenTags);
+                insertTagsJosef(oldChosenTags);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             try {
-                Database.executeUpdate("INSERT into Post (UserID, timeStamp, title, description, typeID) VALUES (" + userId + ", CURRENT_TIMESTAMP, '" + title + "','" + post + "', 1);");
+                Database.executeUpdate("UPDATE Post SET UserId = " + userId + ", timeStamp = CURRENT_TIMESTAMP, title = '" + title + "', description = '" + post + "', TypeID = " + postType + " "
+                        + "WHERE PostID = " + postId + ";");
                 stringPostId = Database.fetchSingle("SELECT MAX(PostID) FROM Post;");
-                for(String tagName : chosenTags) {
+                for(String tagName : oldChosenTags) {
                     tagIds.add(Integer.parseInt(Database.fetchSingle("SELECT TagID FROM Tag WHERE TagName = '" + tagName + "';")));
                 }
 
@@ -275,7 +285,12 @@ public class EditPost extends javax.swing.JFrame {
                 e.printStackTrace();
                 System.out.println("error");
             }
-            int postId = Integer.parseInt(stringPostId);
+            
+            try{
+                Database.executeUpdate("DELETE FROM Post_Tag WHERE PostID = " + postId + ";");
+            } catch(SQLException e){
+                e.printStackTrace();
+            }
             try {
                 for (Integer tag : tagIds) {
                     Database.executeUpdate("INSERT INTO Post_Tag (PostID, TagID) VALUES (" + postId + ", " + tag + ");");
@@ -303,22 +318,29 @@ public class EditPost extends javax.swing.JFrame {
     private void jBBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBackActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        new FormalBlog(user).setVisible(true);
+        new Profile(postId, user).setVisible(true);
     }//GEN-LAST:event_jBBackActionPerformed
 
     private void jBRemoveTagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemoveTagActionPerformed
         // TODO add your handling code here:
         int index;
-        if(chosenTags.size() == 0){
+        StringBuilder str = new StringBuilder("Taggar: ");
+        if(oldChosenTags.isEmpty()){
             return;
-        } else if(chosenTags.size() == 1){
-            chosenTags.remove(0);
-            jLTags.setText("Taggar: ");
+        } else if(oldChosenTags.size() == 1){
+            oldChosenTags.remove(0);
+            jLTags.setText(str.toString());
         } else {
-            index = chosenTags.size() - 1;
-            chosenTags.remove(index);
-            jLTags.setText(oldTag);
+            index = oldChosenTags.size() - 1;
+            oldChosenTags.remove(index);
+            
         }
+        jLTags.setText(str.toString());
+        for(String tag : oldChosenTags){
+            str.append(tag + "   ");
+        }
+        jLTags.setText(str.toString());
+        oldTag = jLTags.getText();
     }//GEN-LAST:event_jBRemoveTagActionPerformed
 
     private void insertTagsJosef(ArrayList<String> tagsToCheck) throws SQLException {
@@ -360,14 +382,14 @@ public class EditPost extends javax.swing.JFrame {
     }
     
     private void fillOldInfo(){
-        ArrayList<String> oldChosenTags = new ArrayList<>();
+       
         StringBuilder str = new StringBuilder(jLTags.getText());
         
         try {
-            jTFTitle.setText(Database.fetchSingle("SELECT Title FROM Post WHERE PostID = " + id));
-            jTAPost.setText(Database.fetchSingle("SELECT Description FROM Post WHERE PostID = " + id));
+            jTFTitle.setText(Database.fetchSingle("SELECT Title FROM Post WHERE PostID = " + postId));
+            jTAPost.setText(Database.fetchSingle("SELECT Description FROM Post WHERE PostID = " + postId));
             
-            ResultSet rs = Database.fetchRows("SELECT TagName FROM Tag WHERE TagID IN (SELECT TagID FROM Post_Tag WHERE PostID IN (SELECT PostID FROM Post WHERE PostID = " + id + "))");
+            ResultSet rs = Database.fetchRows("SELECT TagName FROM Tag WHERE TagID IN (SELECT TagID FROM Post_Tag WHERE PostID IN (SELECT PostID FROM Post WHERE PostID = " + postId + "))");
             while(rs.next()){
                 oldChosenTags.add(rs.getString(1));
             }
@@ -378,6 +400,7 @@ public class EditPost extends javax.swing.JFrame {
             }
             
             jLTags.setText(str.toString());
+            oldTag = jLTags.getText();
         } catch (SQLException e) {
             
         }

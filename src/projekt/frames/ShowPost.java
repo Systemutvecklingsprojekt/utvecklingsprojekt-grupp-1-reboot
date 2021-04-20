@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import projekt.Refactor;
 import projekt.User;
 
@@ -32,6 +34,18 @@ public class ShowPost extends javax.swing.JFrame {
         fillPost(id);
         this.id = id;
         this.user = user;
+        
+        String postUserID;
+        int postUserInt = 0;
+        try {
+            postUserID = Database.fetchSingle("Select UserID from Post where postID = " + id);
+            postUserInt = Integer.parseInt(postUserID);
+        } catch (SQLException ex) {
+            Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(user.getUserID()!= postUserInt){
+        jBEditPost.setVisible(false);
+        }
 
         try {
             String joinQuery = "SELECT CommentID, firstName, lastName, Comments.timeStamp, Text FROM User JOIN Comments ON User.UserID = Comments.UserID WHERE PostID =" + id;
@@ -61,6 +75,20 @@ public class ShowPost extends javax.swing.JFrame {
 
         jspComments.setViewportView(jTableComments);
         jTableComments.setVisible(true);
+		jTableComments.getSelectionModel().addListSelectionListener(new ListSelectionListener()
+		{
+			public void valueChanged(ListSelectionEvent event)
+			{
+				// do some actions here, for example
+				// print first column value from selected row
+				if (event.getValueIsAdjusting()) {
+
+				} else {
+					int id = (int) (jTableComments.getValueAt(jTableComments.getSelectedRow(), 0));
+					new ShowComment(id, user).setVisible(true);
+				}
+			}
+		});
     }
 
     public void fillPost(int id) {
