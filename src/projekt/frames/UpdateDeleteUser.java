@@ -171,7 +171,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame
 		int userID = -1;
 		try {
 			userID = Refactor.getTableValueFirstColumn(table2);
-		
+		String namn = Database.fetchSingle("Select firstName from User where UserID = "+userID+";") + " " +Database.fetchSingle("Select lastName from User where UserID = "+userID+";");
 
 		if (true) {
 			String updatePost = "Update Post SET UserID = 11 Where UserID = " + userID;
@@ -185,9 +185,8 @@ public class UpdateDeleteUser extends javax.swing.JFrame
 			if (idKoll() == false) {
 				return;
 			}
-			int dialog = JOptionPane.showConfirmDialog(null, "Är säker på att du vill ta bort denna användaren");
-			if (dialog == JOptionPane.YES_OPTION) {
-				int dialog2 = JOptionPane.showConfirmDialog(null, "Vill du spara användarens inlägg?");
+			
+				int dialog2 = JOptionPane.showConfirmDialog(null, "Vill du spara "+ namn+" inlägg?");
 
 				try {
 
@@ -220,10 +219,12 @@ public class UpdateDeleteUser extends javax.swing.JFrame
 					e.printStackTrace();
 				}
 
-			}
+			
 		}
 		} catch (ArrayIndexOutOfBoundsException e) {
 			JOptionPane.showMessageDialog(null, "Var vänlig markera en användare");
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
     }//GEN-LAST:event_deleteButtonActionPerformed
 

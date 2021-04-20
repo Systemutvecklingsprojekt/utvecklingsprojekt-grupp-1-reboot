@@ -126,7 +126,7 @@ public class SearchResults extends javax.swing.JFrame {
     {//GEN-HEADEREND:event_jButton1ActionPerformed
         try {
             int id = (int) (jTable2.getValueAt(jTable2.getSelectedRow(), 0));
-            new ShowPost(id).setVisible(true);
+            //new ShowPost(id).setVisible(true);
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "Vänligen välj ett inlägg!");
         }

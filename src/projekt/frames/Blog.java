@@ -59,7 +59,7 @@ public class Blog extends javax.swing.JFrame
 				ex.printStackTrace();
 			}
 			if (user == null) {
-				btnMakePost.setEnabled(false);
+				btnMakePost.setVisible(false);
 			}
 		}
 		initTable();
