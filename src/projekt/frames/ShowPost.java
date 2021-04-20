@@ -23,22 +23,22 @@ import projekt.User;
  */
 public class ShowPost extends javax.swing.JFrame {
 
-    private int id;
+    private int postID;
     private User user;
 
     /**
      * Creates new form ShowPost
      */
-    public ShowPost(User user, int id) {
+    public ShowPost(User user, int postID) {
         initComponents();
-        fillPost(id);
-        this.id = id;
+        fillPost(postID);
+        this.postID = postID;
         this.user = user;
         
         String postUserID;
         int postUserInt = 0;
         try {
-            postUserID = Database.fetchSingle("Select UserID from Post where postID = " + id);
+            postUserID = Database.fetchSingle("Select UserID from Post where postID = " + postID);
             postUserInt = Integer.parseInt(postUserID);
         } catch (SQLException ex) {
             Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
@@ -48,7 +48,7 @@ public class ShowPost extends javax.swing.JFrame {
         }
 
         try {
-            String joinQuery = "SELECT CommentID, firstName, lastName, Comments.timeStamp, Text FROM User JOIN Comments ON User.UserID = Comments.UserID WHERE PostID =" + id;
+            String joinQuery = "SELECT CommentID, firstName, lastName, Comments.timeStamp, Text FROM User JOIN Comments ON User.UserID = Comments.UserID WHERE PostID =" + postID;
 
             fillComments(Database.fetchRows(joinQuery));
             System.out.println("ShowPost");
@@ -91,16 +91,16 @@ public class ShowPost extends javax.swing.JFrame {
 		});
     }
 
-    public void fillPost(int id) {
+    public void fillPost(int postID) {
 
         try {
-            jTextField4.setText(Database.fetchSingle("Select title from Post where PostID=" + id));
-            jTextField2.setText(Database.fetchSingle("Select User.firstName FROM User, Post WHERE Post.UserID = User.UserID AND PostID = " + id) + " " + Database.fetchSingle("Select User.lastName FROM User, Post WHERE Post.UserID = User.UserID AND PostID = " + id));
-            jTextField3.setText(Database.fetchSingle("Select timeStamp FROM Post where PostID=" + id));
-            jTextArea1.setText(Database.fetchSingle("Select description from Post where PostID=" + id));
-            jtfLikeCount.setText(Database.fetchSingle("SELECT count(likes) FROM Post_Likes WHERE PostID =" + id));
+            jTextField4.setText(Database.fetchSingle("Select title from Post where PostID=" + postID));
+            jTextField2.setText(Database.fetchSingle("Select User.firstName FROM User, Post WHERE Post.UserID = User.UserID AND PostID = " + postID) + " " + Database.fetchSingle("Select User.lastName FROM User, Post WHERE Post.UserID = User.UserID AND PostID = " + postID));
+            jTextField3.setText(Database.fetchSingle("Select timeStamp FROM Post where PostID=" + postID));
+            jTextArea1.setText(Database.fetchSingle("Select description from Post where PostID=" + postID));
+            jtfLikeCount.setText(Database.fetchSingle("SELECT count(likes) FROM Post_Likes WHERE PostID =" + postID));
 
-            ResultSet tagsRs = Database.fetchRows("Select tagName from Tag where tagID in (Select tagID from Post_Tag where PostID=" + id + ")");
+            ResultSet tagsRs = Database.fetchRows("Select tagName from Tag where tagID in (Select tagID from Post_Tag where PostID=" + postID + ")");
             String tags = "";
             while (tagsRs.next()) {
 
@@ -334,8 +334,8 @@ public class ShowPost extends javax.swing.JFrame {
     private void jbShowCommentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbShowCommentsActionPerformed
         try {
 
-            int id = (int) (jTableComments.getValueAt(jTableComments.getSelectedRow(), 0));
-            new ShowComment(id, user).setVisible(true);
+            int commentID = (int) (jTableComments.getValueAt(jTableComments.getSelectedRow(), 0));
+            new ShowComment(commentID, user).setVisible(true);
 
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "Vänligen välj en kommentar att visa!");
@@ -344,7 +344,7 @@ public class ShowPost extends javax.swing.JFrame {
     }//GEN-LAST:event_jbShowCommentsActionPerformed
 
     private void jbNewCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNewCommentActionPerformed
-        new NewComment(user, id).setVisible(true);
+        new NewComment(user, postID).setVisible(true);
     }//GEN-LAST:event_jbNewCommentActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
@@ -354,14 +354,14 @@ public class ShowPost extends javax.swing.JFrame {
 
     private void jBLike1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLike1ActionPerformed
         int userId = user.getUserID();
-        String insertQuery = "INSERT INTO Post_Likes (UserID, PostID, likes) VALUES (" + userId + ", " + id + ", 1)";
-        String nameQuery = "SELECT firstName FROM User JOIN Post ON User.UserID = Post.UserID WHERE PostID = " + id;
+        String insertQuery = "INSERT INTO Post_Likes (UserID, PostID, likes) VALUES (" + userId + ", " + postID + ", 1)";
+        String nameQuery = "SELECT firstName FROM User JOIN Post ON User.UserID = Post.UserID WHERE PostID = " + postID;
         try {
-            String tempId = Database.fetchSingle("SELECT UserID FROM Post_Likes WHERE PostID = " + id);
+            String tempId = Database.fetchSingle("SELECT UserID FROM Post_Likes WHERE PostID = " + postID);
             System.out.println(tempId);
             if (tempId == null) {
                 Database.executeUpdate(insertQuery);
-                jtfLikeCount.setText(Database.fetchSingle("SELECT count(likes) FROM Post_Likes WHERE PostID =" + id));
+                jtfLikeCount.setText(Database.fetchSingle("SELECT count(likes) FROM Post_Likes WHERE PostID =" + postID));
                 JOptionPane.showMessageDialog(null, "Du gillade precis " + Database.fetchSingle(nameQuery) + "s inlägg!");
             } else {
                 JOptionPane.showMessageDialog(null, "Du har redan gillat detta inlägg!");
@@ -377,7 +377,7 @@ public class ShowPost extends javax.swing.JFrame {
 
     private void jBEditPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditPostActionPerformed
         // TODO add your handling code here:
-        new EditPost(user, id).setVisible(true);
+        new EditPost(user, postID).setVisible(true);
     }//GEN-LAST:event_jBEditPostActionPerformed
 
     private void jBDeletePostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeletePostActionPerformed
@@ -389,10 +389,10 @@ public class ShowPost extends javax.swing.JFrame {
 
         if (n == JOptionPane.YES_OPTION) {
             try {
-                Database.executeUpdate("DELETE FROM Post_Tag WHERE PostID = " + id);
-                Database.executeUpdate("DELETE FROM Post_Likes WHERE PostID = " + id);
-                Database.executeUpdate("DELETE FROM Comments WHERE PostID = " + id);
-                Database.executeUpdate("DELETE FROM Post WHERE PostID = " + id);
+                Database.executeUpdate("DELETE FROM Post_Tag WHERE PostID = " + postID);
+                Database.executeUpdate("DELETE FROM Post_Likes WHERE PostID = " + postID);
+                Database.executeUpdate("DELETE FROM Comments WHERE PostID = " + postID);
+                Database.executeUpdate("DELETE FROM Post WHERE PostID = " + postID);
 
             } catch (SQLException ex) {
                 Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
