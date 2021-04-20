@@ -12,6 +12,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import projekt.Refactor;
 import projekt.helpers.SpecialDateEvaluator;
 
 /**
@@ -20,15 +24,24 @@ import projekt.helpers.SpecialDateEvaluator;
  */
 public class Calendar extends javax.swing.JFrame {
 
-    private ArrayList<Date> meetings = new ArrayList<>();
+    //private ArrayList<Date> meetings = new ArrayList<>();
 
     public Calendar() {
         initComponents();
+        
+        try {
+            String query = "SELECT Date, Description FROM Meeting GROUP BY Date";
 
+            fillDates(Database.fetchRows(query));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        /*
         String sql1 = "SELECT Date FROM Meeting";
         SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
         JCalendar jc = this.jCalendar1;
-
+        
         //String date2 = format2.format(dates);
         try {
             ResultSet rs1 = Database.fetchRows(sql1);
@@ -38,16 +51,19 @@ public class Calendar extends javax.swing.JFrame {
                 System.out.println((Date) rs1.getObject(1));
             }
 
-            /*for (Date meeting : meetings) {
+            for (Date meeting : meetings) {
                 jCalendar1.getDayChooser().addDateEvaluator(new SpecialDateEvaluator(meetings));
                 jCalendar1.setCalendar(Calendar.getInstance());
                 //jCalendar1.setDate(meeting);//.setForeground(Color.green);
+
+                
             }
-*/
+
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("fel i dela");
         }
+         */
     }
 
     /**
@@ -62,10 +78,18 @@ public class Calendar extends javax.swing.JFrame {
         jBBack = new javax.swing.JButton();
         jBChooseDate = new javax.swing.JButton();
         jCalendar1 = new com.toedter.calendar.JCalendar();
+        jspDates = new javax.swing.JScrollPane();
+        jTDates = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jBBack.setText("Tillbaka");
+        jBBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBackActionPerformed(evt);
+            }
+        });
 
         jBChooseDate.setText("Visa möten");
         jBChooseDate.addActionListener(new java.awt.event.ActionListener() {
@@ -74,34 +98,75 @@ public class Calendar extends javax.swing.JFrame {
             }
         });
 
+        jTDates.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jspDates.setViewportView(jTDates);
+
+        jLabel1.setText("Mötesdagar:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jCalendar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jCalendar1, javax.swing.GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jBBack)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBChooseDate)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(354, 354, 354))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jspDates, javax.swing.GroupLayout.PREFERRED_SIZE, 632, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jBBack)
-                .addGap(462, 462, 462)
-                .addComponent(jBChooseDate)
-                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jspDates, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jBChooseDate)
                     .addComponent(jBBack))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void fillDates(ResultSet rs) {
+        try {
+            jTDates = new JTable(Refactor.tableModelBuilder(rs));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        jspDates.setViewportView(jTDates);
+        jTDates.setVisible(true);
+    }
+    
     private void jBChooseDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBChooseDateActionPerformed
 
         Date day = jCalendar1.getDate();
@@ -111,16 +176,26 @@ public class Calendar extends javax.swing.JFrame {
         String sqlQuery = ("SELECT MeetingID from Meeting where Date = '" + date1 + "'");
 
         try {
+            String tempDate = Database.fetchSingle("SELECT MeetingID from Meeting where Date = '" + date1 + "'");
+            if(tempDate != null){
             ResultSet MeetingID = Database.fetchRows(sqlQuery);
 
             new CurrentMeeting(date1).setVisible(true);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Vänligen välj ett datum med ett möte!");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("fel i dela");
+            System.out.println("fel");
         }
 
 
     }//GEN-LAST:event_jBChooseDateActionPerformed
+
+    private void jBBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBackActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jBBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,5 +237,8 @@ public class Calendar extends javax.swing.JFrame {
     private javax.swing.JButton jBBack;
     private javax.swing.JButton jBChooseDate;
     private com.toedter.calendar.JCalendar jCalendar1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTable jTDates;
+    private javax.swing.JScrollPane jspDates;
     // End of variables declaration//GEN-END:variables
 }
