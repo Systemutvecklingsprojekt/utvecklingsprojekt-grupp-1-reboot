@@ -8,6 +8,8 @@ package projekt.frames;
 import projekt.helpers.Database;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import projekt.Refactor;
@@ -42,6 +44,10 @@ public class ShowPost extends javax.swing.JFrame {
         if (user == null) {
             jbNewComment.setVisible(false);
             jBLike1.setVisible(false);
+            jBDeletePost.setVisible(false);
+        }
+        if (user != null && user.getAdmin().equalsIgnoreCase("N")) {
+            jBDeletePost.setVisible(false);
         }
     }
 
@@ -200,6 +206,11 @@ public class ShowPost extends javax.swing.JFrame {
         });
 
         jBDeletePost.setText("Ta bort inlägg");
+        jBDeletePost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBDeletePostActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -238,12 +249,12 @@ public class ShowPost extends javax.swing.JFrame {
                                 .addComponent(jBDeletePost)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(jtfLikeCount, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(25, 25, 25)
                                 .addComponent(jBLike1)))
                         .addGap(8, 8, 8)))
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -333,13 +344,39 @@ public class ShowPost extends javax.swing.JFrame {
     }//GEN-LAST:event_jBLike1ActionPerformed
 
     private void jBLikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jBEditPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditPostActionPerformed
         // TODO add your handling code here:
         new EditPost(user, id).setVisible(true);
     }//GEN-LAST:event_jBEditPostActionPerformed
+
+    private void jBDeletePostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeletePostActionPerformed
+        int n = JOptionPane.showConfirmDialog(
+                null,
+                "Vill du verkligen ta bort inlägget?",
+                "Förfrågan",
+                JOptionPane.YES_NO_OPTION);
+
+        if (n == JOptionPane.YES_OPTION) {
+            try {
+                Database.executeUpdate("DELETE FROM Post_Tag WHERE PostID = " + id);
+                Database.executeUpdate("DELETE FROM Post_Likes WHERE PostID = " + id);
+                Database.executeUpdate("DELETE FROM Comments WHERE PostID = " + id);
+                Database.executeUpdate("DELETE FROM Post WHERE PostID = " + id);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            this.dispose();
+            JOptionPane.showMessageDialog(null, "Inlägget är nu borttaget!");
+
+        } else {
+
+        }
+    }//GEN-LAST:event_jBDeletePostActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
