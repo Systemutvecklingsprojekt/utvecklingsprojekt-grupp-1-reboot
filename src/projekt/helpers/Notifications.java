@@ -43,7 +43,7 @@ public class Notifications {
         trayIcon.setToolTip("System tray icon demo");
         tray.add(trayIcon);
 
-        trayIcon.displayMessage("Hello, World", "notification demo", MessageType.INFO);
+        trayIcon.displayMessage("Nytt möte!", "Du har möten som väntar på att bli accepterade.", MessageType.INFO);
     }
 }
     
