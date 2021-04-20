@@ -132,7 +132,7 @@ public class ShowCommentList extends javax.swing.JFrame {
         try {
 
             int id = (int) (jTableComments.getValueAt(jTableComments.getSelectedRow(), 0));
-            new ShowComment(id).setVisible(true);
+            new ShowComment(id, user).setVisible(true);
 
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "Vänligen välj ett inlägg att visa!");
