@@ -371,7 +371,7 @@ public class EditPost extends javax.swing.JFrame {
             while(rs.next()){
                 oldChosenTags.add(rs.getString(1));
             }
-            System.out.println(oldChosenTags);
+            
             
             for(String tag : oldChosenTags){
                 str.append(tag + "   ");
