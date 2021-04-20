@@ -64,7 +64,7 @@ public class CurrentMeeting extends javax.swing.JFrame {
         jBSeeMeeting = new javax.swing.JButton();
         jBBack = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTMeeting.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -87,6 +87,11 @@ public class CurrentMeeting extends javax.swing.JFrame {
         });
 
         jBBack.setText("Tillbaka");
+        jBBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -128,6 +133,10 @@ public class CurrentMeeting extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jBSeeMeetingActionPerformed
+
+    private void jBBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBackActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jBBackActionPerformed
 
     /**
      * @param args the command line arguments
