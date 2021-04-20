@@ -5,11 +5,14 @@
  */
 package projekt.frames;
 
+import com.toedter.calendar.JCalendar;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
+import projekt.helpers.SpecialDateEvaluator;
 
 /**
  *
@@ -17,11 +20,34 @@ import java.sql.ResultSet;
  */
 public class Calendar extends javax.swing.JFrame {
 
-    /**
-     * Creates new form test52
-     */
+    private ArrayList<Date> meetings = new ArrayList<>();
+
     public Calendar() {
         initComponents();
+
+        String sql1 = "SELECT Date FROM Meeting";
+        SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+        JCalendar jc = this.jCalendar1;
+
+        //String date2 = format2.format(dates);
+        try {
+            ResultSet rs1 = Database.fetchRows(sql1);
+
+            while (rs1.next()) {
+                meetings.add((Date) rs1.getObject(1));
+                System.out.println((Date) rs1.getObject(1));
+            }
+
+            /*for (Date meeting : meetings) {
+                jCalendar1.getDayChooser().addDateEvaluator(new SpecialDateEvaluator(meetings));
+                jCalendar1.setCalendar(Calendar.getInstance());
+                //jCalendar1.setDate(meeting);//.setForeground(Color.green);
+            }
+*/
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("fel i dela");
+        }
     }
 
     /**
@@ -81,23 +107,18 @@ public class Calendar extends javax.swing.JFrame {
         Date day = jCalendar1.getDate();
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         String date1 = format1.format(day);
-        
-        
+
         String sqlQuery = ("SELECT MeetingID from Meeting where Date = '" + date1 + "'");
-//        System.out.println(date1);
-//        System.out.println(sqlQuery);
-        try{
-        ResultSet MeetingID = Database.fetchRows(sqlQuery);
-        
-        new CurrentMeeting(date1).setVisible(true);
+
+        try {
+            ResultSet MeetingID = Database.fetchRows(sqlQuery);
+
+            new CurrentMeeting(date1).setVisible(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("fel i dela");
         }
-        catch(SQLException e){
-        e.printStackTrace();
-        System.out.println("fel i dela");
-        }
-        
-        
-        
+
 
     }//GEN-LAST:event_jBChooseDateActionPerformed
 
