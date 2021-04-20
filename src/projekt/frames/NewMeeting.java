@@ -5,49 +5,24 @@
  */
 package projekt.frames;
 
-import java.sql.*;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import projekt.helpers.Database;
-import projekt.helpers.Validation;
-import projekt.Refactor;
-
 /**
  *
  * @author anton
  */
 public class NewMeeting extends javax.swing.JFrame {
 
+<<<<<<< HEAD
     private ResultSet rs;
     private javax.swing.JTable table2;
     private ArrayList <String> days;
     private int id;
+=======
+>>>>>>> a52e0e2ebbff887fda965f70999249ef6479b3f1
     /**
      * Creates new form NewMeeting
      */
-    public NewMeeting(ArrayList<String> days) {
-        
-
-		initComponents();
-                this.days = days;
-                jComboDays.removeAllItems();
-                for(String dag : days) {
-                jComboDays.addItem(dag);
-                }
-
-		getResultset();
-		try {
-			table2 = new JTable(Refactor.tableModelBuilder(rs));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		jScrollPane1.setViewportView(table2);
-		table2.setVisible(true);
-    }
-    
-    public NewMeeting () {
-    initComponents();
+    public NewMeeting() {
+        initComponents();
     }
 
     /**
@@ -59,6 +34,7 @@ public class NewMeeting extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+<<<<<<< HEAD
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
@@ -124,10 +100,15 @@ public class NewMeeting extends javax.swing.JFrame {
 
         jLabel2.setText("Beskrivning");
 
+=======
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+>>>>>>> a52e0e2ebbff887fda965f70999249ef6479b3f1
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+<<<<<<< HEAD
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,49 +171,55 @@ public class NewMeeting extends javax.swing.JFrame {
                     .addComponent(jButtonTime)
                     .addComponent(jButton2))
                 .addContainerGap())
+=======
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+>>>>>>> a52e0e2ebbff887fda965f70999249ef6479b3f1
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboDaysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboDaysActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboDaysActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int id = Refactor.getTableValueFirstColumn(table2);
-        String oldTag = "";
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
         try {
-        oldTag = jLblPers.getText();
-        String firstName = Database.fetchSingle("Select firstName from User where UserID =" + id);
-        String lastName = Database.fetchSingle("Select lastName from User where UserID =" + id);
-        jLblPers.setText(oldTag + " " + firstName + " " + lastName);
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(NewMeeting.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(NewMeeting.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(NewMeeting.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(NewMeeting.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        catch (Exception e) {
-            System.out.println("sqllll");
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        //</editor-fold>
 
-    private void jButtonTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTimeActionPerformed
-        String oldtag = jLabel1.getText();
-        
-        String day= jComboDays.getSelectedItem().toString();
-        String time = jTxtTid.getText();
-        jLabel1.setText(oldtag + " " + day + " " + time);
-    }//GEN-LAST:event_jButtonTimeActionPerformed
-
-  public void getResultset()
-	{
-		//Kör emot Databasen och hämtar raderna från User
-		try {
-			rs = Database.fetchRows("SELECT UserID,firstName, lastName FROM User");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-	}
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new NewMeeting().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+<<<<<<< HEAD
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonTime;
@@ -247,5 +234,7 @@ public class NewMeeting extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTxtTid;
+=======
+>>>>>>> a52e0e2ebbff887fda965f70999249ef6479b3f1
     // End of variables declaration//GEN-END:variables
 }
