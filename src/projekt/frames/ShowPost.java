@@ -32,6 +32,18 @@ public class ShowPost extends javax.swing.JFrame {
         fillPost(id);
         this.id = id;
         this.user = user;
+        
+        String postUserID;
+        int postUserInt = 0;
+        try {
+            postUserID = Database.fetchSingle("Select UserID from Post where postID = " + id);
+            postUserInt = Integer.parseInt(postUserID);
+        } catch (SQLException ex) {
+            Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(user.getUserID()!= postUserInt){
+        jBEditPost.setVisible(false);
+        }
 
         try {
             String joinQuery = "SELECT CommentID, firstName, lastName, Comments.timeStamp, Text FROM User JOIN Comments ON User.UserID = Comments.UserID WHERE PostID =" + id;
