@@ -44,7 +44,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame
 	{
 		//Kör emot Databasen och hämtar raderna från User
 		try {
-			rs = Database.fetchRows("SELECT * FROM User");
+			rs = Database.fetchRows("SELECT CONCAT(UserID) as ID, CONCAT(firstName, ' ', lastName) as Namn,CONCAT(eMail) as Epost, CONCAT(adminStatus) AS Admin FROM User;");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
