@@ -12,6 +12,8 @@ import java.util.logging.Logger;
 import javax.swing.JCheckBox;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import projekt.User;
 
 /**
  *
@@ -20,14 +22,18 @@ import java.sql.ResultSet;
 public class MeetingVotes extends javax.swing.JFrame {
 
     private int proposedMeetingID;
+    private static User user;
+    private ArrayList<Integer> dateTimes;
     
     /**
      * Creates new form MeetingVotes
      */
-    public MeetingVotes(int proposedMeetingID) {
+    public MeetingVotes(int proposedMeetingID, User user) {
         this.proposedMeetingID = proposedMeetingID;
+        this.user = user;
         initComponents();
         fillCBDate();
+        dateTimes = new ArrayList<Integer>();
       
     }
 
@@ -42,12 +48,14 @@ public class MeetingVotes extends javax.swing.JFrame {
 
         jCBDate = new javax.swing.JComboBox<>();
         jBAddTime = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jBSendAvailable = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jCBTime = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTAChosenTimes = new javax.swing.JTextArea();
+        jBDeleteTime = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,9 +72,19 @@ public class MeetingVotes extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Skicka tillgänglighet");
+        jBSendAvailable.setText("Skicka tillgänglighet");
+        jBSendAvailable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBSendAvailableActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Tillbaka");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Mina valda tider:");
 
@@ -74,6 +92,15 @@ public class MeetingVotes extends javax.swing.JFrame {
         jTAChosenTimes.setColumns(20);
         jTAChosenTimes.setRows(5);
         jScrollPane1.setViewportView(jTAChosenTimes);
+
+        jBDeleteTime.setText("Ta bort alla valda tider");
+        jBDeleteTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBDeleteTimeActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Välj tillgänlighet för möte:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -83,40 +110,52 @@ public class MeetingVotes extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jBSendAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jCBDate, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jCBTime, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                                .addComponent(jBAddTime)))
-                        .addGap(38, 38, 38))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jCBDate, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jCBTime, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jBDeleteTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jBAddTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(38, 38, 38))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(21, 21, 21)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCBDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBAddTime)
                     .addComponent(jCBTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addComponent(jLabel1)
-                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(jBDeleteTime)
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton1))
+                    .addComponent(jBSendAvailable))
                 .addGap(23, 23, 23))
         );
 
@@ -134,7 +173,39 @@ public class MeetingVotes extends javax.swing.JFrame {
         String time = jCBTime.getSelectedItem().toString();
         String oldLabel = jTAChosenTimes.getText();
         jTAChosenTimes.setText(oldLabel + " " + date + " " +  time + "\n");
+        try {
+            String query = Database.fetchSingle("Select DateTimeID from Proposed_Date_Time where Time = '" + time + "' and Date = '" + date + "'");
+            dateTimes.add(Integer.parseInt(query));
+        } catch (SQLException ex) {
+            System.out.println("errr");
+        }
+        
     }//GEN-LAST:event_jBAddTimeActionPerformed
+
+    private void jBSendAvailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSendAvailableActionPerformed
+        
+        try {
+            for(Integer dateTime : dateTimes){
+                Database.executeUpdate("INSERT INTO user_votes VALUES (4, " + dateTime + ");");
+                JOptionPane.showMessageDialog(null, "Dina tider är skickade till mötesvärden!");
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println("Error");
+                    
+        }
+
+        
+    }//GEN-LAST:event_jBSendAvailableActionPerformed
+
+    private void jBDeleteTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeleteTimeActionPerformed
+        jTAChosenTimes.setText("");
+        dateTimes.removeAll(dateTimes);
+    }//GEN-LAST:event_jBDeleteTimeActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,7 +237,7 @@ public class MeetingVotes extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MeetingVotes(1).setVisible(true);
+                new MeetingVotes(1, user).setVisible(true);
             }
         });
     }
@@ -212,11 +283,13 @@ public class MeetingVotes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAddTime;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jBDeleteTime;
+    private javax.swing.JButton jBSendAvailable;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jCBDate;
     private javax.swing.JComboBox<String> jCBTime;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTAChosenTimes;
     // End of variables declaration//GEN-END:variables

@@ -5,6 +5,9 @@
  */
 package projekt.frames;
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import java.io.File;
 import projekt.helpers.Database;
 import java.sql.SQLException;
 import java.sql.ResultSet;
@@ -21,110 +24,122 @@ import projekt.User;
  *
  * @author Josef
  */
-public class ShowPost extends javax.swing.JFrame
-{
+public class ShowPost extends javax.swing.JFrame {
 
-	private int postID;
-	private User user;
+    private int postID;
+    private User user;
 
-	/**
-	 * Creates new form ShowPost
-	 */
-	public ShowPost(User user, int postID)
-	{
-		initComponents();
-		fillPost(postID);
-		this.postID = postID;
-		this.user = user;
+    /**
+     * Creates new form ShowPost
+     */
+    public ShowPost(User user, int postID) {
+        initComponents();
+        fillPost(postID);
+        this.postID = postID;
+        this.user = user;
 
-		String postUserID;
-		int postUserInt = 0;
-		try {
-			postUserID = Database.fetchSingle("Select UserID from Post where postID = " + postID);
-			postUserInt = Integer.parseInt(postUserID);
-		} catch (SQLException ex) {
-			Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		if (user.getUserID() != postUserInt) {
-			jBEditPost.setVisible(false);
-		}
+        String postUserID;
+        int postUserInt = 0;
+        try {
+            postUserID = Database.fetchSingle("Select UserID from Post where postID = " + postID);
+            postUserInt = Integer.parseInt(postUserID);
+        } catch (SQLException ex) {
+            Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (user.getUserID() != postUserInt) {
+            jBEditPost.setVisible(false);
+        }
 
-		try {
-			String joinQuery = "SELECT CommentID, firstName, lastName, Comments.timeStamp, Text FROM User JOIN Comments ON User.UserID = Comments.UserID WHERE PostID =" + postID;
+        try {
+            String joinQuery = "SELECT CommentID, firstName, lastName, Comments.timeStamp, Text FROM User JOIN Comments ON User.UserID = Comments.UserID WHERE PostID =" + postID;
 
-			fillComments(Database.fetchRows(joinQuery));
-			System.out.println("ShowPost");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		if (user == null) {
-			jbNewComment.setVisible(false);
-			jBLike1.setVisible(false);
-			jBDeletePost.setVisible(false);
-		}
-		if (user != null && user.getAdmin().equalsIgnoreCase("N")) {
-			jBDeletePost.setVisible(false);
-		}
-	}
+            fillComments(Database.fetchRows(joinQuery));
+            System.out.println("ShowPost");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (user == null) {
+            jbNewComment.setVisible(false);
+            jBLike1.setVisible(false);
+            jBDeletePost.setVisible(false);
+        }
+        if (user != null && user.getAdmin().equalsIgnoreCase("N")) {
+            jBDeletePost.setVisible(false);
+        }
+        fillPicture();
+    }
 
-	public void fillComments(ResultSet rs)
-	{
-		try {
-			jTableComments = new JTable(Refactor.tableModelBuilder(rs));
+    public void fillPicture() {
+        try {
+            String pathway = Database.fetchSingle("SELECT Picture FROM Post WHERE PostID = " + postID);
+            System.out.println(pathway);
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+            txt_filename.setText(pathway);
+            Image getAbsolutePath = null;
+            javax.swing.ImageIcon icon = new javax.swing.ImageIcon(pathway);
+            Image image = icon.getImage().getScaledInstance(jLPicture.getWidth(), jLPicture.getHeight(), Image.SCALE_DEFAULT);
 
-		jspComments.setViewportView(jTableComments);
-		jTableComments.setVisible(true);
-		jTableComments.getSelectionModel().addListSelectionListener(new ListSelectionListener()
-		{
-			public void valueChanged(ListSelectionEvent event)
-			{
-				// do some actions here, for example
-				// print first column value from selected row
-				if (event.getValueIsAdjusting()) {
+            jLPicture.setIcon(icon);
 
-				} else {
-					int id = (int) (jTableComments.getValueAt(jTableComments.getSelectedRow(), 0));
-					new ShowComment(id, user).setVisible(true);
-				}
-			}
-		});
-	}
+        } catch (SQLException ex) {
+            Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
-	public void fillPost(int postID)
-	{
+    public void fillComments(ResultSet rs) {
+        try {
+            jTableComments = new JTable(Refactor.tableModelBuilder(rs));
 
-		try {
-			jTextField4.setText(Database.fetchSingle("Select title from Post where PostID=" + postID));
-			jTextField2.setText(Database.fetchSingle("Select User.firstName FROM User, Post WHERE Post.UserID = User.UserID AND PostID = " + postID) + " " + Database.fetchSingle("Select User.lastName FROM User, Post WHERE Post.UserID = User.UserID AND PostID = " + postID));
-			jTextField3.setText(Database.fetchSingle("Select timeStamp FROM Post where PostID=" + postID));
-			jTextArea1.setText(Database.fetchSingle("Select description from Post where PostID=" + postID));
-			jtfLikeCount.setText(Database.fetchSingle("SELECT count(likes) FROM Post_Likes WHERE PostID =" + postID));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-			ResultSet tagsRs = Database.fetchRows("Select tagName from Tag where tagID in (Select tagID from Post_Tag where PostID=" + postID + ")");
-			String tags = "";
-			while (tagsRs.next()) {
+        jspComments.setViewportView(jTableComments);
+        jTableComments.setVisible(true);
+        jTableComments.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                // do some actions here, for example
+                // print first column value from selected row
+                if (event.getValueIsAdjusting()) {
 
-				tags = tags + tagsRs.getString(1);
-				tags = tags + ", ";
-			}
+                } else {
+                    int id = (int) (jTableComments.getValueAt(jTableComments.getSelectedRow(), 0));
+                    new ShowComment(id, user).setVisible(true);
+                }
+            }
+        });
+    }
 
-			jTextField1.setText(tags);
-		} catch (SQLException e) {
+    public void fillPost(int postID) {
 
-		}
+        try {
+            jTextField4.setText(Database.fetchSingle("Select title from Post where PostID=" + postID));
+            jTextField2.setText(Database.fetchSingle("Select User.firstName FROM User, Post WHERE Post.UserID = User.UserID AND PostID = " + postID) + " " + Database.fetchSingle("Select User.lastName FROM User, Post WHERE Post.UserID = User.UserID AND PostID = " + postID));
+            jTextField3.setText(Database.fetchSingle("Select timeStamp FROM Post where PostID=" + postID));
+            jTextArea1.setText(Database.fetchSingle("Select description from Post where PostID=" + postID));
+            jtfLikeCount.setText(Database.fetchSingle("SELECT count(likes) FROM Post_Likes WHERE PostID =" + postID));
 
-	}
+            ResultSet tagsRs = Database.fetchRows("Select tagName from Tag where tagID in (Select tagID from Post_Tag where PostID=" + postID + ")");
+            String tags = "";
+            while (tagsRs.next()) {
 
-	/**
-	 * This method is called from within the constructor to initialize the form.
-	 * WARNING: Do NOT modify this code. The content of this method is always
-	 * regenerated by the Form Editor.
-	 */
-	@SuppressWarnings("unchecked")
+                tags = tags + tagsRs.getString(1);
+                tags = tags + ", ";
+            }
+
+            jTextField1.setText(tags);
+        } catch (SQLException e) {
+
+        }
+
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -147,6 +162,8 @@ public class ShowPost extends javax.swing.JFrame
         jBLike1 = new javax.swing.JButton();
         jBEditPost = new javax.swing.JButton();
         jBDeletePost = new javax.swing.JButton();
+        jLPicture = new javax.swing.JLabel();
+        txt_filename = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -244,6 +261,8 @@ public class ShowPost extends javax.swing.JFrame
             }
         });
 
+        jLPicture.setMaximumSize(new java.awt.Dimension(1500, 1500));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -286,34 +305,45 @@ public class ShowPost extends javax.swing.JFrame
                                 .addGap(25, 25, 25)
                                 .addComponent(jBLike1)))
                         .addGap(8, 8, 8)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_filename, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jtfLikeCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBLike1)
-                    .addComponent(jBDeletePost))
-                .addGap(18, 18, 18)
-                .addComponent(jspComments, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jtfLikeCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBLike1)
+                            .addComponent(jBDeletePost))
+                        .addGap(18, 18, 18)
+                        .addComponent(jspComments, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_filename, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jbNewComment)
@@ -327,52 +357,52 @@ public class ShowPost extends javax.swing.JFrame
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jTextField2ActionPerformed
     {//GEN-HEADEREND:event_jTextField2ActionPerformed
-		// TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
-		this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jbShowCommentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbShowCommentsActionPerformed
-		try {
+        try {
 
-			int commentID = (int) (jTableComments.getValueAt(jTableComments.getSelectedRow(), 0));
-			new ShowComment(commentID, user);
+            int commentID = (int) (jTableComments.getValueAt(jTableComments.getSelectedRow(), 0));
+            new ShowComment(commentID, user);
 
-		} catch (ArrayIndexOutOfBoundsException e) {
-			JOptionPane.showMessageDialog(null, "Vänligen välj en kommentar att visa!");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Vänligen välj en kommentar att visa!");
 
-		}
+        }
     }//GEN-LAST:event_jbShowCommentsActionPerformed
 
     private void jbNewCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNewCommentActionPerformed
-		new NewComment(user, postID).setVisible(true);
+        new NewComment(user, postID).setVisible(true);
     }//GEN-LAST:event_jbNewCommentActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-		// TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
 
 
     private void jBLike1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLike1ActionPerformed
-		int userId = user.getUserID();
-		String insertQuery = "INSERT INTO Post_Likes (UserID, PostID, likes) VALUES (" + userId + ", " + postID + ", 1)";
-		String nameQuery = "SELECT firstName FROM User JOIN Post ON User.UserID = Post.UserID WHERE PostID = " + postID;
-		try {
-			String tempId = Database.fetchSingle("SELECT UserID FROM Post_Likes WHERE PostID = " + postID);
-			System.out.println(tempId);
-			if (tempId == null) {
-				Database.executeUpdate(insertQuery);
-				jtfLikeCount.setText(Database.fetchSingle("SELECT count(likes) FROM Post_Likes WHERE PostID =" + postID));
-				JOptionPane.showMessageDialog(null, "Du gillade precis " + Database.fetchSingle(nameQuery) + "s inlägg!");
-			} else {
-				JOptionPane.showMessageDialog(null, "Du har redan gillat detta inlägg!");
-			}
-		} catch (SQLException ex) {
-			System.out.println("fel");
-		}
+        int userId = user.getUserID();
+        String insertQuery = "INSERT INTO Post_Likes (UserID, PostID, likes) VALUES (" + userId + ", " + postID + ", 1)";
+        String nameQuery = "SELECT firstName FROM User JOIN Post ON User.UserID = Post.UserID WHERE PostID = " + postID;
+        try {
+            String tempId = Database.fetchSingle("SELECT UserID FROM Post_Likes WHERE PostID = " + postID);
+            System.out.println(tempId);
+            if (tempId == null) {
+                Database.executeUpdate(insertQuery);
+                jtfLikeCount.setText(Database.fetchSingle("SELECT count(likes) FROM Post_Likes WHERE PostID =" + postID));
+                JOptionPane.showMessageDialog(null, "Du gillade precis " + Database.fetchSingle(nameQuery) + "s inlägg!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Du har redan gillat detta inlägg!");
+            }
+        } catch (SQLException ex) {
+            System.out.println("fel");
+        }
     }//GEN-LAST:event_jBLike1ActionPerformed
 
     private void jBLikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -380,34 +410,34 @@ public class ShowPost extends javax.swing.JFrame
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jBEditPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditPostActionPerformed
-		// TODO add your handling code here:
-		new EditPost(user, postID).setVisible(true);
+        // TODO add your handling code here:
+        new EditPost(user, postID).setVisible(true);
     }//GEN-LAST:event_jBEditPostActionPerformed
 
     private void jBDeletePostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeletePostActionPerformed
-		int n = JOptionPane.showConfirmDialog(
-				null,
-				"Vill du verkligen ta bort inlägget?",
-				"Förfrågan",
-				JOptionPane.YES_NO_OPTION);
+        int n = JOptionPane.showConfirmDialog(
+                null,
+                "Vill du verkligen ta bort inlägget?",
+                "Förfrågan",
+                JOptionPane.YES_NO_OPTION);
 
-		if (n == JOptionPane.YES_OPTION) {
-			try {
-				Database.executeUpdate("DELETE FROM Post_Tag WHERE PostID = " + postID);
-				Database.executeUpdate("DELETE FROM Post_Likes WHERE PostID = " + postID);
-				Database.executeUpdate("DELETE FROM Comments WHERE PostID = " + postID);
-				Database.executeUpdate("DELETE FROM Post WHERE PostID = " + postID);
+        if (n == JOptionPane.YES_OPTION) {
+            try {
+                Database.executeUpdate("DELETE FROM Post_Tag WHERE PostID = " + postID);
+                Database.executeUpdate("DELETE FROM Post_Likes WHERE PostID = " + postID);
+                Database.executeUpdate("DELETE FROM Comments WHERE PostID = " + postID);
+                Database.executeUpdate("DELETE FROM Post WHERE PostID = " + postID);
 
-			} catch (SQLException ex) {
-				Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
-			}
+            } catch (SQLException ex) {
+                Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-			this.dispose();
-			JOptionPane.showMessageDialog(null, "Inlägget är nu borttaget!");
+            this.dispose();
+            JOptionPane.showMessageDialog(null, "Inlägget är nu borttaget!");
 
-		} else {
+        } else {
 
-		}
+        }
     }//GEN-LAST:event_jBDeletePostActionPerformed
 
 
@@ -416,6 +446,7 @@ public class ShowPost extends javax.swing.JFrame
     private javax.swing.JButton jBEditPost;
     private javax.swing.JButton jBLike1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLPicture;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -431,5 +462,6 @@ public class ShowPost extends javax.swing.JFrame
     private javax.swing.JButton jbShowComments;
     private javax.swing.JScrollPane jspComments;
     private javax.swing.JTextField jtfLikeCount;
+    private javax.swing.JTextField txt_filename;
     // End of variables declaration//GEN-END:variables
 }
