@@ -335,8 +335,7 @@ public class ShowPost extends javax.swing.JFrame {
         try {
 
             int commentID = (int) (jTableComments.getValueAt(jTableComments.getSelectedRow(), 0));
-            new ShowComment(commentID,user)
-
+            new ShowComment(commentID,user).setVisible(true);
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "Vänligen välj en kommentar att visa!");
 

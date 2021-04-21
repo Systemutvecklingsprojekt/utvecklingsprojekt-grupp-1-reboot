@@ -25,7 +25,7 @@ public class NewMeeting extends javax.swing.JFrame {
     private ArrayList<String> pers;
     private ArrayList<String> dbPers;
     private User user;
-    
+    private int creatorID;
 
     /**
      * Creates new form NewMeeting
@@ -33,34 +33,38 @@ public class NewMeeting extends javax.swing.JFrame {
     public NewMeeting(User user) {
         initComponents();
         this.user = user;
+        creatorID = this.user.getUserID();
         jComboPers.removeAllItems();
-        jComboPers.addItem("- Välj -");
         pers = getArrayPers();
+        jDateChooser1.setEnabled(false);
+        jDateChooser1.getCalendarButton().setEnabled(true);
+        jTimeStart.setText("00.00");
+        jTimeStart.setEnableArrowKeys(true);
+        
+        
         fyllCombo();
-        jSpinTim.setMaximum(24);
-        jSpinTim.setMinimum(1);
-        
-        
         
     }
     
-    private ArrayList<String> getArrayPers (){
+    private ArrayList<String> getArrayPers() {
         
-       ArrayList<String> pers = null;
+        ArrayList<String> pers = null;
         try {
-        pers = Database.fetchColumn("Select email from User");
-        return pers;
-        }
-        catch (Exception e) {
+            pers = Database.fetchColumn("Select email from User WHERE NOT email = 'DELETEDUSER'");
+            return pers;
+        } catch (Exception e) {
             System.out.println("feeeeel arraylist personer");
         }
         return pers;
     }
     
     private void fyllCombo() {
-    for(String pers : pers) {
-    jComboPers.addItem(pers);
-    }
+        for (String pers : pers) {
+            
+            jComboPers.addItem(pers);
+            
+        }
+        
     }
 
     /**
@@ -72,14 +76,12 @@ public class NewMeeting extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
         jlblInfo = new javax.swing.JLabel();
         jlblBeskriv = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTxtDesc = new javax.swing.JTextArea();
         jLblTime = new javax.swing.JLabel();
-        jTxtTime = new javax.swing.JTextField();
-        jLblDur = new javax.swing.JLabel();
-        jSpinTim = new com.toedter.components.JSpinField();
         jlblDatum = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jBtnSkapaMöte = new javax.swing.JButton();
@@ -93,6 +95,9 @@ public class NewMeeting extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jTxtNamn = new javax.swing.JTextField();
+        jTimeStart = new com.github.lgooddatepicker.components.TimePicker();
+
+        jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,8 +110,6 @@ public class NewMeeting extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTxtDesc);
 
         jLblTime.setText("Starttid:");
-
-        jLblDur.setText("Varaktighet i timmar:");
 
         jlblDatum.setText("Datum:");
 
@@ -122,14 +125,14 @@ public class NewMeeting extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Namn", "Beskrivning", "Starttid", "Varaktighet", "Datum"
+                "Namn", "Beskrivning", "Starttid", "Datum"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -185,21 +188,14 @@ public class NewMeeting extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLblDur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSpinTim, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLblTime, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTxtTime, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(117, 117, 117))
+                        .addComponent(jLblTime, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(jTimeStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jlblDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(73, 73, 73))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -267,13 +263,9 @@ public class NewMeeting extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTxtTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLblTime))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLblDur)
-                            .addComponent(jSpinTim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLblTime)
+                            .addComponent(jTimeStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(53, 53, 53)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jlblDatum)
                             .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -288,122 +280,119 @@ public class NewMeeting extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboPersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPersActionPerformed
-        
+
     }//GEN-LAST:event_jComboPersActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       String add = jComboPers.getSelectedItem().toString();
+        String add = jComboPers.getSelectedItem().toString();
         DefaultTableModel model = (DefaultTableModel) jTablePers.getModel();
         model.addRow(new Object[]{add});
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jBtnSkapaMöteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSkapaMöteActionPerformed
+        if(Validation.checkName(jTxtNamn) && Validation.checkTextArea(jTxtDesc) && Validation.dateChooserValid(jDateChooser1) && Validation.valideraTid(jTimeStart.getText()) && Validation.validTid(jTimeStart.getText())) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String meetingDate = dateFormat.format(jDateChooser1.getDate());
         String beskrivning = jTxtDesc.getText();
         String name = jTxtNamn.getText();
-        int duration = jSpinTim.getValue();
-        String startTid = jTxtTime.getText();
-        System.out.println(meetingDate);
+        String startTid = jTimeStart.getText() + ".00";
+        
+        
+        
+        
+        
         
         DefaultTableModel model = (DefaultTableModel) jTableMeeting.getModel();
-        model.addRow(new Object[]{name,beskrivning,startTid,duration,meetingDate});
+        model.addRow(new Object[]{name, beskrivning, startTid, meetingDate});
         
         jTxtDesc.setEnabled(false);
-        jSpinTim.setEnabled(false);
+        jTxtNamn.setEnabled(false);
+        }
+        
     }//GEN-LAST:event_jBtnSkapaMöteActionPerformed
 
     private void jBtnSkickaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSkickaActionPerformed
-       meeting();
-       personer();
-    }//GEN-LAST:event_jBtnSkickaActionPerformed
-    
-    private void meeting(){
+        
         int i = 0;
         String beskrivning;
-        String startTid;
-        int tid; 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String date;
         String name;
-        System.out.println(jTableMeeting.getColumnCount());
-        
-        for(i = 0; i<jTableMeeting.getRowCount(); i++) {
-        
-        name = jTableMeeting.getValueAt(i, 0).toString();    
+        name = jTableMeeting.getValueAt(i, 0).toString();
         beskrivning = jTableMeeting.getValueAt(i, 1).toString();
-        startTid = jTableMeeting.getValueAt(i, 2).toString();
-        tid = Integer.parseInt(jTableMeeting.getValueAt(i, 3).toString());
-        date = jTableMeeting.getValueAt(i, 4).toString();
-            System.out.println(name + " " + beskrivning + " " + startTid + " " + tid + " " + date);
+        int propMeet = 0;
+        if(checkList()) {
+        
         try {
-        Database.executeUpdate("Insert into Proposed_Meeting (Name, Describtion)");
+            Database.executeUpdate("Insert into Proposed_Meeting (Name, Description, UserCreatorID) VALUES ('" + name + "', '" + beskrivning + "'," + creatorID + ")");
+            propMeet = Integer.parseInt(Database.fetchSingle("Select ProposedMeetingID from Proposed_Meeting Where ProposedMeetingID = (Select max(ProposedMeetingID) from Proposed_Meeting)"));
+        } catch (Exception e) {
+            System.out.println("kunde ej inserta i proposed meeting");
+            return;
         }
-        catch (Exception e) {
-            System.out.println("kunde ej sätta in i databasen");
-        }
+        
+        meeting(propMeet);
+        personer(propMeet);
+        JOptionPane.showMessageDialog(null, "Mötesförslag(en) har skickats till de inbjudna");}
+
+    }//GEN-LAST:event_jBtnSkickaActionPerformed
+    
+    private void meeting(int propMeet) {
+        int i = 0;
+        String startTid;
+        String date;
+        
+        for (i = 0; i < jTableMeeting.getRowCount(); i++) {
+            startTid = jTableMeeting.getValueAt(i, 2).toString();
+            date = jTableMeeting.getValueAt(i, 3).toString();
+            
+            try {
+                Database.executeUpdate("Insert into Proposed_Date_Time (Date, Time, ProsedMeetingID) VALUES ('" + date + "','" + startTid + "', " + propMeet + ")");
+            } catch (Exception e) {
+                System.out.println("kunde ej sätta in i databasen");
+            }
         }
     }
     
-    
-    private void personer(){
+    private void personer(int propMeet) {
         
         int i = 0;
         String email;
-        String dbID;
+        int userID;
         
-        
-        for(i = 0; i<jTablePers.getRowCount(); i++) {
-        
-        email = jTablePers.getValueAt(i, 0).toString();
-            System.out.println(email);
-       try {
-        dbID = Database.fetchSingle("Select UserID from User Where Email = '" + email + "'" );
-           System.out.println(dbID);
-        }
-        catch (Exception e) {
-         System.out.println("kunde ej sätta in i databasen");
-        }
-        
+        for (i = 0; i < jTablePers.getRowCount(); i++) {
+            
+            email = jTablePers.getValueAt(i, 0).toString();
+            
+            try {
+                userID = Integer.parseInt(Database.fetchSingle("Select UserID from User Where Email = '" + email + "'"));
+                Database.executeUpdate("Insert into Invites (ProposedMeeting, UserID) VALUES (" + propMeet + "," + userID + ")");
+                
+            } catch (Exception e) {
+                System.out.println("kunde ej sätta in i databasen");
+            }
+            
         }
         
     }
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewMeeting.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewMeeting.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewMeeting.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewMeeting.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-User user = null;
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new NewMeeting(user).setVisible(true);
-            }
-        });
+    private boolean checkList() {
+    boolean resultat = true;    
+    try {
+    String koll = jTablePers.getValueAt(0, 0).toString();
+    
+        return resultat;
+    
     }
+    catch(Exception e){
+    JOptionPane.showMessageDialog(null, "Vänligen välj minst en person att bjuda in");
+    resultat = false;
+    return resultat;
+    }
+    
+    
+    }
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnSkapaMöte;
@@ -413,17 +402,16 @@ User user = null;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLblDur;
     private javax.swing.JLabel jLblTime;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private com.toedter.components.JSpinField jSpinTim;
     private javax.swing.JTable jTableMeeting;
     private javax.swing.JTable jTablePers;
+    private com.github.lgooddatepicker.components.TimePicker jTimeStart;
     private javax.swing.JTextArea jTxtDesc;
     private javax.swing.JTextField jTxtNamn;
-    private javax.swing.JTextField jTxtTime;
     private javax.swing.JLabel jlblBeskriv;
     private javax.swing.JLabel jlblDatum;
     private javax.swing.JLabel jlblInfo;
