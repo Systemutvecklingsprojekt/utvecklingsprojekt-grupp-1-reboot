@@ -72,7 +72,21 @@ public class PersonalMeetings extends javax.swing.JFrame {
             }
             jScrollPane1.setViewportView(table2);
             table2.setVisible(true);
-initTableListener();
+             if (table2 != null) {
+            table2.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                public void valueChanged(ListSelectionEvent e) {
+                    if (e.getValueIsAdjusting()) {
+
+                    } else {
+                        int id = (int) (table2.getValueAt(table2.getSelectedRow(), 0));
+                        new ShowMeeting(id).setVisible(true);
+                    }
+                }
+            });
+        } else{
+            System.out.println("table2 is Null");
+        }
+
         }
     }
 
