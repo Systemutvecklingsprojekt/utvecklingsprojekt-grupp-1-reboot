@@ -10,10 +10,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import com.toedter.calendar.JDateChooser;
-import com.github.lgooddatepicker.components.TimePicker;
-import java.time.LocalTime;
-import java.time.format.DateTimeParseException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -53,16 +49,6 @@ public class Validation {
         boolean result = true;
         String pattern = "[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]";
         if(!textFalt.getText().matches(pattern)){
-            JOptionPane.showMessageDialog(null, "V?nligen ange datum i f?ljande format: yyyy-mm-dd");
-            result = false;
-        }
-        return result;
-    }
-    
-    public static boolean checkDate(String string){
-        boolean result = true;
-        String pattern = "[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]";
-        if(!string.matches(pattern)){
             JOptionPane.showMessageDialog(null, "V?nligen ange datum i f?ljande format: yyyy-mm-dd");
             result = false;
         }
@@ -133,7 +119,7 @@ public class Validation {
     public static boolean isArrayListStringNull(ArrayList<String> list){
         boolean result = true;
         if(list == null){
-            JOptionPane.showMessageDialog(null, "Din sökning gav inga träffar.");
+            JOptionPane.showMessageDialog(null, "Din s?kning gav inga tr?ffar.");
             result = false;
         }
         return result;
@@ -161,39 +147,6 @@ public class Validation {
         }
         return result;
     }
-    
-    public static boolean dateChooserValid(JDateChooser chooser) {
-        boolean resultat = true;
-        if (((JTextField) chooser.getDateEditor().getUiComponent()).getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Välj ett datum");
-            resultat = false;
-        }
-        return resultat;
-        
-    }
-    
-    public static boolean valideraTid (String string) {
-        boolean resultat = true;
-        if(string.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Vänligen välj en starttid");
-            resultat = false;
-        }
-        return resultat;
-    }
-    
-    public static boolean validTid (String string) {
-    boolean resultat = true;
-    try {
-        LocalTime.parse(string);
-    } catch (DateTimeParseException | NullPointerException e) {
-        JOptionPane.showMessageDialog(null, "fel format på tid, vänligen välj ur listan");
-        resultat = false;
-    }
-    return resultat;
-    }
-           
-    
-    
     
 }
 

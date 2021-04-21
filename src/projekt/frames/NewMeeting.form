@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
-  <NonVisualComponents>
-    <Component class="javax.swing.JMenuItem" name="jMenuItem1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jMenuItem1"/>
-      </Properties>
-    </Component>
-  </NonVisualComponents>
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -34,17 +27,27 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jLblTime" min="-2" pref="54" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                      <Component id="jTimeStart" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jLblDur" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jSpinTim" min="-2" pref="47" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="jLblTime" min="-2" pref="54" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jTxtTime" min="-2" pref="153" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jlblDatum" min="-2" pref="80" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jDateChooser1" min="-2" pref="129" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
               <Component id="jScrollPane3" min="-2" pref="242" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
           </Group>
@@ -133,10 +136,15 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jTxtTime" min="-2" max="-2" attributes="0"/>
                           <Component id="jLblTime" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTimeStart" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLblDur" min="-2" max="-2" attributes="0"/>
+                          <Component id="jSpinTim" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jlblDatum" min="-2" max="-2" attributes="0"/>
                           <Component id="jDateChooser1" min="-2" max="-2" attributes="0"/>
@@ -183,6 +191,15 @@
         <Property name="text" type="java.lang.String" value="Starttid:"/>
       </Properties>
     </Component>
+    <Component class="javax.swing.JTextField" name="jTxtTime">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLblDur">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Varaktighet i timmar:"/>
+      </Properties>
+    </Component>
+    <Component class="com.toedter.components.JSpinField" name="jSpinTim">
+    </Component>
     <Component class="javax.swing.JLabel" name="jlblDatum">
       <Properties>
         <Property name="text" type="java.lang.String" value="Datum:"/>
@@ -208,15 +225,21 @@
         <Component class="javax.swing.JTable" name="jTableMeeting">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="0">
+              <Table columnCount="5" rowCount="0">
                 <Column editable="false" title="Namn" type="java.lang.String"/>
                 <Column editable="false" title="Beskrivning" type="java.lang.String"/>
                 <Column editable="false" title="Starttid" type="java.lang.String"/>
+                <Column editable="false" title="Varaktighet" type="java.lang.Integer"/>
                 <Column editable="false" title="Datum" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
@@ -321,8 +344,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTxtNamn">
-    </Component>
-    <Component class="com.github.lgooddatepicker.components.TimePicker" name="jTimeStart">
     </Component>
   </SubComponents>
 </Form>
