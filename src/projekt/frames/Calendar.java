@@ -167,7 +167,6 @@ public class Calendar extends javax.swing.JFrame
 				}
 			}
 		});
-		jCalendar1.get
 	}
 
     private void jBChooseDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBChooseDateActionPerformed
