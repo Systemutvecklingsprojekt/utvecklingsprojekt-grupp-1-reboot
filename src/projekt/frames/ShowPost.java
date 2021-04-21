@@ -5,6 +5,9 @@
  */
 package projekt.frames;
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import java.io.File;
 import projekt.helpers.Database;
 import java.sql.SQLException;
 import java.sql.ResultSet;
@@ -34,7 +37,7 @@ public class ShowPost extends javax.swing.JFrame {
         fillPost(postID);
         this.postID = postID;
         this.user = user;
-        
+
         String postUserID;
         int postUserInt = 0;
         try {
@@ -43,8 +46,8 @@ public class ShowPost extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(user.getUserID()!= postUserInt){
-        jBEditPost.setVisible(false);
+        if (user.getUserID() != postUserInt) {
+            jBEditPost.setVisible(false);
         }
 
         try {
@@ -63,6 +66,24 @@ public class ShowPost extends javax.swing.JFrame {
         if (user != null && user.getAdmin().equalsIgnoreCase("N")) {
             jBDeletePost.setVisible(false);
         }
+        fillPicture();
+    }
+
+    public void fillPicture() {
+        try {
+            String pathway = Database.fetchSingle("SELECT Picture FROM Post WHERE PostID = " + postID);
+            System.out.println(pathway);
+
+            txt_filename.setText(pathway);
+            Image getAbsolutePath = null;
+            javax.swing.ImageIcon icon = new javax.swing.ImageIcon(pathway);
+            Image image = icon.getImage().getScaledInstance(jLPicture.getWidth(), jLPicture.getHeight(), Image.SCALE_DEFAULT);
+
+            jLPicture.setIcon(icon);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void fillComments(ResultSet rs) {
@@ -75,20 +96,18 @@ public class ShowPost extends javax.swing.JFrame {
 
         jspComments.setViewportView(jTableComments);
         jTableComments.setVisible(true);
-		jTableComments.getSelectionModel().addListSelectionListener(new ListSelectionListener()
-		{
-			public void valueChanged(ListSelectionEvent event)
-			{
-				// do some actions here, for example
-				// print first column value from selected row
-				if (event.getValueIsAdjusting()) {
+        jTableComments.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                // do some actions here, for example
+                // print first column value from selected row
+                if (event.getValueIsAdjusting()) {
 
-				} else {
-					int id = (int) (jTableComments.getValueAt(jTableComments.getSelectedRow(), 0));
-					new ShowComment(id,user).setVisible(true);
-				}
-			}
-		});
+                } else {
+                    int id = (int) (jTableComments.getValueAt(jTableComments.getSelectedRow(), 0));
+                    new ShowComment(id, user).setVisible(true);
+                }
+            }
+        });
     }
 
     public void fillPost(int postID) {
@@ -143,6 +162,8 @@ public class ShowPost extends javax.swing.JFrame {
         jBLike1 = new javax.swing.JButton();
         jBEditPost = new javax.swing.JButton();
         jBDeletePost = new javax.swing.JButton();
+        jLPicture = new javax.swing.JLabel();
+        txt_filename = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -240,6 +261,8 @@ public class ShowPost extends javax.swing.JFrame {
             }
         });
 
+        jLPicture.setMaximumSize(new java.awt.Dimension(1500, 1500));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -282,34 +305,45 @@ public class ShowPost extends javax.swing.JFrame {
                                 .addGap(25, 25, 25)
                                 .addComponent(jBLike1)))
                         .addGap(8, 8, 8)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_filename, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jtfLikeCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBLike1)
-                    .addComponent(jBDeletePost))
-                .addGap(18, 18, 18)
-                .addComponent(jspComments, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jtfLikeCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBLike1)
+                            .addComponent(jBDeletePost))
+                        .addGap(18, 18, 18)
+                        .addComponent(jspComments, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_filename, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jbNewComment)
@@ -335,7 +369,7 @@ public class ShowPost extends javax.swing.JFrame {
         try {
 
             int commentID = (int) (jTableComments.getValueAt(jTableComments.getSelectedRow(), 0));
-            new ShowComment(commentID,user)
+            new ShowComment(commentID, user);
 
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "Vänligen välj en kommentar att visa!");
@@ -412,6 +446,7 @@ public class ShowPost extends javax.swing.JFrame {
     private javax.swing.JButton jBEditPost;
     private javax.swing.JButton jBLike1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLPicture;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -427,5 +462,6 @@ public class ShowPost extends javax.swing.JFrame {
     private javax.swing.JButton jbShowComments;
     private javax.swing.JScrollPane jspComments;
     private javax.swing.JTextField jtfLikeCount;
+    private javax.swing.JTextField txt_filename;
     // End of variables declaration//GEN-END:variables
 }

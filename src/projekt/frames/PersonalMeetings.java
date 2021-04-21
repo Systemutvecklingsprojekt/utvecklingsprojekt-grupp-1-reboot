@@ -13,53 +13,78 @@ import javax.swing.JTable;
 import projekt.helpers.Database;
 import projekt.helpers.Validation;
 import projekt.Refactor;
+
 /**
  *
  * @author Amand
  */
 public class PersonalMeetings extends javax.swing.JFrame {
-    
-    private int id;
+
     private User user;
     private ResultSet rs;
     private javax.swing.JTable table2;
+
     /**
      * Creates new form PersonalMeetings
      */
-    public PersonalMeetings(int id) {
+    public PersonalMeetings(User user) {
         initComponents();
-        
-        this.id = id;
-        this.user = new User(this.id); 
+
+        this.user = user;
         jbNewMeeting.setVisible(true);
         jComboBox1.removeAllItems();
         jComboBox1.addItem("Mina inbokade möten");
         jComboBox1.addItem("Mina mötesinbjudningar");
         jComboBox1.addItem("Mina mötesutskick");
-        fyllInbokat();
-        
-        
-    }
-    
-    private void fyllInbokat(){
-    
-       	{
-		
-		try {
-			rs = Database.fetchRows("SELECT * from Meeting where MeetingID IN (Select MeetingID from Meeting_Attandence where UserID =" + this.id + " AND isAttending = 'J')");
-                        table2 = new JTable(Refactor.tableModelBuilder(rs));
-                } catch (Exception ex) {
-			ex.printStackTrace();
-		}
-                jScrollPane1.setViewportView(table2);
-		table2.setVisible(true);
 
-	}
     }
-    
-    
 
-    
+    private void fillBooked() {
+
+        {
+
+            try {
+                rs = Database.fetchRows("SELECT DISTINCT * from Meeting where MeetingID IN (Select MeetingID from Meeting_Attandence where UserID =" + user.getUserID() + " AND isAttending = 'J')");
+                table2 = new JTable(Refactor.tableModelBuilder(rs));
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            jScrollPane1.setViewportView(table2);
+            table2.setVisible(true);
+
+        }
+    }
+
+    private void fillInvites() {
+
+        try {
+            rs = Database.fetchRows("SELECT DISTINCT Proposed_Date_Time.ProsedMeetingID, Proposed_Meeting.Description \n"
+                    + "FROM Proposed_Date_Time\n"
+                    + "JOIN Proposed_Meeting ON Proposed_Date_Time.ProsedMeetingID = Proposed_Meeting.ProposedMeetingID\n"
+                    + "JOIN Invites ON Proposed_Meeting.ProposedMeetingID = Invites.ProposedMeeting\n"
+                    + "WHERE UserID = " + user.getUserID());
+            table2 = new JTable(Refactor.tableModelBuilder(rs));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        jScrollPane1.setViewportView(table2);
+        table2.setVisible(true);
+
+    }
+
+    private void fillHostInvites() {
+
+        try {
+            rs = Database.fetchRows("Select Distinct Date, Time, Name, Description from Proposed_Date_Time, Proposed_Meeting where Proposed_Meeting.ProposedMeetingID = Proposed_Date_Time.ProsedMeetingID and Proposed_Meeting.UserCreatorID = " + user.getUserID());
+            table2 = new JTable(Refactor.tableModelBuilder(rs));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        jScrollPane1.setViewportView(table2);
+        table2.setVisible(true);
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -105,6 +130,12 @@ public class PersonalMeetings extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setToolTipText("");
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -113,14 +144,14 @@ public class PersonalMeetings extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jBBack, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 234, Short.MAX_VALUE)
                 .addComponent(jbNewMeeting)
                 .addGap(26, 26, 26))
             .addGroup(layout.createSequentialGroup()
-                .addGap(88, 88, 88)
+                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -129,8 +160,8 @@ public class PersonalMeetings extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBBack)
                     .addComponent(jbNewMeeting))
@@ -145,11 +176,21 @@ public class PersonalMeetings extends javax.swing.JFrame {
     }//GEN-LAST:event_jBBackActionPerformed
 
     private void jbNewMeetingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNewMeetingActionPerformed
-        
+
     }//GEN-LAST:event_jbNewMeetingActionPerformed
 
-    
-    
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+
+        if (jComboBox1.getSelectedItem() == ("Mina inbokade möten")) {
+            fillBooked();
+        } else if (jComboBox1.getSelectedItem() == ("Mina mötesinbjudningar")) {
+            fillInvites();
+        } else if (jComboBox1.getSelectedItem() == ("Mina mötesutskick")) {
+            fillHostInvites();
+        }
+
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBBack;
