@@ -64,7 +64,8 @@ public class EditUsers extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jBBack = new javax.swing.JButton();
         lbinfo = new javax.swing.JLabel();
@@ -80,12 +81,14 @@ public class EditUsers extends javax.swing.JFrame {
         jRadioAdmin = new javax.swing.JRadioButton();
         jBSave = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jBBack.setBackground(new java.awt.Color(204, 204, 255));
         jBBack.setText("Tillbaka");
-        jBBack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jBBack.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jBBackActionPerformed(evt);
             }
         });
@@ -95,8 +98,10 @@ public class EditUsers extends javax.swing.JFrame {
 
         lblFirstName.setText("Förnamn:");
 
-        jtfFirstName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jtfFirstName.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jtfFirstNameActionPerformed(evt);
             }
         });
@@ -110,8 +115,10 @@ public class EditUsers extends javax.swing.JFrame {
         lblEmail.setText("Epost:");
 
         jRadioAdmin.setText("Ja");
-        jRadioAdmin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jRadioAdmin.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jRadioAdminActionPerformed(evt);
             }
         });
@@ -119,8 +126,10 @@ public class EditUsers extends javax.swing.JFrame {
         jBSave.setBackground(new java.awt.Color(204, 204, 255));
         jBSave.setText("Spara Ändringar");
         jBSave.setPreferredSize(new java.awt.Dimension(100, 25));
-        jBSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jBSave.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jBSaveActionPerformed(evt);
             }
         });
