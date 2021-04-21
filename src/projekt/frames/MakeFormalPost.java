@@ -5,16 +5,10 @@
  */
 package projekt.frames;
 
-import java.awt.Image;
-import javax.swing.ImageIcon;
-import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import projekt.User;
 import projekt.helpers.Validation;
@@ -64,8 +58,6 @@ public class MakeFormalPost extends javax.swing.JFrame {
         jlUplodedFile = new javax.swing.JLabel();
         jBBack = new javax.swing.JButton();
         jBRemoveTag = new javax.swing.JButton();
-        lbl_image = new javax.swing.JLabel();
-        txt_filename = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -137,13 +129,17 @@ public class MakeFormalPost extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jBBack)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(277, 277, 277)
                         .addComponent(jBUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jbUploadFile)
+                                .addGap(46, 46, 46)
+                                .addComponent(jlUplodedFile, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTFTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLTags, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -154,18 +150,7 @@ public class MakeFormalPost extends javax.swing.JFrame {
                                 .addGap(34, 34, 34)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jBRemoveTag, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jBAddTag, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jbUploadFile)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jlUplodedFile)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(3, 3, 3)
-                                        .addComponent(lbl_image, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txt_filename, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(jBAddTag, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(43, 43, 43)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -184,40 +169,25 @@ public class MakeFormalPost extends javax.swing.JFrame {
                 .addComponent(jBRemoveTag)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLTags)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbUploadFile)
-                    .addComponent(jlUplodedFile)
-                    .addComponent(txt_filename, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jBUpload)
-                            .addComponent(jBBack))
-                        .addGap(39, 39, 39))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbl_image, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(12, Short.MAX_VALUE))))
+                    .addComponent(jlUplodedFile))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBUpload)
+                    .addComponent(jBBack))
+                .addGap(30, 30, 30))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbUploadFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUploadFileActionPerformed
-        JFileChooser chooser = new JFileChooser();
-        chooser.showOpenDialog(null);
-        File f = chooser.getSelectedFile();
-        String filename = f.getAbsolutePath();
-        txt_filename.setText(filename);
-        Image getAbsolutePath = null;
-        javax.swing.ImageIcon icon = new javax.swing.ImageIcon(filename);
-        Image image = icon.getImage().getScaledInstance(lbl_image.getWidth(), lbl_image.getHeight(), Image.SCALE_SMOOTH);
-
-        lbl_image.setIcon(icon);
+        // TODO add your handling code here:
+        int interval = jFileChooser2.showOpenDialog(this);
     }//GEN-LAST:event_jbUploadFileActionPerformed
 
     private void checkFullTags() {
@@ -282,30 +252,16 @@ public class MakeFormalPost extends javax.swing.JFrame {
         ArrayList<Integer> tagIds = new ArrayList<>();
         if (chosenTags.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Vänligen välj minst en tagg!");
-        } else if (Validation.checkTextField(jTFTitle) && Validation.checkTextArea(jTAPost)) {
+        } else if(Validation.checkTextField(jTFTitle) && Validation.checkTextArea(jTAPost)){
             try {
                 insertTagsJosef(chosenTags);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             try {
-                if (txt_filename.getText().equals("")) {
-                    System.out.println("den går in i if");
-                    Database.executeUpdate("INSERT into Post (UserID, timeStamp, title, description, typeID) VALUES (" + userId + ", CURRENT_TIMESTAMP, '" + title + "','" + post + "', 1);");
-                    stringPostId = Database.fetchSingle("SELECT MAX(PostID) FROM Post;");
-                } else {
-                    System.out.println("den går till else");
-                    String image = txt_filename.getText();
-                    image = image.replace("\\", "\\\\");
-                    
-                    System.out.println(image);
-                    
-                    Database.executeUpdate("INSERT into Post (UserID, timeStamp, title, description, typeID, Picture) "
-                            + "VALUES (" + userId + ", CURRENT_TIMESTAMP, '"+ title + "','" + post + "', 1, '" + image +"')");
-                    stringPostId = Database.fetchSingle("SELECT MAX(PostID) FROM Post;");
-
-                }
-                for (String tagName : chosenTags) {
+                Database.executeUpdate("INSERT into Post (UserID, timeStamp, title, description, typeID) VALUES (" + userId + ", CURRENT_TIMESTAMP, '" + title + "','" + post + "', 1);");
+                stringPostId = Database.fetchSingle("SELECT MAX(PostID) FROM Post;");
+                for(String tagName : chosenTags) {
                     tagIds.add(Integer.parseInt(Database.fetchSingle("SELECT TagID FROM Tag WHERE TagName = '" + tagName + "';")));
                 }
 
@@ -322,23 +278,10 @@ public class MakeFormalPost extends javax.swing.JFrame {
                 e.printStackTrace();
                 System.out.println("fel i dela");
             }
-
-            /*if (txt_filename.getText() != null) {
-
-                String image = txt_filename.getText();
-                image = image.replace("\\", "\\\\");
-
-                String sql = "insert into InläggBild(InläggID, Titel, File) values (1, '" + title + "','" + image + "')";
-                try {
-                    Database.executeUpdate(sql);
-                } catch (SQLException ex) {
-                    Logger.getLogger(BildTest.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }*/
             JOptionPane.showMessageDialog(null, "Ditt inlägg har publicerats");
             new FormalBlog(user).setVisible(true);
             this.dispose();
-        }
+        } 
     }//GEN-LAST:event_jBUploadActionPerformed
 
     private void jTFNewTagMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFNewTagMouseReleased
@@ -360,9 +303,9 @@ public class MakeFormalPost extends javax.swing.JFrame {
     private void jBRemoveTagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemoveTagActionPerformed
         // TODO add your handling code here:
         int index;
-        if (chosenTags.size() == 0) {
+        if(chosenTags.size() == 0){
             return;
-        } else if (chosenTags.size() == 1) {
+        } else if(chosenTags.size() == 1){
             chosenTags.remove(0);
             jLTags.setText("Taggar: ");
         } else {
@@ -425,8 +368,6 @@ public class MakeFormalPost extends javax.swing.JFrame {
     private javax.swing.JTextField jTFTitle;
     private javax.swing.JButton jbUploadFile;
     private javax.swing.JLabel jlUplodedFile;
-    private javax.swing.JLabel lbl_image;
-    private javax.swing.JTextField txt_filename;
     // End of variables declaration//GEN-END:variables
 
 }
