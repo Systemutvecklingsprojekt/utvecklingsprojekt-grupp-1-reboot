@@ -200,7 +200,7 @@ public class MakeInformalPost extends javax.swing.JFrame {
         javax.swing.ImageIcon icon = new javax.swing.ImageIcon(filename);
         Image image = icon.getImage().getScaledInstance(lbl_image.getWidth(), lbl_image.getHeight(), Image.SCALE_SMOOTH);
 
-        lbl_image.setIcon(icon);
+        lbl_image.setIcon(new javax.swing.ImageIcon(new javax.swing.ImageIcon(image).getImage().getScaledInstance(lbl_image.getHeight(), lbl_image.getHeight(), Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_jbUploadFileActionPerformed
 
     private void checkFullTags() {
