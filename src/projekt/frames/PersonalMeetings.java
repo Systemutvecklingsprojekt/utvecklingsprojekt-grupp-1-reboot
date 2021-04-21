@@ -10,6 +10,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import projekt.helpers.Database;
 import projekt.helpers.Validation;
 import projekt.Refactor;
@@ -39,6 +41,24 @@ public class PersonalMeetings extends javax.swing.JFrame {
 
     }
 
+    private void initTableListener() {
+        if (table2 != null) {
+            table2.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                public void valueChanged(ListSelectionEvent e) {
+                    if (e.getValueIsAdjusting()) {
+
+                    } else {
+                        int id = (int) (table2.getValueAt(table2.getSelectedRow(), 0));
+                        new MeetingVotes(id, user).setVisible(true);
+                    }
+                }
+            });
+        } else{
+            System.out.println("table2 is Null");
+        }
+
+    }
+
     private void fillBooked() {
 
         {
@@ -46,12 +66,13 @@ public class PersonalMeetings extends javax.swing.JFrame {
             try {
                 rs = Database.fetchRows("SELECT DISTINCT * from Meeting where MeetingID IN (Select MeetingID from Meeting_Attandence where UserID =" + user.getUserID() + " AND isAttending = 'J')");
                 table2 = new JTable(Refactor.tableModelBuilder(rs));
+
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
             jScrollPane1.setViewportView(table2);
             table2.setVisible(true);
-
+initTableListener();
         }
     }
 
@@ -69,20 +90,21 @@ public class PersonalMeetings extends javax.swing.JFrame {
         }
         jScrollPane1.setViewportView(table2);
         table2.setVisible(true);
-
+initTableListener();
     }
 
     private void fillHostInvites() {
 
         try {
-            rs = Database.fetchRows("Select Distinct Date, Time, Name, Description from Proposed_Date_Time, Proposed_Meeting where Proposed_Meeting.ProposedMeetingID = Proposed_Date_Time.ProsedMeetingID and Proposed_Meeting.UserCreatorID = " + user.getUserID());
+            rs = Database.fetchRows("Select ProposedMeetingID, Date, Time, Name, Description from Proposed_Date_Time, Proposed_Meeting where Proposed_Meeting.ProposedMeetingID = Proposed_Date_Time.ProsedMeetingID and Proposed_Meeting.UserCreatorID = " + user.getUserID());
             table2 = new JTable(Refactor.tableModelBuilder(rs));
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         jScrollPane1.setViewportView(table2);
         table2.setVisible(true);
-
+initTableListener();
     }
 
     /**
@@ -188,7 +210,7 @@ public class PersonalMeetings extends javax.swing.JFrame {
         } else if (jComboBox1.getSelectedItem() == ("Mina mötesutskick")) {
             fillHostInvites();
         }
-
+        
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
 
