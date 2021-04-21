@@ -244,7 +244,7 @@ public class MeetingVotes extends javax.swing.JFrame {
     
     private void fillCBDate(){
         
-        String query = "Select Distinct Date from Proposed_Date_Time where ProsedMeetingID = 1";
+        String query = "Select Distinct Date from Proposed_Date_Time where ProsedMeetingID = " + proposedMeetingID;
         ArrayList<String> dates = new ArrayList<>();
         try {
             ResultSet rs = Database.fetchRows(query);
@@ -263,7 +263,7 @@ public class MeetingVotes extends javax.swing.JFrame {
     }
     private void fillCBTime(){
         String date = jCBDate.getSelectedItem().toString();
-        String query = "Select Distinct Time from Proposed_Date_Time where ProsedMeetingID = 1 and Date = '" + date + "'";
+        String query = "Select Distinct Time from Proposed_Date_Time where ProsedMeetingID = " + proposedMeetingID + " and Date = '" + date + "'";
      
         ArrayList<String> times = new ArrayList<>();
         try {
