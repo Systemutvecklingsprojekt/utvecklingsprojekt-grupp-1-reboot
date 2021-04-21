@@ -78,8 +78,9 @@ public class ShowPost extends javax.swing.JFrame {
             Image getAbsolutePath = null;
             javax.swing.ImageIcon icon = new javax.swing.ImageIcon(pathway);
             Image image = icon.getImage().getScaledInstance(jLPicture.getWidth(), jLPicture.getHeight(), Image.SCALE_DEFAULT);
-
-            jLPicture.setIcon(icon);
+            jLPicture.setIcon(new ImageIcon(new ImageIcon(pathway).getImage().getScaledInstance(jLPicture.getHeight(), jLPicture.getHeight(), Image.SCALE_SMOOTH)));
+            
+            
 
         } catch (SQLException ex) {
             Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
@@ -261,8 +262,6 @@ public class ShowPost extends javax.swing.JFrame {
             }
         });
 
-        jLPicture.setMaximumSize(new java.awt.Dimension(1500, 1500));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -305,16 +304,16 @@ public class ShowPost extends javax.swing.JFrame {
                                 .addGap(25, 25, 25)
                                 .addComponent(jBLike1)))
                         .addGap(8, 8, 8)))
-                .addGap(18, 18, 18)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_filename, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txt_filename, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 684, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addContainerGap(26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -341,7 +340,7 @@ public class ShowPost extends javax.swing.JFrame {
                         .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(18, 18, Short.MAX_VALUE)
                         .addComponent(txt_filename, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)

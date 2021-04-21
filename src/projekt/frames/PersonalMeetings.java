@@ -198,7 +198,7 @@ initTableListener();
     }//GEN-LAST:event_jBBackActionPerformed
 
     private void jbNewMeetingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNewMeetingActionPerformed
-
+        new NewMeeting(user).setVisible(true);
     }//GEN-LAST:event_jbNewMeetingActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
