@@ -21,60 +21,63 @@ import projekt.User;
  *
  * @author Josef
  */
-public class ShowPost extends javax.swing.JFrame {
+public class ShowPost extends javax.swing.JFrame
+{
 
-    private int postID;
-    private User user;
+	private int postID;
+	private User user;
 
-    /**
-     * Creates new form ShowPost
-     */
-    public ShowPost(User user, int postID) {
-        initComponents();
-        fillPost(postID);
-        this.postID = postID;
-        this.user = user;
-        
-        String postUserID;
-        int postUserInt = 0;
-        try {
-            postUserID = Database.fetchSingle("Select UserID from Post where postID = " + postID);
-            postUserInt = Integer.parseInt(postUserID);
-        } catch (SQLException ex) {
-            Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(user.getUserID()!= postUserInt){
-        jBEditPost.setVisible(false);
-        }
+	/**
+	 * Creates new form ShowPost
+	 */
+	public ShowPost(User user, int postID)
+	{
+		initComponents();
+		fillPost(postID);
+		this.postID = postID;
+		this.user = user;
 
-        try {
-            String joinQuery = "SELECT CommentID, firstName, lastName, Comments.timeStamp, Text FROM User JOIN Comments ON User.UserID = Comments.UserID WHERE PostID =" + postID;
+		String postUserID;
+		int postUserInt = 0;
+		try {
+			postUserID = Database.fetchSingle("Select UserID from Post where postID = " + postID);
+			postUserInt = Integer.parseInt(postUserID);
+		} catch (SQLException ex) {
+			Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		if (user.getUserID() != postUserInt) {
+			jBEditPost.setVisible(false);
+		}
 
-            fillComments(Database.fetchRows(joinQuery));
-            System.out.println("ShowPost");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        if (user == null) {
-            jbNewComment.setVisible(false);
-            jBLike1.setVisible(false);
-            jBDeletePost.setVisible(false);
-        }
-        if (user != null && user.getAdmin().equalsIgnoreCase("N")) {
-            jBDeletePost.setVisible(false);
-        }
-    }
+		try {
+			String joinQuery = "SELECT CommentID, firstName, lastName, Comments.timeStamp, Text FROM User JOIN Comments ON User.UserID = Comments.UserID WHERE PostID =" + postID;
 
-    public void fillComments(ResultSet rs) {
-        try {
-            jTableComments = new JTable(Refactor.tableModelBuilder(rs));
+			fillComments(Database.fetchRows(joinQuery));
+			System.out.println("ShowPost");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (user == null) {
+			jbNewComment.setVisible(false);
+			jBLike1.setVisible(false);
+			jBDeletePost.setVisible(false);
+		}
+		if (user != null && user.getAdmin().equalsIgnoreCase("N")) {
+			jBDeletePost.setVisible(false);
+		}
+	}
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+	public void fillComments(ResultSet rs)
+	{
+		try {
+			jTableComments = new JTable(Refactor.tableModelBuilder(rs));
 
-        jspComments.setViewportView(jTableComments);
-        jTableComments.setVisible(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		jspComments.setViewportView(jTableComments);
+		jTableComments.setVisible(true);
 		jTableComments.getSelectionModel().addListSelectionListener(new ListSelectionListener()
 		{
 			public void valueChanged(ListSelectionEvent event)
@@ -85,42 +88,43 @@ public class ShowPost extends javax.swing.JFrame {
 
 				} else {
 					int id = (int) (jTableComments.getValueAt(jTableComments.getSelectedRow(), 0));
-					new ShowComment(id,user).setVisible(true);
+					new ShowComment(id, user).setVisible(true);
 				}
 			}
 		});
-    }
+	}
 
-    public void fillPost(int postID) {
+	public void fillPost(int postID)
+	{
 
-        try {
-            jTextField4.setText(Database.fetchSingle("Select title from Post where PostID=" + postID));
-            jTextField2.setText(Database.fetchSingle("Select User.firstName FROM User, Post WHERE Post.UserID = User.UserID AND PostID = " + postID) + " " + Database.fetchSingle("Select User.lastName FROM User, Post WHERE Post.UserID = User.UserID AND PostID = " + postID));
-            jTextField3.setText(Database.fetchSingle("Select timeStamp FROM Post where PostID=" + postID));
-            jTextArea1.setText(Database.fetchSingle("Select description from Post where PostID=" + postID));
-            jtfLikeCount.setText(Database.fetchSingle("SELECT count(likes) FROM Post_Likes WHERE PostID =" + postID));
+		try {
+			jTextField4.setText(Database.fetchSingle("Select title from Post where PostID=" + postID));
+			jTextField2.setText(Database.fetchSingle("Select User.firstName FROM User, Post WHERE Post.UserID = User.UserID AND PostID = " + postID) + " " + Database.fetchSingle("Select User.lastName FROM User, Post WHERE Post.UserID = User.UserID AND PostID = " + postID));
+			jTextField3.setText(Database.fetchSingle("Select timeStamp FROM Post where PostID=" + postID));
+			jTextArea1.setText(Database.fetchSingle("Select description from Post where PostID=" + postID));
+			jtfLikeCount.setText(Database.fetchSingle("SELECT count(likes) FROM Post_Likes WHERE PostID =" + postID));
 
-            ResultSet tagsRs = Database.fetchRows("Select tagName from Tag where tagID in (Select tagID from Post_Tag where PostID=" + postID + ")");
-            String tags = "";
-            while (tagsRs.next()) {
+			ResultSet tagsRs = Database.fetchRows("Select tagName from Tag where tagID in (Select tagID from Post_Tag where PostID=" + postID + ")");
+			String tags = "";
+			while (tagsRs.next()) {
 
-                tags = tags + tagsRs.getString(1);
-                tags = tags + ", ";
-            }
+				tags = tags + tagsRs.getString(1);
+				tags = tags + ", ";
+			}
 
-            jTextField1.setText(tags);
-        } catch (SQLException e) {
+			jTextField1.setText(tags);
+		} catch (SQLException e) {
 
-        }
+		}
 
-    }
+	}
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
+	/**
+	 * This method is called from within the constructor to initialize the form.
+	 * WARNING: Do NOT modify this code. The content of this method is always
+	 * regenerated by the Form Editor.
+	 */
+	@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -323,52 +327,52 @@ public class ShowPost extends javax.swing.JFrame {
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jTextField2ActionPerformed
     {//GEN-HEADEREND:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
+		// TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
-        this.dispose();
+		this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jbShowCommentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbShowCommentsActionPerformed
-        try {
+		try {
 
-            int commentID = (int) (jTableComments.getValueAt(jTableComments.getSelectedRow(), 0));
-            new ShowComment(commentID,user);
+			int commentID = (int) (jTableComments.getValueAt(jTableComments.getSelectedRow(), 0));
+			new ShowComment(commentID, user);
 
-        } catch (ArrayIndexOutOfBoundsException e) {
-            JOptionPane.showMessageDialog(null, "Vänligen välj en kommentar att visa!");
+		} catch (ArrayIndexOutOfBoundsException e) {
+			JOptionPane.showMessageDialog(null, "Vänligen välj en kommentar att visa!");
 
-        }
+		}
     }//GEN-LAST:event_jbShowCommentsActionPerformed
 
     private void jbNewCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNewCommentActionPerformed
-        new NewComment(user, postID).setVisible(true);
+		new NewComment(user, postID).setVisible(true);
     }//GEN-LAST:event_jbNewCommentActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
+		// TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
 
 
     private void jBLike1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLike1ActionPerformed
-        int userId = user.getUserID();
-        String insertQuery = "INSERT INTO Post_Likes (UserID, PostID, likes) VALUES (" + userId + ", " + postID + ", 1)";
-        String nameQuery = "SELECT firstName FROM User JOIN Post ON User.UserID = Post.UserID WHERE PostID = " + postID;
-        try {
-            String tempId = Database.fetchSingle("SELECT UserID FROM Post_Likes WHERE PostID = " + postID);
-            System.out.println(tempId);
-            if (tempId == null) {
-                Database.executeUpdate(insertQuery);
-                jtfLikeCount.setText(Database.fetchSingle("SELECT count(likes) FROM Post_Likes WHERE PostID =" + postID));
-                JOptionPane.showMessageDialog(null, "Du gillade precis " + Database.fetchSingle(nameQuery) + "s inlägg!");
-            } else {
-                JOptionPane.showMessageDialog(null, "Du har redan gillat detta inlägg!");
-            }
-        } catch (SQLException ex) {
-            System.out.println("fel");
-        }
+		int userId = user.getUserID();
+		String insertQuery = "INSERT INTO Post_Likes (UserID, PostID, likes) VALUES (" + userId + ", " + postID + ", 1)";
+		String nameQuery = "SELECT firstName FROM User JOIN Post ON User.UserID = Post.UserID WHERE PostID = " + postID;
+		try {
+			String tempId = Database.fetchSingle("SELECT UserID FROM Post_Likes WHERE PostID = " + postID);
+			System.out.println(tempId);
+			if (tempId == null) {
+				Database.executeUpdate(insertQuery);
+				jtfLikeCount.setText(Database.fetchSingle("SELECT count(likes) FROM Post_Likes WHERE PostID =" + postID));
+				JOptionPane.showMessageDialog(null, "Du gillade precis " + Database.fetchSingle(nameQuery) + "s inlägg!");
+			} else {
+				JOptionPane.showMessageDialog(null, "Du har redan gillat detta inlägg!");
+			}
+		} catch (SQLException ex) {
+			System.out.println("fel");
+		}
     }//GEN-LAST:event_jBLike1ActionPerformed
 
     private void jBLikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -376,34 +380,34 @@ public class ShowPost extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jBEditPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditPostActionPerformed
-        // TODO add your handling code here:
-        new EditPost(user, postID).setVisible(true);
+		// TODO add your handling code here:
+		new EditPost(user, postID).setVisible(true);
     }//GEN-LAST:event_jBEditPostActionPerformed
 
     private void jBDeletePostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeletePostActionPerformed
-        int n = JOptionPane.showConfirmDialog(
-                null,
-                "Vill du verkligen ta bort inlägget?",
-                "Förfrågan",
-                JOptionPane.YES_NO_OPTION);
+		int n = JOptionPane.showConfirmDialog(
+				null,
+				"Vill du verkligen ta bort inlägget?",
+				"Förfrågan",
+				JOptionPane.YES_NO_OPTION);
 
-        if (n == JOptionPane.YES_OPTION) {
-            try {
-                Database.executeUpdate("DELETE FROM Post_Tag WHERE PostID = " + postID);
-                Database.executeUpdate("DELETE FROM Post_Likes WHERE PostID = " + postID);
-                Database.executeUpdate("DELETE FROM Comments WHERE PostID = " + postID);
-                Database.executeUpdate("DELETE FROM Post WHERE PostID = " + postID);
+		if (n == JOptionPane.YES_OPTION) {
+			try {
+				Database.executeUpdate("DELETE FROM Post_Tag WHERE PostID = " + postID);
+				Database.executeUpdate("DELETE FROM Post_Likes WHERE PostID = " + postID);
+				Database.executeUpdate("DELETE FROM Comments WHERE PostID = " + postID);
+				Database.executeUpdate("DELETE FROM Post WHERE PostID = " + postID);
 
-            } catch (SQLException ex) {
-                Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
-            }
+			} catch (SQLException ex) {
+				Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
+			}
 
-            this.dispose();
-            JOptionPane.showMessageDialog(null, "Inlägget är nu borttaget!");
+			this.dispose();
+			JOptionPane.showMessageDialog(null, "Inlägget är nu borttaget!");
 
-        } else {
+		} else {
 
-        }
+		}
     }//GEN-LAST:event_jBDeletePostActionPerformed
 
 
