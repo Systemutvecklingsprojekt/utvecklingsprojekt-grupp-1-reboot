@@ -5,20 +5,15 @@
  */
 package projekt.frames;
 
-import com.toedter.calendar.JCalendar;
-import java.awt.Color;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import projekt.Refactor;
-import projekt.helpers.SpecialDateEvaluator;
 
 /**
  *
