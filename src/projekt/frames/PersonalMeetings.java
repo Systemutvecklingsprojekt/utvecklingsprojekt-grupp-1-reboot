@@ -19,34 +19,36 @@ import projekt.Refactor;
  */
 public class PersonalMeetings extends javax.swing.JFrame {
     
-    private int id;
+    
     private User user;
     private ResultSet rs;
     private javax.swing.JTable table2;
     /**
      * Creates new form PersonalMeetings
      */
-    public PersonalMeetings(int id) {
+    public PersonalMeetings(User user) {
         initComponents();
         
-        this.id = id;
-        this.user = new User(this.id); 
+        
+        this.user = user; 
         jbNewMeeting.setVisible(true);
         jComboBox1.removeAllItems();
         jComboBox1.addItem("Mina inbokade möten");
         jComboBox1.addItem("Mina mötesinbjudningar");
         jComboBox1.addItem("Mina mötesutskick");
-        fyllInbokat();
+       
         
         
     }
     
-    private void fyllInbokat(){
+    
+    
+    private void fillBooked(){
     
        	{
 		
 		try {
-			rs = Database.fetchRows("SELECT * from Meeting where MeetingID IN (Select MeetingID from Meeting_Attandence where UserID =" + this.id + " AND isAttending = 'J')");
+			rs = Database.fetchRows("SELECT * from Meeting where MeetingID IN (Select MeetingID from Meeting_Attandence where UserID =" + user.getUserID() + " AND isAttending = 'J')");
                         table2 = new JTable(Refactor.tableModelBuilder(rs));
                 } catch (Exception ex) {
 			ex.printStackTrace();
@@ -57,7 +59,35 @@ public class PersonalMeetings extends javax.swing.JFrame {
 	}
     }
     
+    private void fillInvites(){
     
+		
+		try {
+			rs = Database.fetchRows("Select * from Proposed_Date_Time where ProsedMeetingID in (Select ProposedMeeting from Invites where UserID = " + user.getUserID() + ")");
+                        table2 = new JTable(Refactor.tableModelBuilder(rs));
+                } catch (Exception ex) {
+			ex.printStackTrace();
+		}
+                jScrollPane1.setViewportView(table2);
+		table2.setVisible(true);
+
+	
+    
+    }
+    
+    private void fillHostInvites(){
+        
+        try {
+            rs = Database.fetchRows("Select Date, Time, Name, Description from Proposed_Date_Time, Proposed_Meeting where Proposed_Meeting.ProposedMeetingID = Proposed_Date_Time.ProsedMeetingID and Proposed_Meeting.UserCreatorID = " + user.getUserID());
+            table2 = new JTable(Refactor.tableModelBuilder(rs));
+        }
+        catch (Exception ex) {
+			ex.printStackTrace();
+        }               
+                jScrollPane1.setViewportView(table2);
+		table2.setVisible(true);
+    
+    }
 
     
     /**
@@ -105,6 +135,12 @@ public class PersonalMeetings extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setToolTipText("");
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -147,6 +183,19 @@ public class PersonalMeetings extends javax.swing.JFrame {
     private void jbNewMeetingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNewMeetingActionPerformed
         
     }//GEN-LAST:event_jbNewMeetingActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        
+        if(jComboBox1.getSelectedItem()==("Mina inbokade möten")){
+        fillBooked();
+        }
+        else if(jComboBox1.getSelectedItem()==("Mina mötesinbjudningar")){
+        fillInvites();
+        }else if(jComboBox1.getSelectedItem() == ("Mina mötesutskick")){
+        fillHostInvites();
+        }
+       
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     
     
