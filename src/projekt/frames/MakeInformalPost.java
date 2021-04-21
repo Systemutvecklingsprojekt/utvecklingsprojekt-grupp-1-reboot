@@ -5,11 +5,14 @@
  */
 package projekt.frames;
 
+import java.awt.Image;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import projekt.User;
 import projekt.helpers.Database;
@@ -57,6 +60,8 @@ public class MakeInformalPost extends javax.swing.JFrame {
         jLTags = new javax.swing.JLabel();
         jlUplodedFile = new javax.swing.JLabel();
         jBBack = new javax.swing.JButton();
+        txt_filename = new javax.swing.JTextField();
+        lbl_image = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -114,6 +119,12 @@ public class MakeInformalPost extends javax.swing.JFrame {
             }
         });
 
+        txt_filename.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_filenameActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -136,12 +147,17 @@ public class MakeInformalPost extends javax.swing.JFrame {
                             .addComponent(jbUploadFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(46, 46, 46)
-                                .addComponent(jlUplodedFile, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jbUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(32, Short.MAX_VALUE))
+                                .addComponent(jbUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(46, 46, 46)
+                                .addComponent(jlUplodedFile)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_image, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_filename, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 145, Short.MAX_VALUE)))))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,24 +172,35 @@ public class MakeInformalPost extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLTags)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbUploadFile)
-                    .addComponent(jlUplodedFile))
-                .addGap(29, 29, 29)
+                    .addComponent(jlUplodedFile)
+                    .addComponent(txt_filename, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(lbl_image, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbUpload)
-                    .addComponent(jBBack))
-                .addGap(28, 28, 28))
+                    .addComponent(jBBack)
+                    .addComponent(jbUpload))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbUploadFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUploadFileActionPerformed
-        // TODO add your handling code here:
-        int interval = jFileChooser2.showOpenDialog(this);
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+        String filename = f.getAbsolutePath();
+        txt_filename.setText(filename);
+        Image getAbsolutePath = null;
+        javax.swing.ImageIcon icon = new javax.swing.ImageIcon(filename);
+        Image image = icon.getImage().getScaledInstance(lbl_image.getWidth(), lbl_image.getHeight(), Image.SCALE_SMOOTH);
+
+        lbl_image.setIcon(icon);
     }//GEN-LAST:event_jbUploadFileActionPerformed
 
     private void checkFullTags() {
@@ -267,16 +294,30 @@ public class MakeInformalPost extends javax.swing.JFrame {
 
         if (chosenTags.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Vänligen välj minst en tagg!");
-            
-        } else if(Validation.checkTextField(jTFTitle) && Validation.checkTextArea(jTAPost)){
+
+        } else if (Validation.checkTextField(jTFTitle) && Validation.checkTextArea(jTAPost)) {
             try {
                 insertTagsJosef(chosenTags);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             try {
-                Database.executeUpdate("INSERT into Post (UserID, timeStamp, title, description, typeID) VALUES (" + userId + ", CURRENT_TIMESTAMP, '" + title + "','" + post + "', 2);");
-                stringPostId = Database.fetchSingle("SELECT MAX(PostID) FROM Post;");
+                if (txt_filename.getText().equals("")) {
+                    Database.executeUpdate("INSERT into Post (UserID, timeStamp, title, description, typeID) VALUES (" + userId + ", CURRENT_TIMESTAMP, '" + title + "','" + post + "', 2);");
+                    stringPostId = Database.fetchSingle("SELECT MAX(PostID) FROM Post;");
+                } else {
+                    System.out.println("den går till else");
+                    String image = txt_filename.getText();
+                    image = image.replace("\\", "\\\\");
+
+                    System.out.println(image);
+
+                    Database.executeUpdate("INSERT into Post (UserID, timeStamp, title, description, typeID, Picture) "
+                            + "VALUES (" + userId + ", CURRENT_TIMESTAMP, '" + title + "','" + post + "', 2, '" + image + "')");
+                    stringPostId = Database.fetchSingle("SELECT MAX(PostID) FROM Post;");
+
+                }
+
                 for (String tagName : chosenTags) {
                     tagIds.add(Integer.parseInt(Database.fetchSingle("SELECT TagID FROM Tag WHERE TagName = '" + tagName + "';")));
                 }
@@ -301,7 +342,7 @@ public class MakeInformalPost extends javax.swing.JFrame {
             this.dispose();
         }
 
-        
+
     }//GEN-LAST:event_jbUploadActionPerformed
 
     private void jTFNewTagMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFNewTagMouseReleased
@@ -321,6 +362,10 @@ public class MakeInformalPost extends javax.swing.JFrame {
         this.dispose();
         new Blog(user, false).setVisible(true);
     }//GEN-LAST:event_jBBackActionPerformed
+
+    private void txt_filenameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_filenameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_filenameActionPerformed
 
     private void fillTags() {
         ArrayList<String> tags = new ArrayList<>();
@@ -347,6 +392,8 @@ public class MakeInformalPost extends javax.swing.JFrame {
     private javax.swing.JButton jbUpload;
     private javax.swing.JButton jbUploadFile;
     private javax.swing.JLabel jlUplodedFile;
+    private javax.swing.JLabel lbl_image;
+    private javax.swing.JTextField txt_filename;
     // End of variables declaration//GEN-END:variables
 
 }
