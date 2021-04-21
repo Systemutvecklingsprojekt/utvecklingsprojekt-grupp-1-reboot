@@ -337,12 +337,12 @@ public class NewMeeting extends javax.swing.JFrame {
         tid = Integer.parseInt(jTableMeeting.getValueAt(i, 3).toString());
         date = jTableMeeting.getValueAt(i, 4).toString();
             System.out.println(name + " " + beskrivning + " " + startTid + " " + tid + " " + date);
-       // try {
-        //Database.executeUpdate("Insert sql till en massa SKIT XD");
-        //}
-        //catch (Exception e) {
-          //  System.out.println("kunde ej sätta in i databasen");
-        //}
+        try {
+        Database.executeUpdate("Insert into Proposed_Meeting (Name, Describtion)");
+        }
+        catch (Exception e) {
+            System.out.println("kunde ej sätta in i databasen");
+        }
         }
     }
     
