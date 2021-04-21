@@ -396,11 +396,11 @@ public class NewMeeting extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(NewMeeting.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+User user = null;
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewMeeting().setVisible(true);
+                new NewMeeting(user).setVisible(true);
             }
         });
     }
