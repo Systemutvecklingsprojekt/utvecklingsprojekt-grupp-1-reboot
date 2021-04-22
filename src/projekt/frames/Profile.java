@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import projekt.User;
 import projekt.helpers.Database;
+import projekt.helpers.Validation;
 /**
  *
  * @author Amand
@@ -184,6 +185,7 @@ public class Profile extends javax.swing.JFrame {
     }//GEN-LAST:event_jBBackActionPerformed
 
     private void changeInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeInfoButtonActionPerformed
+        if(Validation.emailVerification(jtfEmail) && Validation.checkPTextField(jtfPassword)) {
         String password = jtfPassword.getText();
         String email = jtfEmail.getText();
         String tempId;
@@ -205,6 +207,7 @@ public class Profile extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Dina användaruppgifter är nu uppdaterade!");
         } catch (Exception e) {
             e.printStackTrace();
+        }
         }
     }//GEN-LAST:event_changeInfoButtonActionPerformed
 
