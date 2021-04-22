@@ -212,12 +212,14 @@ public class MakeFormalPost extends javax.swing.JFrame {
         chooser.showOpenDialog(null);
         File f = chooser.getSelectedFile();
         String filename = f.getAbsolutePath();
-        txt_filename.setText(filename);
-        Image getAbsolutePath = null;
-        javax.swing.ImageIcon icon = new javax.swing.ImageIcon(filename);
-        Image image = icon.getImage().getScaledInstance(lbl_image.getWidth(), lbl_image.getHeight(), Image.SCALE_SMOOTH);
+        if (Validation.isImageValid(filename)) {
+            txt_filename.setText(filename);
+            Image getAbsolutePath = null;
+            javax.swing.ImageIcon icon = new javax.swing.ImageIcon(filename);
+            Image image = icon.getImage().getScaledInstance(lbl_image.getWidth(), lbl_image.getHeight(), Image.SCALE_SMOOTH);
 
-        lbl_image.setIcon(new javax.swing.ImageIcon(new javax.swing.ImageIcon(image).getImage().getScaledInstance(lbl_image.getHeight(), lbl_image.getHeight(), Image.SCALE_SMOOTH)));
+            lbl_image.setIcon(new javax.swing.ImageIcon(new javax.swing.ImageIcon(image).getImage().getScaledInstance(lbl_image.getHeight(), lbl_image.getHeight(), Image.SCALE_SMOOTH)));
+        }
     }//GEN-LAST:event_jbUploadFileActionPerformed
 
     private void checkFullTags() {
@@ -297,11 +299,11 @@ public class MakeFormalPost extends javax.swing.JFrame {
                     System.out.println("den går till else");
                     String image = txt_filename.getText();
                     image = image.replace("\\", "\\\\");
-                    
+
                     System.out.println(image);
-                    
+
                     Database.executeUpdate("INSERT into Post (UserID, timeStamp, title, description, typeID, Picture) "
-                            + "VALUES (" + userId + ", CURRENT_TIMESTAMP, '"+ title + "','" + post + "', 1, '" + image +"')");
+                            + "VALUES (" + userId + ", CURRENT_TIMESTAMP, '" + title + "','" + post + "', 1, '" + image + "')");
                     stringPostId = Database.fetchSingle("SELECT MAX(PostID) FROM Post;");
 
                 }
