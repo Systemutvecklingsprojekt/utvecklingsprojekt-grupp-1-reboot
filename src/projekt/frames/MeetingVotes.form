@@ -110,6 +110,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBAddTime">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="L&#xe4;gg till tid"/>
       </Properties>
       <Events>
@@ -118,6 +121,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBSendAvailable">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Skicka tillg&#xe4;nglighet"/>
       </Properties>
       <Events>
@@ -126,6 +132,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Tillbaka"/>
       </Properties>
       <Events>
@@ -165,6 +174,9 @@
     </Container>
     <Component class="javax.swing.JButton" name="jBDeleteTime">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Ta bort alla valda tider"/>
       </Properties>
       <Events>
