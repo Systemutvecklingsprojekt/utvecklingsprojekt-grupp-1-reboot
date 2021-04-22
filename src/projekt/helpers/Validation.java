@@ -12,8 +12,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 import com.github.lgooddatepicker.components.TimePicker;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -192,7 +197,22 @@ public class Validation {
     return resultat;
     }
            
+    public static boolean isDateAhead (Date meet) {
     
+    boolean resultat = true;
+    DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+       Date now = new Date();
+       if(now.after(meet)){
+           resultat = false;
+       JOptionPane.showMessageDialog(null, "Vänligen välj ett datum som kommer efter idag");
+       return resultat;
+       }
+       
+       return true;
+       
+    
+    
+    }
     
     
 }
