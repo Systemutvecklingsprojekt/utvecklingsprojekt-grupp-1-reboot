@@ -138,6 +138,7 @@ public class EditPost extends javax.swing.JFrame {
             }
         });
 
+        jBRemoveTag.setBackground(new java.awt.Color(204, 204, 255));
         jBRemoveTag.setText("Ta bort tagg");
         jBRemoveTag.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

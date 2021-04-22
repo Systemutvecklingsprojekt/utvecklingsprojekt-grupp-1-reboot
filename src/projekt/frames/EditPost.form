@@ -225,6 +225,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBRemoveTag">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Ta bort tagg"/>
       </Properties>
       <Events>
