@@ -246,7 +246,7 @@ public class EditUsers extends javax.swing.JFrame {
                 }
                 JOptionPane.showMessageDialog(null, "Användare " + firstName + " " + lastName + " är nu uppdaterad!");
             } catch (Exception e) {
-                System.out.println("fel");
+               e.printStackTrace();
             }
         }
     }//GEN-LAST:event_jBSaveActionPerformed
