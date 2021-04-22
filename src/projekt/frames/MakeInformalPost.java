@@ -112,6 +112,7 @@ public class MakeInformalPost extends javax.swing.JFrame {
 
         jlUplodedFile.setText("Fil: ");
 
+        jBBack.setBackground(new java.awt.Color(204, 204, 255));
         jBBack.setText("Tillbaka");
         jBBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,12 +196,14 @@ public class MakeInformalPost extends javax.swing.JFrame {
         chooser.showOpenDialog(null);
         File f = chooser.getSelectedFile();
         String filename = f.getAbsolutePath();
-        txt_filename.setText(filename);
-        Image getAbsolutePath = null;
-        javax.swing.ImageIcon icon = new javax.swing.ImageIcon(filename);
-        Image image = icon.getImage().getScaledInstance(lbl_image.getWidth(), lbl_image.getHeight(), Image.SCALE_SMOOTH);
+        if (Validation.isImageValid(filename)) {
+            txt_filename.setText(filename);
+            Image getAbsolutePath = null;
+            javax.swing.ImageIcon icon = new javax.swing.ImageIcon(filename);
+            Image image = icon.getImage().getScaledInstance(lbl_image.getWidth(), lbl_image.getHeight(), Image.SCALE_SMOOTH);
 
-        lbl_image.setIcon(new javax.swing.ImageIcon(new javax.swing.ImageIcon(image).getImage().getScaledInstance(lbl_image.getHeight(), lbl_image.getHeight(), Image.SCALE_SMOOTH)));
+            lbl_image.setIcon(new javax.swing.ImageIcon(new javax.swing.ImageIcon(image).getImage().getScaledInstance(lbl_image.getHeight(), lbl_image.getHeight(), Image.SCALE_SMOOTH)));
+        }
     }//GEN-LAST:event_jbUploadFileActionPerformed
 
     private void checkFullTags() {

@@ -5,6 +5,8 @@
  */
 package projekt.frames;
 
+import java.awt.Image;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import projekt.helpers.Database;
@@ -15,6 +17,8 @@ import javax.swing.JOptionPane;
 import projekt.User;
 import projekt.helpers.Validation;
 import java.lang.StringBuilder;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -23,7 +27,7 @@ import java.lang.StringBuilder;
 public class EditPost extends javax.swing.JFrame {
 
     private int maxTags;
-    
+
     private ArrayList<String> oldChosenTags;
     private User user;
     private String oldTag;
@@ -34,7 +38,7 @@ public class EditPost extends javax.swing.JFrame {
         this.user = user;
         this.postId = postId;
         maxTags = 0;
-        
+
         oldChosenTags = new ArrayList<>();
         oldTag = "";
 
@@ -48,6 +52,7 @@ public class EditPost extends javax.swing.JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        fillPicture();
     }
 
     /**
@@ -72,6 +77,9 @@ public class EditPost extends javax.swing.JFrame {
         jlUplodedFile = new javax.swing.JLabel();
         jBBack = new javax.swing.JButton();
         jBRemoveTag = new javax.swing.JButton();
+        txt_filename = new javax.swing.JTextField();
+        jLPicture = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -130,6 +138,7 @@ public class EditPost extends javax.swing.JFrame {
             }
         });
 
+        jBRemoveTag.setBackground(new java.awt.Color(204, 204, 255));
         jBRemoveTag.setText("Ta bort tagg");
         jBRemoveTag.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,36 +146,58 @@ public class EditPost extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setBackground(new java.awt.Color(204, 204, 255));
+        jButton1.setText("Ta bort fil");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jBBack)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jBBack)
-                        .addGap(277, 277, 277)
-                        .addComponent(jBUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBRemoveTag, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jbUploadFile)
-                                .addGap(46, 46, 46)
-                                .addComponent(jlUplodedFile, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTFTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLTags, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jCBTags, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTFNewTag, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(34, 34, 34)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jBRemoveTag, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jBAddTag, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(43, 43, 43)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(8, 8, 8)
+                                        .addComponent(jlUplodedFile)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txt_filename, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jbUploadFile)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton1)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTFTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLTags, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jCBTags, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTFNewTag, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(34, 34, 34)
+                                        .addComponent(jBAddTag, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(43, 43, 43))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,34 +210,67 @@ public class EditPost extends javax.swing.JFrame {
                         .addComponent(jCBTags, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTFNewTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jBAddTag))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBRemoveTag)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLTags)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbUploadFile)
-                    .addComponent(jlUplodedFile))
-                .addGap(27, 27, 27)
+                    .addComponent(jLTags)
+                    .addComponent(jBRemoveTag))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_filename, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlUplodedFile))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(jbUploadFile))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBUpload)
                     .addComponent(jBBack))
-                .addGap(30, 30, 30))
+                .addGap(67, 67, 67))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbUploadFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUploadFileActionPerformed
-        // TODO add your handling code here:
-        int interval = jFileChooser2.showOpenDialog(this);
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+        String filename = f.getAbsolutePath();
+        if (Validation.isImageValid(filename)) {
+            txt_filename.setText(filename);
+            Image getAbsolutePath = null;
+            javax.swing.ImageIcon icon = new javax.swing.ImageIcon(filename);
+            Image image = icon.getImage().getScaledInstance(jLPicture.getWidth(), jLPicture.getHeight(), Image.SCALE_SMOOTH);
+            jLPicture.setVisible(true);
+            jLPicture.setIcon(new javax.swing.ImageIcon(new javax.swing.ImageIcon(image).getImage().getScaledInstance(jLPicture.getHeight(), jLPicture.getHeight(), Image.SCALE_SMOOTH)));
+        }
     }//GEN-LAST:event_jbUploadFileActionPerformed
 
     private void checkFullTags() {
         if (maxTags == 3) {
             jBAddTag.setEnabled(false);
+        }
+    }
+
+    public void fillPicture() {
+        try {
+            String pathway = Database.fetchSingle("SELECT Picture FROM Post WHERE PostID = " + postId);
+            System.out.println(pathway);
+
+            txt_filename.setText(pathway);
+            Image getAbsolutePath = null;
+            javax.swing.ImageIcon icon = new javax.swing.ImageIcon(pathway);
+            Image image = icon.getImage().getScaledInstance(jLPicture.getWidth(), jLPicture.getHeight(), Image.SCALE_DEFAULT);
+            jLPicture.setIcon(new ImageIcon(new ImageIcon(pathway).getImage().getScaledInstance(jLPicture.getHeight(), jLPicture.getHeight(), Image.SCALE_SMOOTH)));
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -259,25 +323,33 @@ public class EditPost extends javax.swing.JFrame {
     }//GEN-LAST:event_jBAddTagActionPerformed
 
     private void jBUploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBUploadActionPerformed
-        
+
         String title = jTFTitle.getText();
         String post = jTAPost.getText();
         int userId = user.getUserID();
         String stringPostId = "";
+        String image = txt_filename.getText();
+        image = image.replace("\\", "\\\\");
         ArrayList<Integer> tagIds = new ArrayList<>();
         if (oldChosenTags.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Vänligen välj minst en tagg!");
-        } else if(Validation.checkTextField(jTFTitle) && Validation.checkTextArea(jTAPost)){
+        } else if (Validation.checkTextField(jTFTitle) && Validation.checkTextArea(jTAPost)) {
             try {
                 insertTagsJosef(oldChosenTags);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             try {
-                Database.executeUpdate("UPDATE Post SET UserId = " + userId + ", timeStamp = CURRENT_TIMESTAMP, title = '" + title + "', description = '" + post + "', TypeID = " + postType + " "
-                        + "WHERE PostID = " + postId + ";");
-                stringPostId = Database.fetchSingle("SELECT MAX(PostID) FROM Post;");
-                for(String tagName : oldChosenTags) {
+                if (image.equals("")) {
+                    Database.executeUpdate("UPDATE Post SET UserId = " + userId + ", timeStamp = CURRENT_TIMESTAMP, title = '" + title + "', description = '" + post + "', TypeID = " + postType + ", Picture = null "
+                            + "WHERE PostID = " + postId + ";");
+                    stringPostId = Database.fetchSingle("SELECT MAX(PostID) FROM Post;");
+                } else {
+                    Database.executeUpdate("UPDATE Post SET UserId = " + userId + ", timeStamp = CURRENT_TIMESTAMP, title = '" + title + "', description = '" + post + "', TypeID = " + postType + ", Picture = '" + image + "'"
+                            + "WHERE PostID = " + postId + ";");
+                    stringPostId = Database.fetchSingle("SELECT MAX(PostID) FROM Post;");
+                }
+                for (String tagName : oldChosenTags) {
                     tagIds.add(Integer.parseInt(Database.fetchSingle("SELECT TagID FROM Tag WHERE TagName = '" + tagName + "';")));
                 }
 
@@ -285,10 +357,10 @@ public class EditPost extends javax.swing.JFrame {
                 e.printStackTrace();
                 System.out.println("error");
             }
-            
-            try{
+
+            try {
                 Database.executeUpdate("DELETE FROM Post_Tag WHERE PostID = " + postId + ";");
-            } catch(SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             try {
@@ -302,7 +374,7 @@ public class EditPost extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ditt inlägg har publicerats");
             new FormalBlog(user).setVisible(true);
             this.dispose();
-        } 
+        }
     }//GEN-LAST:event_jBUploadActionPerformed
 
     private void jTFNewTagMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFNewTagMouseReleased
@@ -325,23 +397,28 @@ public class EditPost extends javax.swing.JFrame {
         // TODO add your handling code here:
         int index;
         StringBuilder str = new StringBuilder("Taggar: ");
-        if(oldChosenTags.isEmpty()){
+        if (oldChosenTags.isEmpty()) {
             return;
-        } else if(oldChosenTags.size() == 1){
+        } else if (oldChosenTags.size() == 1) {
             oldChosenTags.remove(0);
             jLTags.setText(str.toString());
         } else {
             index = oldChosenTags.size() - 1;
             oldChosenTags.remove(index);
-            
+
         }
         jLTags.setText(str.toString());
-        for(String tag : oldChosenTags){
+        for (String tag : oldChosenTags) {
             str.append(tag + "   ");
         }
         jLTags.setText(str.toString());
         oldTag = jLTags.getText();
     }//GEN-LAST:event_jBRemoveTagActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        txt_filename.setText("");
+        jLPicture.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void insertTagsJosef(ArrayList<String> tagsToCheck) throws SQLException {
         ArrayList<String> rsTags = new ArrayList<>();
@@ -380,29 +457,28 @@ public class EditPost extends javax.swing.JFrame {
             jCBTags.addItem(tag);
         }
     }
-    
-    private void fillOldInfo(){
-       
+
+    private void fillOldInfo() {
+
         StringBuilder str = new StringBuilder(jLTags.getText());
-        
+
         try {
             jTFTitle.setText(Database.fetchSingle("SELECT Title FROM Post WHERE PostID = " + postId));
             jTAPost.setText(Database.fetchSingle("SELECT Description FROM Post WHERE PostID = " + postId));
-            
+
             ResultSet rs = Database.fetchRows("SELECT TagName FROM Tag WHERE TagID IN (SELECT TagID FROM Post_Tag WHERE PostID IN (SELECT PostID FROM Post WHERE PostID = " + postId + "))");
-            while(rs.next()){
+            while (rs.next()) {
                 oldChosenTags.add(rs.getString(1));
             }
-            
-            
-            for(String tag : oldChosenTags){
+
+            for (String tag : oldChosenTags) {
                 str.append(tag + "   ");
             }
-            
+
             jLTags.setText(str.toString());
             oldTag = jLTags.getText();
         } catch (SQLException e) {
-            
+
         }
     }
 
@@ -412,8 +488,10 @@ public class EditPost extends javax.swing.JFrame {
     private javax.swing.JButton jBBack;
     private javax.swing.JButton jBRemoveTag;
     private javax.swing.JButton jBUpload;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jCBTags;
     private javax.swing.JFileChooser jFileChooser2;
+    private javax.swing.JLabel jLPicture;
     private javax.swing.JLabel jLTags;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTAPost;
@@ -421,6 +499,7 @@ public class EditPost extends javax.swing.JFrame {
     private javax.swing.JTextField jTFTitle;
     private javax.swing.JButton jbUploadFile;
     private javax.swing.JLabel jlUplodedFile;
+    private javax.swing.JTextField txt_filename;
     // End of variables declaration//GEN-END:variables
 
 }

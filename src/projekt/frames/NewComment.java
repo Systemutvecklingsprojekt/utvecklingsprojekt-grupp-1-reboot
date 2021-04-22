@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import projekt.User;
 import projekt.helpers.Database;
+import projekt.helpers.Validation;
 
 /**
  *
@@ -112,6 +113,10 @@ public class NewComment extends javax.swing.JFrame {
 
     private void jbPublishCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPublishCommentActionPerformed
         String comment = jtfComment.getText();
+        if(comment.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Vänligen skriv någonting som kommentar");
+            return;
+        }
         int userId = user.getUserID();
         System.out.println(comment + " " + userId + " " + postId);
         String query = "INSERT INTO Comments (UserID, PostID, Text) VALUES(" + userId + ", " + postId + ",'" + comment + "')";
@@ -123,6 +128,7 @@ public class NewComment extends javax.swing.JFrame {
         }
         JOptionPane.showMessageDialog(null, "Kommentar är nu tillagd!");
         this.dispose();
+        
     }//GEN-LAST:event_jbPublishCommentActionPerformed
 
 

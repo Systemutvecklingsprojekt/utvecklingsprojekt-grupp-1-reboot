@@ -291,7 +291,7 @@ public class NewMeeting extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jBtnSkapaMöteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSkapaMöteActionPerformed
-        if(Validation.checkName(jTxtNamn) && Validation.checkTextArea(jTxtDesc) && Validation.dateChooserValid(jDateChooser1) && Validation.valideraTid(jTimeStart.getText()) && Validation.validTid(jTimeStart.getText())) {
+        if(Validation.checkName(jTxtNamn) && Validation.checkTextArea(jTxtDesc) && Validation.dateChooserValid(jDateChooser1) && Validation.valideraTid(jTimeStart.getText()) && Validation.validTid(jTimeStart.getText()) && Validation.isDateAhead(jDateChooser1.getDate())) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String meetingDate = dateFormat.format(jDateChooser1.getDate());
         String beskrivning = jTxtDesc.getText();

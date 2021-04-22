@@ -46,7 +46,7 @@
                       <Component id="jbNewComment" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jTextField4" max="32767" attributes="0"/>
-                  <Component id="jspComments" alignment="0" pref="481" max="32767" attributes="0"/>
+                  <Component id="jspComments" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
@@ -250,6 +250,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBLike1">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="99" green="99" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Gilla!"/>
       </Properties>
       <Events>
@@ -258,6 +261,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBEditPost">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Redigera inl&#xe4;gg"/>
       </Properties>
       <Events>
@@ -266,6 +272,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBDeletePost">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Ta bort inl&#xe4;gg"/>
       </Properties>
       <Events>
