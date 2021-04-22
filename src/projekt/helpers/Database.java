@@ -16,9 +16,9 @@ public class Database
 {
 	
 	private static Connection conn = null;
-	private static final String CONNECTION_STRING = "jdbc:mysql://jamaihaitot.com:2230/development";
-	private static final String USERNAME = "development";
-	private static final String PASSWORD = "tUG8p6xQsXwEXYS8";
+	private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/db";
+	private static final String USERNAME = "root";
+	private static final String PASSWORD = "96Sve01s12321!";
 	
 	private Database()
 	{
