@@ -238,7 +238,7 @@ public class CreateUser extends javax.swing.JFrame
 
     private void jBSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSaveActionPerformed
 
-        if(Validation.multibleTextFieldEmpty(textFields)){
+        if(Validation.multibleTextFieldEmpty(textFields) && Validation.checkName(jTFFirstName) && Validation.checkName(jTFLastName) && Validation.checkPTextField(jTFPassword) && Validation.emailVerification(jTFEmail) ){
             createVariables();
             try {
                     String sqlEmail = Database.fetchSingle("SELECT eMail FROM User WHERE eMail = '" + jTFEmail.getText() + "';");

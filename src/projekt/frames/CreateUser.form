@@ -54,10 +54,7 @@
                                                   <Component id="jLEmail" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                                               </Group>
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <Component id="jLPassword" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="jLPassword" alignment="1" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                                           <Component id="jTFPassword" max="32767" attributes="0"/>

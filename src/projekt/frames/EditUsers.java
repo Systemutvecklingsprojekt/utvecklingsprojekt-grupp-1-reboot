@@ -224,7 +224,7 @@ public class EditUsers extends javax.swing.JFrame {
         String lastName = jtfLastName.getText();
         String password = jtfPassword.getText();
         String email = jtfEmail.getText();
-        if (Validation.multibleTextFieldEmpty(textFields)) {
+        if (Validation.multibleTextFieldEmpty(textFields) && Validation.checkName(jtfFirstName) && Validation.checkName(jtfLastName) && Validation.checkPTextField(jtfPassword) && Validation.emailVerification(jtfEmail) ) {
             try {
                 String sqlEmail = Database.fetchSingle("SELECT eMail FROM User WHERE eMail = '" + email + "';");
                 String tempId = Database.fetchSingle("SELECT UserID FROM User WHERE eMail = '" + email + "';");

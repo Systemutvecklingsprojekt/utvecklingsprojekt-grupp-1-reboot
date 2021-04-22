@@ -88,8 +88,8 @@ public class Validation {
 
         boolean result = true;
         if (!textField.getText().isEmpty()) {
-            if (textField.getText().length() > 6) {
-                JOptionPane.showMessageDialog(null, "L?senordet f?r max vara 6 karakt?rer l?ngt!");
+            if (textField.getText().length() > 20 && textField.getText().length() < 5) {
+                JOptionPane.showMessageDialog(null, "L?senordet får max vara 20 karaktärer långt och minst 5 karaktärer!");
                 result = false;
             }
         } else {
@@ -147,7 +147,7 @@ public class Validation {
     public static boolean checkName(JTextField textField) {
         boolean resultat = true;
         if (!textField.getText().isEmpty()) {
-            if (textField.getText().length() > 20) {
+            if (textField.getText().length() > 20 && noInts(textField)) {
                 JOptionPane.showMessageDialog(null, "Max 20 tecken!");
                 resultat = false;
             }
@@ -224,5 +224,21 @@ public class Validation {
         }
         return resultat;
     }
+    
+    public static boolean noInts(JTextField field) {
+        boolean resultat = false;
+        String name = field.toString();
+        if(name.matches("[a-zA-Z]+")) {
+        resultat = true;
+        return resultat;
+        }
+        else {
+        resultat = false;
+        JOptionPane.showMessageDialog(null, "Använd endast tecken i namnfälten");
+        }
+        
+        return resultat;
+    
+}
 
 }
