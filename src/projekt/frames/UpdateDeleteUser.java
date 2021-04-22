@@ -170,7 +170,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
 		int userID = -1;
 		try {
-			userID = Refactor.getTableValueFirstColumn(table2);
+			userID = (int)Refactor.getTableValueFirstColumn(table2);
 		String namn = Database.fetchSingle("Select firstName from User where UserID = "+userID+";") + " " +Database.fetchSingle("Select lastName from User where UserID = "+userID+";");
 
 		if (true) {
@@ -231,32 +231,11 @@ public class UpdateDeleteUser extends javax.swing.JFrame
     private void changeInformationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeInformationButtonActionPerformed
 		int userID = -1;
 		try {
-			userID = Refactor.getTableValueFirstColumn(table2);
+			userID = (int)Refactor.getTableValueFirstColumn(table2);
 			new EditUsers(userID).setVisible(true);
 		} catch (ArrayIndexOutOfBoundsException e) {
 			JOptionPane.showMessageDialog(null, "Var vänlig markera en användare");
 		}
-
-		
-		//if (Validation.isInt(jtfID) && Validation.isStringNull(jtfID.getText())) {
-
-//			if (jtfID.getText().isBlank()) {
-//				userID = Refactor.getTableValueFirstColumn(table2);
-//			} else {
-//				userID = Integer.parseInt(jtfID.getText());
-//			}
-//			try {
-//				String validId = Database.fetchSingle("SELECT UserID FROM User WHERE UserID =" + userID);
-//				if (validId != null) {
-//					new EditUsers(userID).setVisible(true);
-//				} else {
-//					JOptionPane.showMessageDialog(null, "Var god ange ett giltigt UserID!");
-//				}
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-		//}
-
     }//GEN-LAST:event_changeInformationButtonActionPerformed
 
     private void jBBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBackActionPerformed
@@ -267,7 +246,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame
 	{
 
 		try {
-			int userID = Refactor.getTableValueFirstColumn(table2);
+			int userID = (int)Refactor.getTableValueFirstColumn(table2);
 
 			String validId = Database.fetchSingle("SELECT UserID FROM User WHERE UserID =" + userID);
 			if (validId == null) {
