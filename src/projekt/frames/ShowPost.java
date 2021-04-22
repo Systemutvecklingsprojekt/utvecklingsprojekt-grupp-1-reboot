@@ -245,6 +245,7 @@ public class ShowPost extends javax.swing.JFrame {
 
         jLabel1.setText("Gillningar:");
 
+        jBLike1.setBackground(new java.awt.Color(255, 153, 153));
         jBLike1.setText("Gilla!");
         jBLike1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -252,6 +253,7 @@ public class ShowPost extends javax.swing.JFrame {
             }
         });
 
+        jBEditPost.setBackground(new java.awt.Color(204, 204, 255));
         jBEditPost.setText("Redigera inlägg");
         jBEditPost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -259,6 +261,7 @@ public class ShowPost extends javax.swing.JFrame {
             }
         });
 
+        jBDeletePost.setBackground(new java.awt.Color(204, 204, 255));
         jBDeletePost.setText("Ta bort inlägg");
         jBDeletePost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,7 +294,7 @@ public class ShowPost extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jbNewComment))
                     .addComponent(jTextField4)
-                    .addComponent(jspComments, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+                    .addComponent(jspComments)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
