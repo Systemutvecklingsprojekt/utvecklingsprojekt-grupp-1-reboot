@@ -65,6 +65,7 @@ public class MeetingVotes extends javax.swing.JFrame {
             }
         });
 
+        jBAddTime.setBackground(new java.awt.Color(204, 204, 255));
         jBAddTime.setText("Lägg till tid");
         jBAddTime.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,6 +73,7 @@ public class MeetingVotes extends javax.swing.JFrame {
             }
         });
 
+        jBSendAvailable.setBackground(new java.awt.Color(204, 204, 255));
         jBSendAvailable.setText("Skicka tillgänglighet");
         jBSendAvailable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,6 +81,7 @@ public class MeetingVotes extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(204, 204, 255));
         jButton2.setText("Tillbaka");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,6 +96,7 @@ public class MeetingVotes extends javax.swing.JFrame {
         jTAChosenTimes.setRows(5);
         jScrollPane1.setViewportView(jTAChosenTimes);
 
+        jBDeleteTime.setBackground(new java.awt.Color(204, 204, 255));
         jBDeleteTime.setText("Ta bort alla valda tider");
         jBDeleteTime.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,8 +173,9 @@ public class MeetingVotes extends javax.swing.JFrame {
     }//GEN-LAST:event_jCBDateActionPerformed
 
     private void jBAddTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAddTimeActionPerformed
-        String date= jCBDate.getSelectedItem().toString();
+        String date = jCBDate.getSelectedItem().toString();
         String time = jCBTime.getSelectedItem().toString();
+        
         String oldLabel = jTAChosenTimes.getText();
         jTAChosenTimes.setText(oldLabel + " " + date + " " +  time + "\n");
         try {
@@ -180,20 +185,32 @@ public class MeetingVotes extends javax.swing.JFrame {
             System.out.println("errr");
         }
         
+        
+       
+        
     }//GEN-LAST:event_jBAddTimeActionPerformed
 
     private void jBSendAvailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSendAvailableActionPerformed
         
+        String alreadyVoted = "SELECT UserID, DateTimeID, COUNT(*)\n" +
+            " FROM user_votes\n" +
+            " GROUP BY UserID, DateTimeID\n" +
+            " HAVING COUNT(*) > 1;";
         try {
-            for(Integer dateTime : dateTimes){
-                Database.executeUpdate("INSERT INTO user_votes VALUES (4, " + dateTime + ");");
-                JOptionPane.showMessageDialog(null, "Dina tider är skickade till mötesvärden!");
+            if(Database.fetchRows(alreadyVoted) == null){
+                for(Integer dateTime : dateTimes){
+                    Database.executeUpdate("INSERT INTO user_votes VALUES (4, " + dateTime + ");");
+                    JOptionPane.showMessageDialog(null, "Dina tider är skickade till mötesvärden!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Du har redan anmält dig till detta möte!");
             }
             
         } catch (SQLException ex) {
             System.out.println("Error");
                     
         }
+        
 
         
     }//GEN-LAST:event_jBSendAvailableActionPerformed
