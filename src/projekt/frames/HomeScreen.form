@@ -26,29 +26,33 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jBAdminUsers" alignment="0" min="-2" pref="356" max="-2" attributes="0"/>
-                          <Component id="lblSearch" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jBProfile" min="-2" pref="169" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jBMeetings" min="-2" pref="169" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="jBFormal" min="-2" pref="169" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jBInformal" min="-2" pref="169" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jtfSearch" min="-2" pref="230" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jBsearch" min="-2" pref="62" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jBAdminUsers" alignment="0" min="-2" pref="356" max="-2" attributes="0"/>
+                                  <Component id="lblSearch" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jBProfile" min="-2" pref="169" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="jBMeetings" min="-2" pref="169" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jBFormal" min="-2" pref="169" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jBInformal" min="-2" pref="169" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -98,10 +102,10 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="jBFormal">
       <Properties>
+        <Property name="text" type="java.lang.String" value="Formell blogg"/>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="cc" red="cc" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Formell blogg"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBFormalActionPerformed"/>
@@ -109,10 +113,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBInformal">
       <Properties>
+        <Property name="text" type="java.lang.String" value="Informell blogg"/>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="cc" red="cc" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Informell blogg"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBInformalActionPerformed"/>
@@ -120,10 +124,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBMeetings">
       <Properties>
+        <Property name="text" type="java.lang.String" value="M&#xf6;ten"/>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="cc" red="cc" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="M&#xf6;ten"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBMeetingsActionPerformed"/>
@@ -131,10 +135,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBProfile">
       <Properties>
+        <Property name="text" type="java.lang.String" value="Profil"/>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="cc" red="cc" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Profil"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>
@@ -143,10 +147,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBAdminUsers">
       <Properties>
+        <Property name="text" type="java.lang.String" value="Hantera anv&#xe4;ndare och inl&#xe4;gg"/>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="cc" red="cc" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Hantera anv&#xe4;ndare och inl&#xe4;gg"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBAdminUsersActionPerformed"/>
@@ -161,10 +165,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBsearch">
       <Properties>
+        <Property name="text" type="java.lang.String" value="S&#xf6;k"/>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="cc" red="cc" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="S&#xf6;k"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBsearchActionPerformed"/>
@@ -172,15 +176,18 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblWelcome">
       <Properties>
+        <Property name="text" type="java.lang.String" value="V&#xc4;LKOMMEN"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="24" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="V&#xc4;LKOMMEN"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jBSignOut">
       <Properties>
         <Property name="text" type="java.lang.String" value="Logga ut"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBSignOutActionPerformed"/>

@@ -112,6 +112,7 @@ public class MakeInformalPost extends javax.swing.JFrame {
 
         jlUplodedFile.setText("Fil: ");
 
+        jBBack.setBackground(new java.awt.Color(204, 204, 255));
         jBBack.setText("Tillbaka");
         jBBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
