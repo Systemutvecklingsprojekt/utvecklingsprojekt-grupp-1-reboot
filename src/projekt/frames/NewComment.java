@@ -109,6 +109,7 @@ public class NewComment extends javax.swing.JFrame {
 
     private void jbBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBackActionPerformed
         this.dispose();
+        new ShowPost(user, postId).setVisible(true);
     }//GEN-LAST:event_jbBackActionPerformed
 
     private void jbPublishCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPublishCommentActionPerformed
@@ -128,6 +129,7 @@ public class NewComment extends javax.swing.JFrame {
         }
         JOptionPane.showMessageDialog(null, "Kommentar är nu tillagd!");
         this.dispose();
+        new ShowPost(user, postId).setVisible(true);
         
     }//GEN-LAST:event_jbPublishCommentActionPerformed
 

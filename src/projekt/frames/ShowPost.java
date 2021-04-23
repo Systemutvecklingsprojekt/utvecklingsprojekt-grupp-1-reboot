@@ -234,6 +234,8 @@ public class ShowPost extends javax.swing.JFrame {
 
         jLabel1.setText("Gillningar:");
 
+        jtfLikeCount.setEditable(false);
+
         jBLike1.setBackground(new java.awt.Color(255, 153, 153));
         jBLike1.setText("Gilla!");
         jBLike1.addActionListener(new java.awt.event.ActionListener() {
@@ -358,6 +360,7 @@ public class ShowPost extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jbNewCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNewCommentActionPerformed
+        this.dispose();
         new NewComment(user, postID).setVisible(true);
     }//GEN-LAST:event_jbNewCommentActionPerformed
 

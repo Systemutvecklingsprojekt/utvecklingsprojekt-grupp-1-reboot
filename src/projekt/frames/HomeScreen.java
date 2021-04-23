@@ -10,6 +10,9 @@ import javax.swing.table.DefaultTableModel;
 import projekt.User;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
+import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import projekt.Refactor;
 
 /**
@@ -286,7 +289,11 @@ public class HomeScreen extends javax.swing.JFrame
                         
                         rs = Database.fetchRows("Select NoticeID,Topic,DateTime,TypeName from Notice,Notice_Type where NoticeID in(Select NID from User_Notice where UID =" + id + ")Group by NoticeID");
                         DefaultTableModel dmb = Refactor.tableModelBuilder(rs);
-                        jTableNotiser = Refactor.populateTable(rs);
+                        jTableNotiser = new JTable(dmb);
+                        jScrollPane1.setViewportView(jTableNotiser);
+                        jTableNotiser.setVisible(true);
+                        
+                        
                         
                       //  DefaultTableModel model = (DefaultTableModel) jTableNotiser.getModel();
                         //model.addRow(new Object[]{null, beskrivning, startTid, meetingDate});     

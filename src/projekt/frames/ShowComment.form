@@ -126,6 +126,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="jtfLikeCount">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>

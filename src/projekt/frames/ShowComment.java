@@ -97,6 +97,8 @@ public class ShowComment extends javax.swing.JFrame {
             }
         });
 
+        jtfLikeCount.setEditable(false);
+
         jLabel1.setText("Gillningar:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -169,7 +171,7 @@ public class ShowComment extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Du har redan gillat denna kommentar!");
             }
         } catch (SQLException ex) {
-            System.out.println("fel");
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_jBLikeActionPerformed
 
