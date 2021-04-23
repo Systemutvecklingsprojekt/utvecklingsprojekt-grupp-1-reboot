@@ -234,6 +234,8 @@ public class ShowPost extends javax.swing.JFrame {
 
         jLabel1.setText("Gillningar:");
 
+        jtfLikeCount.setEditable(false);
+
         jBLike1.setBackground(new java.awt.Color(255, 153, 153));
         jBLike1.setText("Gilla!");
         jBLike1.addActionListener(new java.awt.event.ActionListener() {
