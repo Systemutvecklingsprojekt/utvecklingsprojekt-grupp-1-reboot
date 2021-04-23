@@ -7,9 +7,12 @@ package projekt.frames;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import projekt.Refactor;
 import projekt.frames.Calendar;
 import projekt.helpers.Database;
@@ -47,7 +50,22 @@ public class CurrentMeeting extends javax.swing.JFrame {
 
 		jScrollPane1.setViewportView(jTMeeting);
 		jTMeeting.setVisible(true);
-		//Kör emot Databasen och hämtar raderna från User
+		jTMeeting.getSelectionModel().addListSelectionListener(new ListSelectionListener()
+		{
+			@Override
+			public void valueChanged(ListSelectionEvent e)
+			{
+//				String date;
+//				date = (String)jTDates.getValueAt(jTDates.getSelectedRow(), 0);
+				
+				if(e.getValueIsAdjusting()){
+					
+				} else {
+					int id = (int) (jTMeeting.getValueAt(jTMeeting.getSelectedRow(), 0));
+					new ShowMeeting(id).setVisible(true);
+				}
+			}
+		});
 //       
 	}
     /**
@@ -61,7 +79,6 @@ public class CurrentMeeting extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTMeeting = new javax.swing.JTable();
-        jBSeeMeeting = new javax.swing.JButton();
         jBBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -79,13 +96,6 @@ public class CurrentMeeting extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTMeeting);
 
-        jBSeeMeeting.setText("Se möte");
-        jBSeeMeeting.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBSeeMeetingActionPerformed(evt);
-            }
-        });
-
         jBBack.setText("Tillbaka");
         jBBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,11 +109,8 @@ public class CurrentMeeting extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jBBack)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBSeeMeeting))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jBBack, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
@@ -113,26 +120,12 @@ public class CurrentMeeting extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBSeeMeeting)
-                    .addComponent(jBBack))
+                .addComponent(jBBack)
                 .addGap(15, 15, 15))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jBSeeMeetingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSeeMeetingActionPerformed
-        try {
-
-            int id = (int) (jTMeeting.getValueAt(jTMeeting.getSelectedRow(), 0));
-            new ShowMeeting(id).setVisible(true);
-
-        } catch (ArrayIndexOutOfBoundsException e) {
-            JOptionPane.showMessageDialog(null, "Vänligen välj ett möte att visa!");
-
-        }
-    }//GEN-LAST:event_jBSeeMeetingActionPerformed
 
     private void jBBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBackActionPerformed
         this.dispose();
@@ -175,7 +168,6 @@ public class CurrentMeeting extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBBack;
-    private javax.swing.JButton jBSeeMeeting;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTMeeting;
     // End of variables declaration//GEN-END:variables
