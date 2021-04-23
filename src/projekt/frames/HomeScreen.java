@@ -18,6 +18,7 @@ public class HomeScreen extends javax.swing.JFrame
 	private String firstName;
 	private String lastName;
 	private User user;
+        
 
 	/**
 	 * Creates new form Homescreen
@@ -122,15 +123,30 @@ public class HomeScreen extends javax.swing.JFrame
 
         jTableNotiser.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Text", "Typ", "Referear"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTableNotiser);
 
         jlblNotiser.setText("Notiser:");
