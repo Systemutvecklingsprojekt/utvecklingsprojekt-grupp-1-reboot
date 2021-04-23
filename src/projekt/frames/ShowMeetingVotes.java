@@ -11,8 +11,14 @@ import projekt.User;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Amand
@@ -29,7 +35,7 @@ public class ShowMeetingVotes extends javax.swing.JFrame {
         this.meetingID = meetingID;
         this.user = user;
         insertValues();
-        
+
     }
 
     private void insertValues() {
@@ -40,13 +46,11 @@ public class ShowMeetingVotes extends javax.swing.JFrame {
                     + " CONCAT(pdt.Date) AS Datum,\n"
                     + " CONCAT(pdt.Time) AS Tid,\n"
                     + " CONCAT(pdt.DateTimeID) AS Mötesnummer\n"
-                    + " from user_votes uv,\n"
-                    + " Proposed_Date_Time pdt,\n"
-                    + " Proposed_Meeting pm\n"
-                    + " where uv.DateTimeID = pdt.DateTimeID\n"
-                    + " and pdt.ProsedMeetingID = pm.ProposedMeetingID\n"
-                    + " and pm.ProposedMeetingID = " + meetingID + "\n"
-                    + " group by uv.DateTimeID;");
+                    + " from user_votes uv\n"
+                    + " RIGHT JOIN Proposed_Date_Time pdt ON uv.DateTimeID = pdt.DateTimeID\n"
+                    + " JOIN Proposed_Meeting pm ON pdt.ProsedMeetingID = pm.ProposedMeetingID\n"
+                    + " WHERE pm.ProposedMeetingID = " + meetingID + "\n"
+                    + " group by pdt.DateTimeID;");
             table2 = new JTable(Refactor.tableModelBuilder(rs));
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -141,21 +145,31 @@ public class ShowMeetingVotes extends javax.swing.JFrame {
     }//GEN-LAST:event_jBBackActionPerformed
 
     private void jBDetermineMeetingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDetermineMeetingActionPerformed
-        
-        int dateTimeID = Integer.parseInt(table2.getValueAt(table2.getSelectedRow(),3).toString());
+
+        int dateTimeID = Integer.parseInt(table2.getValueAt(table2.getSelectedRow(), 3).toString());
         System.out.println(dateTimeID);
+        ArrayList<Integer> userIDS = new ArrayList<>();
+        String date = table2.getValueAt(table2.getSelectedRow(), 1).toString();
+        
         try {
-            String date = Database.fetchSingle("Select Date from Proposed_Date_Time where DateTimeID = " + dateTimeID);
+            
+            
             String time = Database.fetchSingle("Select Time from Proposed_Date_Time where DateTimeID = " + dateTimeID);
             String description = Database.fetchSingle("Select Description from Proposed_Meeting where ProposedMeetingID = (Select ProsedMeetingID from Proposed_Date_Time where DateTimeID = " + dateTimeID + ")");
             Database.executeUpdate("Insert into Meeting (Date, Time, Description, UserID) values ('" + date + "', '" + time + "', '" + description + "', " + user.getUserID() + ")");
             int newMeetingID = Integer.parseInt(Database.fetchSingle("SELECT MAX(MeetingID) FROM Meeting"));
-            Database.executeUpdate("Insert into Meeting_Attandence values ((Select UserID from Invites where ProposedMeeting = " + meetingID + "), " + newMeetingID + ", J");
+            ResultSet rs = Database.fetchRows("Select UserID from Invites where ProposedMeeting = " + meetingID);
+            while (rs.next()) {
+                userIDS.add(rs.getInt("UserID"));
+            }
+            for (Integer userID : userIDS) {
+                Database.executeUpdate("Insert into Meeting_Attandence (UserID, MeetingID, IsAttending) values (" + userID + ", " + newMeetingID + ", 'J')");
+            }
+            JOptionPane.showMessageDialog(null, "Möte fastställt!");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-        catch (SQLException ex) {
-            System.out.println("err");
-        }
-        
+
     }//GEN-LAST:event_jBDetermineMeetingActionPerformed
 
     /*
@@ -167,7 +181,7 @@ public class ShowMeetingVotes extends javax.swing.JFrame {
             }
         });
     }
-       */ 
+     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBBack;
