@@ -63,24 +63,24 @@ public class HomeScreen extends javax.swing.JFrame
             }
         });
 
-        jBInformal.setBackground(new java.awt.Color(204, 204, 255));
         jBInformal.setText("Informell blogg");
+        jBInformal.setBackground(new java.awt.Color(204, 204, 255));
         jBInformal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBInformalActionPerformed(evt);
             }
         });
 
-        jBMeetings.setBackground(new java.awt.Color(204, 204, 255));
         jBMeetings.setText("Möten");
+        jBMeetings.setBackground(new java.awt.Color(204, 204, 255));
         jBMeetings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBMeetingsActionPerformed(evt);
             }
         });
 
-        jBProfile.setBackground(new java.awt.Color(204, 204, 255));
         jBProfile.setText("Profil");
+        jBProfile.setBackground(new java.awt.Color(204, 204, 255));
         jBProfile.setToolTipText("");
         jBProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,8 +106,8 @@ public class HomeScreen extends javax.swing.JFrame
             }
         });
 
-        lblWelcome.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lblWelcome.setText("VÄLKOMMEN");
+        lblWelcome.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
         jBSignOut.setText("Logga ut");
         jBSignOut.setBackground(new java.awt.Color(204, 204, 255));
@@ -144,22 +144,23 @@ public class HomeScreen extends javax.swing.JFrame
                                 .addComponent(jBFormal, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jBInformal, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(109, 109, 109))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(265, 265, 265)
-                .addComponent(jBSignOut)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(109, 109, 109))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jBSignOut)
+                                .addContainerGap())))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jBSignOut, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(6, 6, 6)
+                .addComponent(jBSignOut)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblWelcome)
                 .addGap(18, 18, 18)
                 .addComponent(lblSearch)
@@ -167,7 +168,7 @@ public class HomeScreen extends javax.swing.JFrame
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBsearch))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBInformal, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBFormal, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
