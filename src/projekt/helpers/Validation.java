@@ -157,7 +157,7 @@ public class Validation {
                 System.out.println("tjoheh");
                 JOptionPane.showMessageDialog(null, "Vänligen ange inga siffror i namnfälten!");
                 return resultat;
-                
+
             }
         } else {
             JOptionPane.showMessageDialog(null, "Du har inte angivit n?got namn.");
@@ -253,5 +253,16 @@ public class Validation {
             return false;
         }
         return true;
+    }
+
+    public static void main(String[] args) {
+        if (!isDigit("1")) {
+            System.out.println("Failed Test: 1");
+        }
+        if (isDigit("Q")) {
+            System.out.println("Failed Test: Q");
+        }
+        
+ 
     }
 }
