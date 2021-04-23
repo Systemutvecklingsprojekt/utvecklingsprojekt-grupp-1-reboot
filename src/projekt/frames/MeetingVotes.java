@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import projekt.User;
 
@@ -21,7 +22,8 @@ public class MeetingVotes extends javax.swing.JFrame {
     private int proposedMeetingID;
     private static User user;
     private ArrayList<Integer> dateTimes;
-    
+    private ArrayList<String> votedTimeID;
+
     /**
      * Creates new form MeetingVotes
      */
@@ -31,7 +33,18 @@ public class MeetingVotes extends javax.swing.JFrame {
         initComponents();
         fillCBDate();
         dateTimes = new ArrayList<Integer>();
-      
+        getUserVotes();
+    }
+
+    private void getUserVotes() {
+        this.votedTimeID = new ArrayList<>();
+        try{
+            votedTimeID = Database.fetchColumn("SELECT DateTimeID FROM user_votes where UserID = "+ user.getUserID());
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+        
     }
 
     /**
@@ -166,50 +179,65 @@ public class MeetingVotes extends javax.swing.JFrame {
     private void jCBDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDateActionPerformed
         jCBTime.removeAllItems();
         fillCBTime();
-        
+
     }//GEN-LAST:event_jCBDateActionPerformed
 
     private void jBAddTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAddTimeActionPerformed
         String date = jCBDate.getSelectedItem().toString();
-        String time = jCBTime.getSelectedItem().toString();
-        
-        String oldLabel = jTAChosenTimes.getText();
-        jTAChosenTimes.setText(oldLabel + " " + date + " " +  time + "\n");
-        try {
-            String query = Database.fetchSingle("Select DateTimeID from Proposed_Date_Time where Time = '" + time + "' and Date = '" + date + "'");
-            dateTimes.add(Integer.parseInt(query));
-        } catch (SQLException ex) {
-            System.out.println("errr");
+//        String time = jCBTime.getSelectedItem().toString();
+    String id[] = date.split(",");
+    boolean alreadyVoted = false;
+    for(String ID: votedTimeID){
+        if(ID.equals(id[0])){
+            alreadyVoted = true;
         }
-            
+    }
+    if(alreadyVoted == false){
+        dateTimes.add(Integer.parseInt(id[0]));
+                String oldLabel = jTAChosenTimes.getText();
+                jTAChosenTimes.setText(oldLabel +id[0] +": " + id[1] + ", " + id[2]+ "\n");
+    }else{
+         JOptionPane.showMessageDialog(null, "Du har redan röstat på denna mötestid");
+    }
+//        try {
+//            String dateTime = Database.fetchSingle("Select DateTimeID from Proposed_Date_Time where Time = '" + time + "' and Date = '" + date + "'");
+//            String query = "Select UserID, DateTimeID from user_votes where UserID = " + user.getUserID() + " and DateTimeID = " + dateTime;
+//            query = Database.fetchSingle(query);
+//            System.out.println(query);
+//            if (query == null) {
+//                dateTimes.add(Integer.parseInt(dateTime));
+//                String oldLabel = jTAChosenTimes.getText();
+//                jTAChosenTimes.setText(oldLabel + " " + date + " " + time + "\n");
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Du har redan röstat på denna mötestid");
+//
+//            }
+//
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//            System.out.println("errr");
+//        }
+
+
     }//GEN-LAST:event_jBAddTimeActionPerformed
 
     private void jBSendAvailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSendAvailableActionPerformed
-        
-        String alreadyVoted = "SELECT UserID, DateTimeID, COUNT(*)\n" +
-            " FROM user_votes\n" +
-            " WHERE UserID = " + user.getUserID() + "\n" +
-            " GROUP BY UserID, DateTimeID\n" +
-            " HAVING COUNT(*) > 1;";
-        try {
-            ResultSet rs = Database.fetchRows(alreadyVoted);
-            if(rs.next() == false) {
-                for(Integer dateTime : dateTimes){
-                    Database.executeUpdate("INSERT INTO user_votes VALUES (" + user.getUserID() + ", " + dateTime + ");");
-                    
-                }
-                JOptionPane.showMessageDialog(null, "Dina tider är skickade till mötesvärden!");
-            } else {
-                JOptionPane.showMessageDialog(null, "Du har redan anmält dig till detta möte!");
-            }
-            
-        } catch (SQLException ex) {
-            System.out.println("Error");
-                    
-        }
-        
 
-        
+//        String alreadyVoted = "SELECT UserID, DateTimeID, COUNT(*)\n" +
+//            " FROM user_votes\n" + 
+//            " WHERE UserID =" + user.getUserID() +"\n" +
+//            " GROUP BY UserID, DateTimeID\n" +
+//            " HAVING COUNT(*) > 1;"
+        try {
+            for (Integer dateTime : dateTimes) {
+                Database.executeUpdate("INSERT INTO user_votes VALUES (" + user.getUserID() + ", " + dateTime + ");");
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Error");
+
+        }
     }//GEN-LAST:event_jBSendAvailableActionPerformed
 
     private void jBDeleteTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeleteTimeActionPerformed
@@ -218,7 +246,7 @@ public class MeetingVotes extends javax.swing.JFrame {
     }//GEN-LAST:event_jBDeleteTimeActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -255,45 +283,44 @@ public class MeetingVotes extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void fillCBDate(){
-        
-        String query = "Select Distinct Date from Proposed_Date_Time where ProsedMeetingID = " + proposedMeetingID;
+
+    private void fillCBDate() {
+
+        String query = "Select CONCAT(DateTimeID,', ',Date,', ',Time) from Proposed_Date_Time where ProsedMeetingID = " + proposedMeetingID;
         ArrayList<String> dates = new ArrayList<>();
         try {
             ResultSet rs = Database.fetchRows(query);
-            while(rs.next()){
+            while (rs.next()) {
                 dates.add(rs.getString(1));
             }
-            for(String date : dates){
+            for (String date : dates) {
                 jCBDate.addItem(date);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-         
-        
-        
+
     }
-    private void fillCBTime(){
+
+    private void fillCBTime() {
         String date = jCBDate.getSelectedItem().toString();
         String query = "Select Distinct Time from Proposed_Date_Time where ProsedMeetingID = " + proposedMeetingID + " and Date = '" + date + "'";
-     
+
         ArrayList<String> times = new ArrayList<>();
         try {
             ResultSet rs = Database.fetchRows(query);
-            while(rs.next()){
+            while (rs.next()) {
                 times.add(rs.getString(1));
             }
-            for(String time : times){
+            for (String time : times) {
                 jCBTime.addItem(time);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    
+
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAddTime;

@@ -50,7 +50,7 @@ public class Database
 		rs = fetchRows(query);
 		ArrayList<String> columnList = new ArrayList<>();
 		while (rs.next()) {
-			columnList.add(rs.getNString(1));
+			columnList.add(rs.getString(1));
 		}
 		return columnList;
 		
