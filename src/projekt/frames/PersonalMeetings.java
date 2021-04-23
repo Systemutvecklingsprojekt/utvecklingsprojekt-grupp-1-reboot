@@ -110,7 +110,11 @@ public class PersonalMeetings extends javax.swing.JFrame {
     private void fillHostInvites() {
 
         try {
-            rs = Database.fetchRows("Select ProposedMeetingID, Date, Time, Name, Description from Proposed_Date_Time, Proposed_Meeting where Proposed_Meeting.ProposedMeetingID = Proposed_Date_Time.ProsedMeetingID and Proposed_Meeting.UserCreatorID = " + user.getUserID());
+            rs = Database.fetchRows("SELECT Proposed_Meeting.ProposedMeetingID, Proposed_Date_Time.Date, Proposed_Date_Time.Time, Proposed_Meeting.Name, Proposed_Meeting.Description \n" +
+                                    " FROM Proposed_Date_Time\n" +
+                                    " JOIN Proposed_Meeting ON Proposed_Date_Time.ProsedMeetingID = Proposed_Meeting.ProposedMeetingID\n" +
+                                    " WHERE UserCreatorID = " + user.getUserID() + "\n" +
+                                    " GROUP BY ProposedMeetingID;");
             table2 = new JTable(Refactor.tableModelBuilder(rs));
 
         } catch (Exception ex) {

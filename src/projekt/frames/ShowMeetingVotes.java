@@ -34,10 +34,19 @@ public class ShowMeetingVotes extends javax.swing.JFrame {
 
     private void insertValues() {
         try {
-            ResultSet rs = Database.fetchRows("SELECT COUNT(user_votes.DateTimeID), Proposed_Date_Time.Date, Proposed_Date_Time.Time"
-                    + " FROM Proposed_Date_Time"
-                    + " JOIN user_votes ON Proposed_Date_Time.DateTimeID = user_votes.DateTimeID"
-                    + " WHERE user_votes.DateTimeID = 4");
+            String query = "";
+
+            ResultSet rs = Database.fetchRows("select COUNT(uv.UserID) AS Röster,\n"
+                    + " CONCAT(pdt.Date) AS Datum,\n"
+                    + " CONCAT(pdt.Time) AS Tid,\n"
+                    + " CONCAT(pdt.DateTimeID) AS Mötesnummer\n"
+                    + " from user_votes uv,\n"
+                    + " Proposed_Date_Time pdt,\n"
+                    + " Proposed_Meeting pm\n"
+                    + " where uv.DateTimeID = pdt.DateTimeID\n"
+                    + " and pdt.ProsedMeetingID = pm.ProposedMeetingID\n"
+                    + " and pm.ProposedMeetingID = " + meetingID + "\n"
+                    + " group by uv.DateTimeID;");
             table2 = new JTable(Refactor.tableModelBuilder(rs));
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -133,17 +142,18 @@ public class ShowMeetingVotes extends javax.swing.JFrame {
 
     private void jBDetermineMeetingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDetermineMeetingActionPerformed
         
-        int dateTimeID = (int) jTMeetingTimes.getValueAt(jTMeetingTimes.getSelectedRow(), 0);
+        int dateTimeID = Integer.parseInt(table2.getValueAt(table2.getSelectedRow(),3).toString());
+        System.out.println(dateTimeID);
         try {
             String date = Database.fetchSingle("Select Date from Proposed_Date_Time where DateTimeID = " + dateTimeID);
-            String time = Database.fetchSingle("Selcet Time from Proposed_Date_Time where DateTimeID = " + dateTimeID);
+            String time = Database.fetchSingle("Select Time from Proposed_Date_Time where DateTimeID = " + dateTimeID);
             String description = Database.fetchSingle("Select Description from Proposed_Meeting where ProposedMeetingID = (Select ProsedMeetingID from Proposed_Date_Time where DateTimeID = " + dateTimeID + ")");
-            Database.executeUpdate("Insert into Meeting values ('" + date + "', '" + time + "', '" + description + "', " + user.getUserID() + ")" );
-            
-            Database.executeUpdate("Insert into Meeting_Attandence values (" + dateTimeID + ",(Select UserID from Invites where ProposedMeeting = " + meetingID + "), J");
+            Database.executeUpdate("Insert into Meeting (Date, Time, Description, UserID) values ('" + date + "', '" + time + "', '" + description + "', " + user.getUserID() + ")");
+            int newMeetingID = Integer.parseInt(Database.fetchSingle("SELECT MAX(MeetingID) FROM Meeting"));
+            Database.executeUpdate("Insert into Meeting_Attandence values ((Select UserID from Invites where ProposedMeeting = " + meetingID + "), " + newMeetingID + ", J");
         }
         catch (SQLException ex) {
-           
+            System.out.println("err");
         }
         
     }//GEN-LAST:event_jBDetermineMeetingActionPerformed
