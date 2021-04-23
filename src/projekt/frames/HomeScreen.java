@@ -5,7 +5,12 @@
  */
 package projekt.frames;
 
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 import projekt.User;
+import projekt.helpers.Database;
+import java.sql.ResultSet;
+import projekt.Refactor;
 
 /**
  *
@@ -29,6 +34,7 @@ public class HomeScreen extends javax.swing.JFrame
 		jBAdminUsers.setVisible(false);
 		this.id = id;
 		this.user = new User(this.id);
+                checkNotis();
 
 		adminCheck();
 		lblWelcome.setText("VÄLKOMMEN: " + user.getFirstName() + " " + user.getLastName() + "!");
@@ -123,20 +129,20 @@ public class HomeScreen extends javax.swing.JFrame
 
         jTableNotiser.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Text", "Typ", "Referear"
+                "NotisID", "Text", "Typ", "Skapad"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -261,6 +267,53 @@ public class HomeScreen extends javax.swing.JFrame
 			jBAdminUsers.setVisible(true);
 		}
 	}
+        
+        private void checkNotis() {
+            try {
+            String check = Database.fetchSingle("Select NID from User_Notice where UID =" + id);
+                       // if(check != null) {
+                         ArrayList<String> types = new ArrayList<>();   
+                         ArrayList<String> date = new ArrayList<>(); 
+                         ArrayList<String> text = new ArrayList<>(); 
+                         ArrayList<String> NotisID = new ArrayList<>(); 
+                         ResultSet rs;
+                         
+                        
+//                        types = Database.fetchColumn("Select TypeName from Notice_Type where NoticeTypeID IN (Select NoticeTypeID from Notice where NoticeID IN(Select NID from User_Notice where UID =" + this.id + "))");
+//                        date = Database.fetchColumn("Select DateTime from Notice where NoticeID IN(Select NID from User_Notice where UID =" + id+ ")");
+//                        text = Database.fetchColumn("Select Topic from Notice where NoticeID IN(Select NID from User_Notice where UID =" + id+ ")");
+//                        NotisID = Database.fetchColumn("Select NoticeID from Notice where NoticeID in (Select NID from User_Notice Where UID =" + id + ")");
+                        
+                        rs = Database.fetchRows("Select NoticeID,Topic,DateTime,TypeName from Notice,Notice_Type where NoticeID in(Select NID from User_Notice where UID =" + id + ")Group by NoticeID");
+                        DefaultTableModel dmb = Refactor.tableModelBuilder(rs);
+                        jTableNotiser = Refactor.populateTable(rs);
+                        
+                      //  DefaultTableModel model = (DefaultTableModel) jTableNotiser.getModel();
+                        //model.addRow(new Object[]{null, beskrivning, startTid, meetingDate});     
+                        
+                                
+                                
+                        
+                        //Database.fetchSingle("Select MeetingID from Meeting where NotisID =" + check); //hämta specifika möten, loop?
+                        //Database.fetchSingle("Select PostID from Post where NotisID =" + check ); // Hämta specifika posts
+                        //Database.executeUpdate("Delete from Notiser where notisID =" + check); //Ta bort notiser, de har aviserats
+                        //Databasen , vettefan hur men på något sätt så
+                        //table.getselectedValue(column med 1)
+                        //if(getSelectedValue type = 2/1)
+                        //getMeetingID->ShowMeeting(ID)
+                        //getPostID->sHOWPost(id);
+                        //Största problemet: Kolla date/timestamp mot localdatetime - en tabell att få ett RS av så man slipper fetch single
+                        //Selecta vilka notiser man vill ha, möten/post mer? Remove knapp brevid?
+                        //}
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+        }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
