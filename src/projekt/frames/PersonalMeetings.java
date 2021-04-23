@@ -53,7 +53,7 @@ public class PersonalMeetings extends javax.swing.JFrame {
                     }
                 }
             });
-        } else{
+        } else {
             System.out.println("table2 is Null");
         }
 
@@ -72,20 +72,20 @@ public class PersonalMeetings extends javax.swing.JFrame {
             }
             jScrollPane1.setViewportView(table2);
             table2.setVisible(true);
-             if (table2 != null) {
-            table2.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-                public void valueChanged(ListSelectionEvent e) {
-                    if (e.getValueIsAdjusting()) {
+            if (table2 != null) {
+                table2.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                    public void valueChanged(ListSelectionEvent e) {
+                        if (e.getValueIsAdjusting()) {
 
-                    } else {
-                        int id = (int) (table2.getValueAt(table2.getSelectedRow(), 0));
-                        new ShowMeeting(id).setVisible(true);
+                        } else {
+                            int id = (int) (table2.getValueAt(table2.getSelectedRow(), 0));
+                            new ShowMeeting(id).setVisible(true);
+                        }
                     }
-                }
-            });
-        } else{
-            System.out.println("table2 is Null");
-        }
+                });
+            } else {
+                System.out.println("table2 is Null");
+            }
 
         }
     }
@@ -104,7 +104,7 @@ public class PersonalMeetings extends javax.swing.JFrame {
         }
         jScrollPane1.setViewportView(table2);
         table2.setVisible(true);
-initTableListener();
+        initTableListener();
     }
 
     private void fillHostInvites() {
@@ -112,13 +112,28 @@ initTableListener();
         try {
             rs = Database.fetchRows("Select ProposedMeetingID, Date, Time, Name, Description from Proposed_Date_Time, Proposed_Meeting where Proposed_Meeting.ProposedMeetingID = Proposed_Date_Time.ProsedMeetingID and Proposed_Meeting.UserCreatorID = " + user.getUserID());
             table2 = new JTable(Refactor.tableModelBuilder(rs));
-            
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         jScrollPane1.setViewportView(table2);
         table2.setVisible(true);
-initTableListener();
+        if (table2 != null) {
+            table2.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                public void valueChanged(ListSelectionEvent e) {
+                    if (e.getValueIsAdjusting()) {
+
+                    } else {
+                        int id = (int) (table2.getValueAt(table2.getSelectedRow(), 0));
+                        System.out.println(id);
+                        new ShowMeetingVotes(id, user).setVisible(true);
+                    }
+                }
+            });
+        } else {
+            System.out.println("table2 is Null");
+
+        }
     }
 
     /**
@@ -138,6 +153,7 @@ initTableListener();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jBBack.setBackground(new java.awt.Color(204, 204, 255));
         jBBack.setText("Tillbaka");
         jBBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,6 +161,7 @@ initTableListener();
             }
         });
 
+        jbNewMeeting.setBackground(new java.awt.Color(204, 204, 255));
         jbNewMeeting.setText("Skapa nytt möte");
         jbNewMeeting.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,17 +195,16 @@ initTableListener();
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jBBack, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 234, Short.MAX_VALUE)
-                .addComponent(jbNewMeeting)
-                .addGap(26, 26, 26))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jBBack, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(203, 203, 203)
+                        .addComponent(jbNewMeeting))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,7 +240,7 @@ initTableListener();
         } else if (jComboBox1.getSelectedItem() == ("Mina mötesutskick")) {
             fillHostInvites();
         }
-        
+
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
 

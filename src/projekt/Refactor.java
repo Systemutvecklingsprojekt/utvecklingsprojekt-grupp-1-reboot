@@ -38,8 +38,8 @@ public class Refactor
 
 			String header = metaData.getColumnName(column);
 			/*
-                    Först tar vi bort eventuella siffror, sedan lägger vi in ett whitespace framför kapitaliserade karaktärer
-                    som inte är den första karaktären.
+				Först tar vi bort eventuella siffror, sedan lägger vi in ett whitespace framför kapitaliserade karaktärer
+				som inte är den första karaktären.
 			 */
 			String refactoredHeader = header.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2");
 			columnNames.add(capitalize(refactoredHeader));
@@ -60,12 +60,19 @@ public class Refactor
 
 	public static int getTableValueFirstColumn(JTable table) throws ArrayIndexOutOfBoundsException
 	{
-		return (int) table.getValueAt(table.getSelectedRow(), 0);
+		Class cla = table.getValueAt(table.getSelectedRow(), 0).getClass();
+		if (cla == "".getClass()) {
+			return Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0));
+		} else {
+			return (int) table.getValueAt(table.getSelectedRow(), 0);
+		}
+
 	}
 
 	public static void showPostByPostID(User user, JTable table) throws ArrayIndexOutOfBoundsException
 	{
-		int id = Refactor.getTableValueFirstColumn(table);
+
+		int id = (int) Refactor.getTableValueFirstColumn(table);
 		new ShowPost(user, id).setVisible(true);
 
 	}

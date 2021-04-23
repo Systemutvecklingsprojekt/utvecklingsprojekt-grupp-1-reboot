@@ -46,13 +46,13 @@ public class ShowPost extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
         }
-       if (user == null) {
-			jBEditPost.setVisible(false);
-		} else {
-			if (user.getUserID() != postUserInt) {
-				jBEditPost.setVisible(false);
-			}
-		}
+        if (user == null) {
+            jBEditPost.setVisible(false);
+        } else {
+            if (user.getUserID() != postUserInt) {
+                jBEditPost.setVisible(false);
+            }
+        }
 
         try {
             String joinQuery = "SELECT CommentID, firstName, lastName, Comments.timeStamp, Text FROM User JOIN Comments ON User.UserID = Comments.UserID WHERE PostID =" + postID;
@@ -83,8 +83,6 @@ public class ShowPost extends javax.swing.JFrame {
             javax.swing.ImageIcon icon = new javax.swing.ImageIcon(pathway);
             Image image = icon.getImage().getScaledInstance(jLPicture.getWidth(), jLPicture.getHeight(), Image.SCALE_DEFAULT);
             jLPicture.setIcon(new ImageIcon(new ImageIcon(pathway).getImage().getScaledInstance(jLPicture.getHeight(), jLPicture.getHeight(), Image.SCALE_SMOOTH)));
-            
-            
 
         } catch (SQLException ex) {
             Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
@@ -159,7 +157,6 @@ public class ShowPost extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jbNewComment = new javax.swing.JButton();
-        jbShowComments = new javax.swing.JButton();
         jspComments = new javax.swing.JScrollPane();
         jTableComments = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -219,14 +216,6 @@ public class ShowPost extends javax.swing.JFrame {
         jbNewComment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbNewCommentActionPerformed(evt);
-            }
-        });
-
-        jbShowComments.setBackground(new java.awt.Color(204, 204, 255));
-        jbShowComments.setText("Visa kommentar");
-        jbShowComments.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbShowCommentsActionPerformed(evt);
             }
         });
 
@@ -290,8 +279,6 @@ public class ShowPost extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jBEditPost)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbShowComments)
-                        .addGap(18, 18, 18)
                         .addComponent(jbNewComment))
                     .addComponent(jTextField4)
                     .addComponent(jspComments)
@@ -353,7 +340,6 @@ public class ShowPost extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jbNewComment)
-                    .addComponent(jbShowComments)
                     .addComponent(jBEditPost))
                 .addGap(19, 19, 19))
         );
@@ -370,18 +356,6 @@ public class ShowPost extends javax.swing.JFrame {
     {//GEN-HEADEREND:event_jButton1ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jbShowCommentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbShowCommentsActionPerformed
-        try {
-
-            int commentID = (int) (jTableComments.getValueAt(jTableComments.getSelectedRow(), 0));
-            new ShowComment(commentID, user);
-
-        } catch (ArrayIndexOutOfBoundsException e) {
-            JOptionPane.showMessageDialog(null, "Vänligen välj en kommentar att visa!");
-
-        }
-    }//GEN-LAST:event_jbShowCommentsActionPerformed
 
     private void jbNewCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNewCommentActionPerformed
         new NewComment(user, postID).setVisible(true);
@@ -465,7 +439,6 @@ public class ShowPost extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JButton jbNewComment;
-    private javax.swing.JButton jbShowComments;
     private javax.swing.JScrollPane jspComments;
     private javax.swing.JTextField jtfLikeCount;
     private javax.swing.JTextField txt_filename;
