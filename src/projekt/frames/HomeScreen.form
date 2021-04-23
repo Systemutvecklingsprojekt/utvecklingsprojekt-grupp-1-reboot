@@ -57,6 +57,11 @@
               </Group>
               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
           </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="jBtnNotis" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -95,7 +100,9 @@
                       <Component id="jlblNotiser" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="286" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jBtnNotis" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -248,6 +255,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Notiser:"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jBtnNotis">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="G&#xe5; till notis"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnNotisActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

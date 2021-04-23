@@ -65,6 +65,7 @@ public class HomeScreen extends javax.swing.JFrame
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableNotiser = new javax.swing.JTable();
         jlblNotiser = new javax.swing.JLabel();
+        jBtnNotis = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -160,6 +161,13 @@ public class HomeScreen extends javax.swing.JFrame
 
         jlblNotiser.setText("Notiser:");
 
+        jBtnNotis.setText("Gå till notis");
+        jBtnNotis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnNotisActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -191,6 +199,10 @@ public class HomeScreen extends javax.swing.JFrame
                     .addComponent(jlblNotiser, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBtnNotis)
+                .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,7 +235,9 @@ public class HomeScreen extends javax.swing.JFrame
                         .addComponent(jlblNotiser)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61))))
+                        .addGap(18, 18, 18)
+                        .addComponent(jBtnNotis)
+                        .addGap(20, 20, 20))))
         );
 
         pack();
@@ -263,6 +277,25 @@ public class HomeScreen extends javax.swing.JFrame
 		this.dispose();
     }//GEN-LAST:event_jBSignOutActionPerformed
 
+    private void jBtnNotisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnNotisActionPerformed
+        if (jTableNotiser.getValueAt(jTableNotiser.getSelectedRow(), 3).equals("Meeting")) {
+            int id = (int) (jTableNotiser.getValueAt(jTableNotiser.getSelectedRow(), 0));
+            new ShowMeeting(id).setVisible(true);
+        }
+        
+        if (jTableNotiser.getValueAt(jTableNotiser.getSelectedRow(), 3).equals("Post")) {
+            int id = (int) (jTableNotiser.getValueAt(jTableNotiser.getSelectedRow(), 0));
+            new ShowPost(this.user,id).setVisible(true);
+        }
+        
+        if (jTableNotiser.getValueAt(jTableNotiser.getSelectedRow(), 3).equals("ProposedMeeting")) {
+            int id = (int) (jTableNotiser.getValueAt(jTableNotiser.getSelectedRow(), 0));
+            new PersonalMeetings(this.user).setVisible(true);
+        }
+        
+        
+    }//GEN-LAST:event_jBtnNotisActionPerformed
+
 	private void adminCheck()
 	{
 
@@ -287,11 +320,12 @@ public class HomeScreen extends javax.swing.JFrame
 //                        text = Database.fetchColumn("Select Topic from Notice where NoticeID IN(Select NID from User_Notice where UID =" + id+ ")");
 //                        NotisID = Database.fetchColumn("Select NoticeID from Notice where NoticeID in (Select NID from User_Notice Where UID =" + id + ")");
                         
-                        rs = Database.fetchRows("Select NoticeID,Topic,DateTime,TypeName from Notice,Notice_Type where NoticeID in(Select NID from User_Notice where UID =" + id + ")Group by NoticeID");
+                        rs = Database.fetchRows("SELECT NoticeID, Topic, DateTime, TypeName FROM Notice JOIN Notice_Type ON Notice.NoticeTypeID = Notice_Type.NoticeTypeID JOIN User_Notice ON Notice.NoticeID = User_Notice.NID WHERE UID = " + id);
                         DefaultTableModel dmb = Refactor.tableModelBuilder(rs);
                         jTableNotiser = new JTable(dmb);
                         jScrollPane1.setViewportView(jTableNotiser);
                         jTableNotiser.setVisible(true);
+                        
                         
                         
                         
@@ -331,6 +365,7 @@ public class HomeScreen extends javax.swing.JFrame
     private javax.swing.JButton jBProfile;
     private javax.swing.JButton jBSignOut;
     private javax.swing.JButton jBsearch;
+    private javax.swing.JButton jBtnNotis;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableNotiser;
     private javax.swing.JLabel jlblNotiser;
