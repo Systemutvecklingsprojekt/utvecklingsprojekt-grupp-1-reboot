@@ -169,7 +169,7 @@ public class ShowComment extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Du har redan gillat denna kommentar!");
             }
         } catch (SQLException ex) {
-            System.out.println("fel");
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_jBLikeActionPerformed
 

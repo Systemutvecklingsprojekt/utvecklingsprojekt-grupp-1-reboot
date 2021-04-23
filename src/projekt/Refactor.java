@@ -12,6 +12,7 @@ import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import projekt.frames.ShowMeeting;
 import projekt.frames.ShowPost;
 
 /**
@@ -74,6 +75,14 @@ public class Refactor
 
 		int id = (int) Refactor.getTableValueFirstColumn(table);
 		new ShowPost(user, id).setVisible(true);
+
+	}
+        
+        public static void showMeetingByID(User user, JTable table) throws ArrayIndexOutOfBoundsException
+	{
+
+		int id = (int) Refactor.getTableValueFirstColumn(table);
+		new ShowMeeting(id).setVisible(true);
 
 	}
 
