@@ -360,6 +360,7 @@ public class ShowPost extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jbNewCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNewCommentActionPerformed
+        this.dispose();
         new NewComment(user, postID).setVisible(true);
     }//GEN-LAST:event_jbNewCommentActionPerformed
 
