@@ -188,14 +188,17 @@ public class MeetingVotes extends javax.swing.JFrame {
         
         String alreadyVoted = "SELECT UserID, DateTimeID, COUNT(*)\n" +
             " FROM user_votes\n" +
+            " WHERE UserID = " + user.getUserID() + "\n" +
             " GROUP BY UserID, DateTimeID\n" +
             " HAVING COUNT(*) > 1;";
         try {
-            if(Database.fetchRows(alreadyVoted) == null){
+            ResultSet rs = Database.fetchRows(alreadyVoted);
+            if(rs.next() == false) {
                 for(Integer dateTime : dateTimes){
                     Database.executeUpdate("INSERT INTO user_votes VALUES (" + user.getUserID() + ", " + dateTime + ");");
-                    JOptionPane.showMessageDialog(null, "Dina tider är skickade till mötesvärden!");
+                    
                 }
+                JOptionPane.showMessageDialog(null, "Dina tider är skickade till mötesvärden!");
             } else {
                 JOptionPane.showMessageDialog(null, "Du har redan anmält dig till detta möte!");
             }
