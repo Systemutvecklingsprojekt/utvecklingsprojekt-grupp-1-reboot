@@ -88,7 +88,7 @@ public class Validation {
 
         boolean result = true;
         if (!textField.getText().isEmpty()) {
-            if (textField.getText().length() > 20 && textField.getText().length() < 5) {
+            if (textField.getText().length() > 20 || textField.getText().length() < 5) {
                 JOptionPane.showMessageDialog(null, "L?senordet får max vara 20 karaktärer långt och minst 5 karaktärer!");
                 result = false;
             }
@@ -147,9 +147,17 @@ public class Validation {
     public static boolean checkName(JTextField textField) {
         boolean resultat = true;
         if (!textField.getText().isEmpty()) {
-            if (textField.getText().length() > 20 && noInts(textField)) {
-                JOptionPane.showMessageDialog(null, "Max 20 tecken!");
+            if (textField.getText().length() > 20 && textField.getText().length() < 2) {
+                JOptionPane.showMessageDialog(null, "Max 20 tecken och minst 2!");
                 resultat = false;
+                return resultat;
+            }
+            if (noInts(textField)) {
+                resultat = false;
+                System.out.println("tjoheh");
+                JOptionPane.showMessageDialog(null, "Vänligen ange inga siffror i namnfälten!");
+                return resultat;
+                
             }
         } else {
             JOptionPane.showMessageDialog(null, "Du har inte angivit n?got namn.");
@@ -211,34 +219,39 @@ public class Validation {
         return true;
 
     }
-    
-    public static boolean isImageValid(String string){
+
+    public static boolean isImageValid(String string) {
         boolean resultat = false;
-        if(string.endsWith(".jpg")|| string.endsWith(".png")){
+        if (string.endsWith(".jpg") || string.endsWith(".png")) {
             resultat = true;
             return resultat;
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(null, "Vänligen välj en bild med formatet PNG eller JPG!");
             resultat = false;
         }
         return resultat;
     }
-    
+
     public static boolean noInts(JTextField field) {
         boolean resultat = false;
         String name = field.toString();
-        if(name.matches("[a-zA-Z]+")) {
-        resultat = true;
-        return resultat;
+        if (name.matches(".*\\d.*")) {
+            resultat = true;
+            return resultat;
+        } else {
+            resultat = false;
+            JOptionPane.showMessageDialog(null, "Använd endast tecken i namnfälten");
+            return resultat;
         }
-        else {
-        resultat = false;
-        JOptionPane.showMessageDialog(null, "Använd endast tecken i namnfälten");
-        }
-        
-        return resultat;
-    
-}
 
+    }
+
+    public static boolean isDigit(String string) {
+        try {
+            int d = Integer.parseInt(string);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
 }
