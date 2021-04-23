@@ -27,6 +27,7 @@ public class ShowComment extends javax.swing.JFrame {
         this.id = id;
         this.user = user;
         fillComment(id);
+        jBLike.setVisible(true);
         
         if (user == null){
             jBLike.setVisible(false);
