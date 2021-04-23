@@ -184,6 +184,11 @@ public class Blog extends javax.swing.JFrame
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
 		this.dispose();
+                if(user == null){
+                    new NotLoggedInHomeScreen().setVisible(true);
+                } else {
+                    new HomeScreen(user.getUserID()).setVisible(true);
+                }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnMakePostActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnMakePostActionPerformed
