@@ -192,8 +192,9 @@ public class Calendar extends javax.swing.JFrame
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         String date1 = format1.format(day); 
         try{
-        String sqlQuery = "SELECT Date, Despription from Meeting where Date = '" + date1 + "'";
+        String sqlQuery = "SELECT Date, Description from Meeting where Date = '" + date1 + "'";
         ResultSet rs1 = Database.fetchRows (sqlQuery);
+        fillDates(Database.fetchRows(sqlQuery));
         }
         catch(SQLException e){
         e.printStackTrace();
