@@ -241,6 +241,7 @@ public class EditUsers extends javax.swing.JFrame {
                e.printStackTrace();
             }
         }
+        
     }//GEN-LAST:event_jBSaveActionPerformed
 
     
