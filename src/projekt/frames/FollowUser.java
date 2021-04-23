@@ -5,7 +5,9 @@
  */
 package projekt.frames;
 
+import java.util.ArrayList;
 import projekt.User;
+import projekt.helpers.Database;
 
 /**
  *
@@ -13,11 +15,41 @@ import projekt.User;
  */
 public class FollowUser extends javax.swing.JFrame {
 
+    private ArrayList<String> pers;
+    private ArrayList<String> dbPers;
+    private User user;
+
     /**
      * Creates new form FollowUser
      */
     public FollowUser(User user) {
         initComponents();
+        this.user = user;
+        jComboBox1.removeAllItems();
+        pers = getArrayPers();
+        fillBox();
+
+    }
+
+    public void fillBox() {
+        for (String pers : pers) {
+
+            jComboBox1.addItem(pers);
+
+        }
+
+    }
+
+    private ArrayList<String> getArrayPers() {
+        String ownEmail = user.getEmail();
+        ArrayList<String> pers = null;
+        try {
+            pers = Database.fetchColumn("Select email from User WHERE NOT email = 'DELETEDUSER'");
+            return pers;
+        } catch (Exception e) {
+            System.out.println("feeeeel arraylist personer");
+        }
+        return pers;
     }
 
     /**
@@ -39,7 +71,11 @@ public class FollowUser extends javax.swing.JFrame {
 
         jLabel1.setText("Användare");
 
-        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,12 +101,16 @@ public class FollowUser extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addContainerGap(129, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
