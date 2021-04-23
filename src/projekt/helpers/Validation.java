@@ -145,25 +145,27 @@ public class Validation {
     }
 
     public static boolean checkName(JTextField textField) {
-        boolean resultat = true;
-        if (!textField.getText().isEmpty()) {
-            if (textField.getText().length() > 20 && textField.getText().length() < 2) {
-                JOptionPane.showMessageDialog(null, "Max 20 tecken och minst 2!");
-                resultat = false;
-                return resultat;
-            }
-            if (noInts(textField)) {
-                resultat = false;
-                System.out.println("tjoheh");
-                JOptionPane.showMessageDialog(null, "Vänligen ange inga siffror i namnfälten!");
-                return resultat;
-
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Du har inte angivit n?got namn.");
-            resultat = false;
+        String messageDialog ="";
+        boolean errorflag = true;
+        if (textField.getText().isBlank()) {
+            messageDialog = messageDialog +"Du har inte angivit något namn.\n";
+            errorflag = false;
         }
-        return resultat;
+        if (textField.getText().length() > 20 && textField.getText().length() < 2) {
+            messageDialog = messageDialog +"Max 20 tecken och minst 2!\n";
+            errorflag = false;
+        }
+        if (containsDigit(textField.getText())) {
+            errorflag = false;
+            messageDialog = messageDialog +"Vänligen ange inga siffror i namnfälten!\n";
+
+        }
+        if(errorflag==false){
+            JOptionPane.showMessageDialog(null, messageDialog);
+            //System.out.println("projekt.helpers.Validation.checkName()");
+        }
+        
+        return errorflag;
     }
 
     public static boolean emailVerification(JTextField textField) {
@@ -232,37 +234,59 @@ public class Validation {
         return resultat;
     }
 
-    public static boolean noInts(JTextField field) {
-        boolean resultat = false;
-        String name = field.toString();
-        if (name.matches(".*\\d.*")) {
-            resultat = true;
-            return resultat;
-        } else {
-            resultat = false;
-            JOptionPane.showMessageDialog(null, "Använd endast tecken i namnfälten");
-            return resultat;
+    private static boolean noInts(String string) {
+        boolean isNotInt = false;
+
+        if (string.matches("[a-zA-z]")) {
+            isNotInt = true;
         }
+        return isNotInt;
 
     }
 
-    public static boolean isDigit(String string) {
+    private static boolean isDigit(String string) {
         try {
             int d = Integer.parseInt(string);
         } catch (NumberFormatException nfe) {
+            return false;
+        } catch (Exception e) {
             return false;
         }
         return true;
     }
 
+    public static boolean containsDigit(String string) {
+        boolean hasDigits = false;
+        for (int i = 0; i < string.length(); i++) {
+            if (isDigit(Character.toString(string.charAt(i)))) {
+                hasDigits = true;
+                break;
+            }
+            //Process char
+        }
+
+        return hasDigits;
+    }
+
+    private static void containsDigitTest(String[] expectedTrue, String[] expectedFalse) {
+        for (int i = 0; i < expectedTrue.length; i++) {
+            if (!containsDigit(expectedTrue[i])) {
+                System.out.println("projekt.helpers.Validation.containsDigitTest():\n"
+                        + "isDigit(" + expectedTrue[i] + ")->False\nExpected True");
+            }
+        }
+        for (int i = 0; i < expectedFalse.length; i++) {
+            if (containsDigit(expectedFalse[i])) {
+                System.out.println("projekt.helpers.Validation.containsDigitTest():\n"
+                        + "isDigit(" + expectedFalse[i] + ")->True\nExpected False");
+            }
+        }
+
+    }
+
     public static void main(String[] args) {
-        if (!isDigit("1")) {
-            System.out.println("Failed Test: 1");
-        }
-        if (isDigit("Q")) {
-            System.out.println("Failed Test: Q");
-        }
-        
- 
+        String[] expectedFalseNoDigits = {"i", "okej", "Okokasxbaxnksjnuasvv", "qwertyu"}, expectedTrueSomeDigits = {"1", "ok1ej", "Okokasxba8xnksjnuasvv", "qw9ertyu", "1", "99991234567890234567"};
+        containsDigitTest(expectedTrueSomeDigits, expectedFalseNoDigits);
+
     }
 }
