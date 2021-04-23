@@ -44,6 +44,7 @@
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="jBBack" max="32767" attributes="0"/>
                           <Component id="jbUploadFile" max="32767" attributes="0"/>
+                          <Component id="jBRemoveFile" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
@@ -89,7 +90,10 @@
                   <Component id="txt_filename" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="lbl_image" min="-2" pref="102" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lbl_image" min="-2" pref="102" max="-2" attributes="0"/>
+                  <Component id="jBRemoveFile" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jBBack" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -202,6 +206,17 @@
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_image">
+    </Component>
+    <Component class="javax.swing.JButton" name="jBRemoveFile">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Ta bort fil"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBRemoveFileActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

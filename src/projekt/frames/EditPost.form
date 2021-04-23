@@ -53,12 +53,12 @@
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jbUploadFile" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="jBRemoveFile" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jLPicture" min="-2" pref="133" max="-2" attributes="0"/>
+                              <Component id="lbl_image" min="-2" pref="133" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
@@ -104,7 +104,7 @@
               <Component id="jScrollPane1" min="-2" pref="132" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLPicture" alignment="0" min="-2" pref="123" max="-2" attributes="0"/>
+                  <Component id="lbl_image" alignment="0" min="-2" pref="123" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="txt_filename" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -112,7 +112,7 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jBRemoveFile" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jbUploadFile" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -236,9 +236,9 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txt_filename">
     </Component>
-    <Component class="javax.swing.JLabel" name="jLPicture">
+    <Component class="javax.swing.JLabel" name="lbl_image">
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="jBRemoveFile">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="cc" red="cc" type="rgb"/>
@@ -246,7 +246,7 @@
         <Property name="text" type="java.lang.String" value="Ta bort fil"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBRemoveFileActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

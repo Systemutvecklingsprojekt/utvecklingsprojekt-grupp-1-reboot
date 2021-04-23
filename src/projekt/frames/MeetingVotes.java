@@ -7,9 +7,6 @@ package projekt.frames;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JCheckBox;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
@@ -184,10 +181,7 @@ public class MeetingVotes extends javax.swing.JFrame {
         } catch (SQLException ex) {
             System.out.println("errr");
         }
-        
-        
-       
-        
+            
     }//GEN-LAST:event_jBAddTimeActionPerformed
 
     private void jBSendAvailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSendAvailableActionPerformed
@@ -199,7 +193,7 @@ public class MeetingVotes extends javax.swing.JFrame {
         try {
             if(Database.fetchRows(alreadyVoted) == null){
                 for(Integer dateTime : dateTimes){
-                    Database.executeUpdate("INSERT INTO user_votes VALUES (4, " + dateTime + ");");
+                    Database.executeUpdate("INSERT INTO user_votes VALUES (" + user.getUserID() + ", " + dateTime + ");");
                     JOptionPane.showMessageDialog(null, "Dina tider är skickade till mötesvärden!");
                 }
             } else {

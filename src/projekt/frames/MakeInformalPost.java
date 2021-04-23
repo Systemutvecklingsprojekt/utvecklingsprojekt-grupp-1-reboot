@@ -62,6 +62,7 @@ public class MakeInformalPost extends javax.swing.JFrame {
         jBBack = new javax.swing.JButton();
         txt_filename = new javax.swing.JTextField();
         lbl_image = new javax.swing.JLabel();
+        jBRemoveFile = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -126,6 +127,14 @@ public class MakeInformalPost extends javax.swing.JFrame {
             }
         });
 
+        jBRemoveFile.setBackground(new java.awt.Color(204, 204, 255));
+        jBRemoveFile.setText("Ta bort fil");
+        jBRemoveFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBRemoveFileActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -145,7 +154,8 @@ public class MakeInformalPost extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jBBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbUploadFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jbUploadFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jBRemoveFile, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -180,7 +190,9 @@ public class MakeInformalPost extends javax.swing.JFrame {
                     .addComponent(jlUplodedFile)
                     .addComponent(txt_filename, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(lbl_image, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_image, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBRemoveFile))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBBack)
@@ -192,17 +204,23 @@ public class MakeInformalPost extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbUploadFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUploadFileActionPerformed
-        JFileChooser chooser = new JFileChooser();
-        chooser.showOpenDialog(null);
-        File f = chooser.getSelectedFile();
-        String filename = f.getAbsolutePath();
-        if (Validation.isImageValid(filename)) {
-            txt_filename.setText(filename);
-            Image getAbsolutePath = null;
-            javax.swing.ImageIcon icon = new javax.swing.ImageIcon(filename);
-            Image image = icon.getImage().getScaledInstance(lbl_image.getWidth(), lbl_image.getHeight(), Image.SCALE_SMOOTH);
-
-            lbl_image.setIcon(new javax.swing.ImageIcon(new javax.swing.ImageIcon(image).getImage().getScaledInstance(lbl_image.getHeight(), lbl_image.getHeight(), Image.SCALE_SMOOTH)));
+        try {
+            JFileChooser chooser = new JFileChooser();
+            chooser.showOpenDialog(null);
+            File f = chooser.getSelectedFile();
+            if (f != null) {
+                String filename = f.getAbsolutePath();
+                if (Validation.isImageValid(filename)) {
+                    txt_filename.setText(filename);
+                    Image getAbsolutePath = null;
+                    javax.swing.ImageIcon icon = new javax.swing.ImageIcon(filename);
+                    Image image = icon.getImage().getScaledInstance(lbl_image.getWidth(), lbl_image.getHeight(), Image.SCALE_SMOOTH);
+                    lbl_image.setVisible(true);
+                    lbl_image.setIcon(new javax.swing.ImageIcon(new javax.swing.ImageIcon(image).getImage().getScaledInstance(lbl_image.getHeight(), lbl_image.getHeight(), Image.SCALE_SMOOTH)));
+                }
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }//GEN-LAST:event_jbUploadFileActionPerformed
 
@@ -370,6 +388,11 @@ public class MakeInformalPost extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_filenameActionPerformed
 
+    private void jBRemoveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemoveFileActionPerformed
+        txt_filename.setText("");
+        lbl_image.setVisible(false);
+    }//GEN-LAST:event_jBRemoveFileActionPerformed
+
     private void fillTags() {
         ArrayList<String> tags = new ArrayList<>();
         tags.add("AW");
@@ -385,6 +408,7 @@ public class MakeInformalPost extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAddTag;
     private javax.swing.JButton jBBack;
+    private javax.swing.JButton jBRemoveFile;
     private javax.swing.JComboBox<String> jCBTags;
     private javax.swing.JFileChooser jFileChooser2;
     private javax.swing.JLabel jLTags;

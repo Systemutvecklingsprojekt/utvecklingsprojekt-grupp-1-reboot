@@ -11,10 +11,7 @@ import projekt.User;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -25,14 +22,14 @@ import javax.swing.JOptionPane;
  */
 public class ShowMeetingVotes extends javax.swing.JFrame {
 
-    private int meetingID;
+    private int proposedMeetingID;
     private User user;
     private javax.swing.JTable table2;
 
-    public ShowMeetingVotes(int meetingID, User user) {
+    public ShowMeetingVotes(int proposedMeetingID, User user) {
 
         initComponents();
-        this.meetingID = meetingID;
+        this.proposedMeetingID = proposedMeetingID;
         this.user = user;
         insertValues();
 
@@ -49,7 +46,7 @@ public class ShowMeetingVotes extends javax.swing.JFrame {
                     + " from user_votes uv\n"
                     + " RIGHT JOIN Proposed_Date_Time pdt ON uv.DateTimeID = pdt.DateTimeID\n"
                     + " JOIN Proposed_Meeting pm ON pdt.ProsedMeetingID = pm.ProposedMeetingID\n"
-                    + " WHERE pm.ProposedMeetingID = " + meetingID + "\n"
+                    + " WHERE pm.ProposedMeetingID = " + proposedMeetingID + "\n"
                     + " group by pdt.DateTimeID;");
             table2 = new JTable(Refactor.tableModelBuilder(rs));
         } catch (Exception ex) {
@@ -152,19 +149,18 @@ public class ShowMeetingVotes extends javax.swing.JFrame {
         String date = table2.getValueAt(table2.getSelectedRow(), 1).toString();
         
         try {
-            
-            
             String time = Database.fetchSingle("Select Time from Proposed_Date_Time where DateTimeID = " + dateTimeID);
             String description = Database.fetchSingle("Select Description from Proposed_Meeting where ProposedMeetingID = (Select ProsedMeetingID from Proposed_Date_Time where DateTimeID = " + dateTimeID + ")");
             Database.executeUpdate("Insert into Meeting (Date, Time, Description, UserID) values ('" + date + "', '" + time + "', '" + description + "', " + user.getUserID() + ")");
             int newMeetingID = Integer.parseInt(Database.fetchSingle("SELECT MAX(MeetingID) FROM Meeting"));
-            ResultSet rs = Database.fetchRows("Select UserID from Invites where ProposedMeeting = " + meetingID);
+            ResultSet rs = Database.fetchRows("Select UserID from Invites where ProposedMeeting = " + proposedMeetingID);
             while (rs.next()) {
                 userIDS.add(rs.getInt("UserID"));
             }
             for (Integer userID : userIDS) {
                 Database.executeUpdate("Insert into Meeting_Attandence (UserID, MeetingID, IsAttending) values (" + userID + ", " + newMeetingID + ", 'J')");
             }
+            deleteOldMeeting();
             JOptionPane.showMessageDialog(null, "Möte fastställt!");
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -172,6 +168,15 @@ public class ShowMeetingVotes extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jBDetermineMeetingActionPerformed
 
+    private void deleteOldMeeting(){
+        try {
+            Database.executeUpdate("DELETE FROM Invites WHERE ProposedMeeting = " + proposedMeetingID + ";");
+            Database.executeUpdate("DELETE FROM Proposed_Date_Time WHERE ProsedMeetingID = " + proposedMeetingID + ";");
+            Database.executeUpdate("DELETE FROM Proposed_Meeting WHERE ProposedMeetingID = " + proposedMeetingID + ";");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
     /*
     public static void main(String args[]) {
         

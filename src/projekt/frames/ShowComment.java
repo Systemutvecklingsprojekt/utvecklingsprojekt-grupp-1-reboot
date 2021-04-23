@@ -97,6 +97,8 @@ public class ShowComment extends javax.swing.JFrame {
             }
         });
 
+        jtfLikeCount.setEditable(false);
+
         jLabel1.setText("Gillningar:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
