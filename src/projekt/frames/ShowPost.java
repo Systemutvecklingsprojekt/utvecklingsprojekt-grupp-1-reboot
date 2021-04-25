@@ -260,6 +260,8 @@ public class ShowPost extends javax.swing.JFrame {
             }
         });
 
+        txt_filename.setEditable(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
