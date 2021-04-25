@@ -12,6 +12,7 @@ import projekt.helpers.Database;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -36,8 +37,8 @@ public class HomeScreen extends javax.swing.JFrame {
         jBAdminUsers.setVisible(false);
         this.id = id;
         this.user = new User(this.id);
-        checkNotis();
-
+        //checkNotis();
+        fillMeetings(1);
         adminCheck();
         lblWelcome.setText("VÄLKOMMEN: " + user.getFirstName() + " " + user.getLastName() + "!");
     }
@@ -57,6 +58,10 @@ public class HomeScreen extends javax.swing.JFrame {
             int id = (int) (jTNotifications.getValueAt(jTNotifications.getSelectedRow(), 0));
             new PersonalMeetings(this.user).setVisible(true);
         }
+        jComboBox1.removeAllItems();
+        jComboBox1.addItem("Möten");
+        jComboBox1.addItem("Inlägg");
+
     }
 
     /**
@@ -82,6 +87,7 @@ public class HomeScreen extends javax.swing.JFrame {
         jTNotifications = new javax.swing.JTable();
         jlblNotiser = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -184,6 +190,13 @@ public class HomeScreen extends javax.swing.JFrame {
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Möten", "Inlägg\t" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -212,7 +225,10 @@ public class HomeScreen extends javax.swing.JFrame {
                         .addComponent(jBMeetings, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlblNotiser, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlblNotiser)
+                        .addGap(37, 37, 37)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(93, Short.MAX_VALUE))
@@ -245,8 +261,10 @@ public class HomeScreen extends javax.swing.JFrame {
                         .addComponent(jBAdminUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                        .addComponent(jlblNotiser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlblNotiser)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(61, 61, 61))))
@@ -295,6 +313,16 @@ public class HomeScreen extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        if (jComboBox1.getSelectedItem() == ("Möten")) {
+            fillMeetings(1);
+        }
+        if (jComboBox1.getSelectedItem() == ("Inlägg")) {
+            jTNotifications.clearSelection();
+            fillMeetings(2);
+        }
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
     private void adminCheck() {
 
         if (user.getAdmin().equals("J")) {
@@ -302,6 +330,73 @@ public class HomeScreen extends javax.swing.JFrame {
         }
     }
 
+    public void fillMeetings(int notificationTypeId) {
+        try {
+            String check = Database.fetchSingle("Select NID from User_Notice where UID =" + id);
+            ResultSet rs;
+
+            rs = Database.fetchRows("SELECT NoticeID, Topic, DateTime, TypeName FROM Notice JOIN Notice_Type ON Notice.NoticeTypeID = Notice_Type.NoticeTypeID JOIN User_Notice ON Notice.NoticeID = User_Notice.NID WHERE UID = " + id + " AND Notice_Type.NoticeTypeID = " + notificationTypeId);
+            DefaultTableModel dmb = Refactor.tableModelBuilder(rs);
+
+            jTNotifications = new JTable(dmb);
+            jScrollPane1.setViewportView(jTNotifications);
+            jTNotifications.setVisible(true);
+            jTNotifications.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    if (e.getValueIsAdjusting()) {
+
+                    } else {
+
+                        checkStatement();
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void fillTest(int notificationTypeId) {
+
+        {
+
+            try {
+                ResultSet rs = Database.fetchRows("SELECT NoticeID, Topic, DateTime, TypeName FROM Notice JOIN Notice_Type ON Notice.NoticeTypeID = Notice_Type.NoticeTypeID JOIN User_Notice ON Notice.NoticeID = User_Notice.NID WHERE UID = " + id + " AND Notice_Type.NoticeTypeID = " + notificationTypeId);
+                DefaultTableModel dmb = Refactor.tableModelBuilder(rs);
+                dmb.getDataVector().removeAllElements();
+                jTNotifications = new JTable(dmb);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            jScrollPane1.setViewportView(jTNotifications);
+            jTNotifications.setVisible(true);
+            if (jTNotifications.getRowCount() != 0) {
+                jTNotifications.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                    public void valueChanged(ListSelectionEvent e) {
+                        if (e.getValueIsAdjusting()) {
+
+                        } else {
+                            int id = (int) (jTNotifications.getValueAt(jTNotifications.getSelectedRow(), 0));
+
+                            if (notificationTypeId == 1) {
+                                new ShowMeeting(id).setVisible(true);
+                            }
+                            if (notificationTypeId == 2) {
+                                new ShowPost(user, id).setVisible(true);
+                            }
+                        }
+                    }
+                });
+            } else {
+                JOptionPane.showMessageDialog(null, "Finns inga notiser att visa här!");
+            }
+
+        }
+    }
+
+    /*
     private void checkNotis() {
         try {
             String check = Database.fetchSingle("Select NID from User_Notice where UID =" + id);
@@ -311,7 +406,7 @@ public class HomeScreen extends javax.swing.JFrame {
             ArrayList<String> text = new ArrayList<>();
             ArrayList<String> NotisID = new ArrayList<>();
             ResultSet rs;
-                           
+
             //jontes efterblivna kommentarer :
 //                        types = Database.fetchColumn("Select TypeName from Notice_Type where NoticeTypeID IN (Select NoticeTypeID from Notice where NoticeID IN(Select NID from User_Notice where UID =" + this.id + "))");
 //                        date = Database.fetchColumn("Select DateTime from Notice where NoticeID IN(Select NID from User_Notice where UID =" + id+ ")");
@@ -352,7 +447,7 @@ public class HomeScreen extends javax.swing.JFrame {
         }
 
     }
-
+     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAdminUsers;
@@ -363,6 +458,7 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JButton jBSignOut;
     private javax.swing.JButton jBsearch;
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTNotifications;
     private javax.swing.JLabel jlblNotiser;
