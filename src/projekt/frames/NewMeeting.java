@@ -314,13 +314,14 @@ public class NewMeeting extends javax.swing.JFrame {
 
     private void jBtnSkickaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSkickaActionPerformed
         
+        if(checkList()) {
         int i = 0;
         String beskrivning;
         String name;
         name = jTableMeeting.getValueAt(i, 0).toString();
         beskrivning = jTableMeeting.getValueAt(i, 1).toString();
         int propMeet = 0;
-        if(checkList()) {
+        
         
         try {
             Database.executeUpdate("Insert into Proposed_Meeting (Name, Description, UserCreatorID) VALUES ('" + name + "', '" + beskrivning + "'," + creatorID + ")");
@@ -331,7 +332,9 @@ public class NewMeeting extends javax.swing.JFrame {
         }
         
         meeting(propMeet);
+        notis(propMeet);
         personer(propMeet);
+        
         JOptionPane.showMessageDialog(null, "Mötesförslag(en) har skickats till de inbjudna");}
 
     }//GEN-LAST:event_jBtnSkickaActionPerformed
@@ -341,12 +344,15 @@ public class NewMeeting extends javax.swing.JFrame {
         String startTid;
         String date;
         
+       
+        
         for (i = 0; i < jTableMeeting.getRowCount(); i++) {
             startTid = jTableMeeting.getValueAt(i, 2).toString();
             date = jTableMeeting.getValueAt(i, 3).toString();
             
             try {
                 Database.executeUpdate("Insert into Proposed_Date_Time (Date, Time, ProsedMeetingID) VALUES ('" + date + "','" + startTid + "', " + propMeet + ")");
+                
             } catch (Exception e) {
                 System.out.println("kunde ej sätta in i databasen");
             }
@@ -358,6 +364,7 @@ public class NewMeeting extends javax.swing.JFrame {
         int i = 0;
         String email;
         int userID;
+        int notisID;
         
         for (i = 0; i < jTablePers.getRowCount(); i++) {
             
@@ -366,6 +373,8 @@ public class NewMeeting extends javax.swing.JFrame {
             try {
                 userID = Integer.parseInt(Database.fetchSingle("Select UserID from User Where Email = '" + email + "'"));
                 Database.executeUpdate("Insert into Invites (ProposedMeeting, UserID) VALUES (" + propMeet + "," + userID + ")");
+                notisID = Integer.parseInt(Database.fetchSingle("Select NoticeID from Notice Where NoticeID = (Select max(NoticeID) from Notice)"));
+                Database.executeUpdate("Insert into User_Notice (NID, UID) VALUES (" + notisID + "," + userID + ")");
                 
             } catch (Exception e) {
                 System.out.println("kunde ej sätta in i databasen");
@@ -375,16 +384,46 @@ public class NewMeeting extends javax.swing.JFrame {
         
     }
     
+    private void notis(int propMeet) {
+    
+       
+        String email;
+        String topic;
+        String time;
+        String date;
+        int userID;
+        int notisID;
+        
+        email = jTablePers.getValueAt(0, 0).toString();
+        topic = jTableMeeting.getValueAt(0, 0).toString();
+        time = jTableMeeting.getValueAt(0, 2).toString() + "000";
+        date = jTableMeeting.getValueAt(0, 3).toString() + " " + time;
+
+            try {
+                userID = Integer.parseInt(Database.fetchSingle("Select UserID from User Where Email = '" + email + "'"));
+                Database.executeUpdate("Insert into Notice (Topic, DateTime, NoticeTypeID) VALUES ('" + topic + "','" + date + "', 3)");
+                notisID = Integer.parseInt(Database.fetchSingle("Select NoticeID from Notice Where NoticeID = (Select max(NoticeID) from Notice)"));
+                Database.executeUpdate("Insert into Notice_Proposed_Meeting (NID,ProposedID) VALUES (" + notisID + "," + propMeet + ") ");
+               
+                
+                
+            } catch (Exception e) {
+                System.out.println("kunde ej sätta in i databasen");
+            }
+            
+    }
+    
     private boolean checkList() {
     boolean resultat = true;    
     try {
+    String koll2 = jTableMeeting.getValueAt(0, 0).toString();
     String koll = jTablePers.getValueAt(0, 0).toString();
     
         return resultat;
     
     }
     catch(Exception e){
-    JOptionPane.showMessageDialog(null, "Vänligen välj minst en person att bjuda in");
+    JOptionPane.showMessageDialog(null, "Vänligen fyll i all informatin och minst en deltagare");
     resultat = false;
     return resultat;
     }
