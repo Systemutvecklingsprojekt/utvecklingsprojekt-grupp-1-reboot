@@ -5,7 +5,16 @@
  */
 package projekt.frames;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import projekt.Refactor;
 import projekt.User;
 import projekt.helpers.Database;
 
@@ -15,9 +24,9 @@ import projekt.helpers.Database;
  */
 public class FollowUser extends javax.swing.JFrame {
 
-    private ArrayList<String> pers;
-    private ArrayList<String> dbPers;
     private User user;
+    private int userSubscriberId;
+    private int userCreatorId;
 
     /**
      * Creates new form FollowUser
@@ -25,31 +34,42 @@ public class FollowUser extends javax.swing.JFrame {
     public FollowUser(User user) {
         initComponents();
         this.user = user;
-        jComboBox1.removeAllItems();
-        pers = getArrayPers();
-        fillBox();
+        userSubscriberId = user.getUserID();
 
-    }
-
-    public void fillBox() {
-        for (String pers : pers) {
-
-            jComboBox1.addItem(pers);
-
-        }
-
-    }
-
-    private ArrayList<String> getArrayPers() {
-        String ownEmail = user.getEmail();
-        ArrayList<String> pers = null;
         try {
-            pers = Database.fetchColumn("Select email from User WHERE NOT email = 'DELETEDUSER'");
-            return pers;
-        } catch (Exception e) {
-            System.out.println("feeeeel arraylist personer");
+            String allQuery = "SELECT UserID, firstName, lastName FROM User";
+            String followQuery = "SELECT UserCreatorID, firstName, lastName FROM UserPrem JOIN User ON UserPrem.UserCreatorID = User.UserID WHERE UserSubscriberID = " + userSubscriberId;
+
+            fillAllUsers(Database.fetchRows(allQuery));
+            fillFollowing(Database.fetchRows(followQuery));
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return pers;
+
+    }
+
+    public void fillAllUsers(ResultSet rs) {
+        try {
+            jTAllUsers = new JTable(Refactor.tableModelBuilder(rs));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        jspAllUsers.setViewportView(jTAllUsers);
+        jTAllUsers.setVisible(true);
+    }
+
+    public void fillFollowing(ResultSet rs) {
+        try {
+            jTFollowing = new JTable(Refactor.tableModelBuilder(rs));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        jspFollowing.setViewportView(jTFollowing);
+        jTFollowing.setVisible(true);
     }
 
     /**
@@ -61,19 +81,67 @@ public class FollowUser extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jspAllUsers = new javax.swing.JScrollPane();
+        jTAllUsers = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jspFollowing = new javax.swing.JScrollPane();
+        jTFollowing = new javax.swing.JTable();
+        jBFollow = new javax.swing.JButton();
+        jBUnfollow = new javax.swing.JButton();
+        jBBack = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jTAllUsers.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jspAllUsers.setViewportView(jTAllUsers);
 
-        jLabel1.setText("Användare");
+        jLabel2.setText("Alla användare");
 
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel3.setText("Användare du följer");
+
+        jTFollowing.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jspFollowing.setViewportView(jTFollowing);
+
+        jBFollow.setText("Följ användare");
+        jBFollow.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBFollowActionPerformed(evt);
+            }
+        });
+
+        jBUnfollow.setText("Avfölj användare");
+        jBUnfollow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBUnfollowActionPerformed(evt);
+            }
+        });
+
+        jBBack.setText("Tillbaka");
+        jBBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBackActionPerformed(evt);
             }
         });
 
@@ -82,74 +150,110 @@ public class FollowUser extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jspAllUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jBUnfollow)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
+                                .addComponent(jBBack))
+                            .addComponent(jBFollow, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41))))
+                        .addContainerGap()
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jspFollowing, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1)
+                .addContainerGap()
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jspAllUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jBFollow)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jspFollowing, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(122, Short.MAX_VALUE))
+                    .addComponent(jBUnfollow)
+                    .addComponent(jBBack))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jBBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBackActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jBBackActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(FollowUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(FollowUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(FollowUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(FollowUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new FollowUser().setVisible(true);
-//            }
-//        });
-//    }
+    private void jBFollowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFollowActionPerformed
+        try {
+            userCreatorId = (int) Refactor.getTableValueFirstColumn(jTAllUsers);
+            String sqlTempId = "SELECT UserCreatorID FROM UserPrem WHERE UserCreatorID = " + userCreatorId + " AND UserSubscriberID = " + userSubscriberId;
+            System.out.println(Database.fetchSingle(sqlTempId));
+            String tempId = Database.fetchSingle(sqlTempId);
+            String firstName = Database.fetchSingle("SELECT firstName FROM User WHERE UserID = " + userCreatorId);
+
+            if (tempId == null) {
+                String insertQuery = "INSERT INTO UserPrem (UserSubscriberID, UserCreatorID) VALUES (" + userSubscriberId + ", " + userCreatorId + " )";
+                Database.executeUpdate(insertQuery);
+                JOptionPane.showMessageDialog(null, "Du följer nu " + firstName + "!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Du följer redan " + firstName + "!");
+                return;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Var vänlig markera en användare");
+        } catch (SQLException ex) {
+            System.out.println("fel");
+            Logger.getLogger(FollowUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.dispose();
+        new FollowUser(user).setVisible(true);
+    }//GEN-LAST:event_jBFollowActionPerformed
+
+    private void jBUnfollowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBUnfollowActionPerformed
+        userCreatorId = (int) Refactor.getTableValueFirstColumn(jTFollowing);
+        System.out.println(userCreatorId);
+        System.out.println(userSubscriberId);
+
+        String deleteQuery = "DELETE FROM UserPrem WHERE UserSubscriberID = " + userSubscriberId + " AND UserCreatorID = " + userCreatorId;
+        try {
+            String firstName = Database.fetchSingle("SELECT firstName FROM User WHERE UserID = " + userCreatorId);
+            Database.executeUpdate(deleteQuery);
+            JOptionPane.showMessageDialog(null, "Du har nu avföljt " + firstName + "!");
+            this.dispose();
+            new FollowUser(user).setVisible(true);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Var vänlig markera en användare");
+        }
+    }//GEN-LAST:event_jBUnfollowActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jBBack;
+    private javax.swing.JButton jBFollow;
+    private javax.swing.JButton jBUnfollow;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable jTAllUsers;
+    private javax.swing.JTable jTFollowing;
+    private javax.swing.JScrollPane jspAllUsers;
+    private javax.swing.JScrollPane jspFollowing;
     // End of variables declaration//GEN-END:variables
 }
