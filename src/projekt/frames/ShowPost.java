@@ -392,6 +392,22 @@ public class ShowPost extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    public boolean getPostTypeID() throws SQLException{
+        
+        boolean typFormal = false;
+        try{
+        String typeID = Database.fetchSingle("Select typeID from Post where PostID = " + postID);
+        int typeIDint = Integer.parseInt(typeID);
+        
+        if(typeIDint == 1){
+        typFormal = true;
+        }}
+        catch (SQLException e) {
+
+        }
+        return typFormal;
+    }
+    
     private void jBEditPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditPostActionPerformed
         // TODO add your handling code here:
         new EditPost(user, postID).setVisible(true);
@@ -414,12 +430,14 @@ public class ShowPost extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            this.dispose();
+            
+            try {
+                new Blog(user, getPostTypeID()).setVisible(true);
+                
+            } catch (SQLException ex) {
+            }
             JOptionPane.showMessageDialog(null, "Inlägget är nu borttaget!");
-
-        } else {
-
+            this.dispose();
         }
     }//GEN-LAST:event_jBDeletePostActionPerformed
 

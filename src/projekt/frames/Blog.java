@@ -86,10 +86,16 @@ public class Blog extends javax.swing.JFrame
                     public void mouseClicked(MouseEvent e){
                         if(e.getClickCount() == 1){
                             Refactor.showPostByPostID(user, jTable1);
+                            blogDispose();
                         }
                     }
                 });
 	}
+        
+    private void blogDispose(){
+        
+        this.dispose();
+    }
 
 	/**
 	 * This method is called from within the constructor to

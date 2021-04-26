@@ -16,6 +16,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -141,34 +143,36 @@ public class Validation {
     }
 
     public static boolean checkName(JTextField textField) {
-        String messageDialog ="";
+        String messageDialog = "";
         boolean errorflag = true;
         if (textField.getText().isBlank()) {
-            messageDialog = messageDialog +"Du har inte angivit något namn.\n";
+            messageDialog = messageDialog + "Du har inte angivit något namn.\n";
             errorflag = false;
         }
         if (textField.getText().length() > 20 || textField.getText().length() < 2) {
-            messageDialog = messageDialog +"Max 20 tecken och minst 2!\n";
+            messageDialog = messageDialog + "Max 20 tecken och minst 2!\n";
             errorflag = false;
         }
         if (containsDigit(textField.getText())) {
             errorflag = false;
-            messageDialog = messageDialog +"Vänligen ange inga siffror i namnfälten!\n";
+            messageDialog = messageDialog + "Vänligen ange inga siffror i namnfälten!\n";
 
         }
-        if(errorflag==false){
+        if (errorflag == false) {
             JOptionPane.showMessageDialog(null, messageDialog);
             //System.out.println("projekt.helpers.Validation.checkName()");
         }
-        
+
         return errorflag;
     }
 
-    public static boolean emailVerification(JTextField textField) {
+    public static boolean emailVerification(String email) {
         boolean result = true;
-
-        if (!textField.getText().matches("[a-zA-Z@.]*")|| !textField.getText().matches("[0-9a-zA-Z@.]*") ) {
-            JOptionPane.showMessageDialog(null, "Fel format på inskriven email");
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            JOptionPane.showMessageDialog(null, "Vänligen ange en epostadress i rätt format!");
             result = false;
         }
         return result;
