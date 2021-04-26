@@ -161,7 +161,8 @@ public class ShowMeetingVotes extends javax.swing.JFrame {
         } catch(ArrayIndexOutOfBoundsException e){
             JOptionPane.showMessageDialog(null, "Vänligen välj ett möte att fastställa!");
         }
-
+        this.dispose();
+        new PersonalMeetings(user);
     }                                                  
 
     private void deleteOldMeeting(){
