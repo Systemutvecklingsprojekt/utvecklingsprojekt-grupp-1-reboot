@@ -16,6 +16,9 @@ import javax.mail.internet.InternetAddress;
 
 public class Validation {
 
+    /*
+    Kollar om textfält är tom, returnerar true eller false.
+     */
     public static boolean checkTextField(JTextField textfield) {
 
         boolean result = true;
@@ -28,6 +31,9 @@ public class Validation {
         return result;
     }
 
+    /*
+    Kollar om textyta är tom, returnerar true eller false.
+     */
     public static boolean checkTextArea(JTextArea textArea) {
         boolean result = true;
         if (textArea.getText().isEmpty()) {
@@ -37,6 +43,9 @@ public class Validation {
         return result;
     }
 
+    /*
+    Kollar om datum i textfält är korrektt formaterad, returnerar true eller false.
+     */
     public static boolean checkDate(JTextField textFalt) {
         boolean result = true;
         String pattern = "[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]";
@@ -47,6 +56,9 @@ public class Validation {
         return result;
     }
 
+    /*
+    Kollar om datum i en sträng är korrekt formaterad, returnar true eller false.
+     */
     public static boolean checkDate(String string) {
         boolean result = true;
         String pattern = "[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]";
@@ -57,6 +69,9 @@ public class Validation {
         return result;
     }
 
+    /*
+    Kollar om lösenordsfält är tomt, returnerar true eller false.
+     */
     public static boolean checkPasswordField(JPasswordField passwordField) {
 
         boolean result = true;
@@ -68,6 +83,9 @@ public class Validation {
         return result;
     }
 
+    /*
+    Kollar om textfält är tomt eller inte är godtagbart, returnar true eller false.
+     */
     public static boolean checkPTextField(JTextField textField) {
 
         boolean result = true;
@@ -83,6 +101,9 @@ public class Validation {
         return result;
     }
 
+    /*
+    Kollar om flera textfält är tomma, returnar true eller false.
+     */
     public static boolean multibleTextFieldEmpty(ArrayList<JTextField> textFalt) {
         boolean result = true;
 
@@ -97,6 +118,9 @@ public class Validation {
         return result;
     }
 
+    /*
+    Kollar om textfältet innehåller endast siffror, returnerar true eller false.
+     */
     public static boolean isInt(JTextField textField) {
         boolean result = true;
         try {
@@ -110,6 +134,9 @@ public class Validation {
         return result;
     }
 
+    /*
+    Kollar om en sträng är tom, returnerar true eller false.
+     */
     public static boolean isStringNull(String text) {
         boolean result = true;
         if (text.equals("")) {
@@ -119,6 +146,9 @@ public class Validation {
         return result;
     }
 
+    /*
+    Kollar om en ArrayList är tom, returnerar true eller false.
+     */
     public static boolean isArrayListStringNull(ArrayList<String> list) {
         boolean result = true;
         if (list == null) {
@@ -128,6 +158,9 @@ public class Validation {
         return result;
     }
 
+    /*
+    Kollar om textfält är tomt, godtagbart och inte innehåller siffror, returnerar true eller false. 
+     */
     public static boolean checkName(JTextField textField) {
         String messageDialog = "";
         boolean errorflag = true;
@@ -146,12 +179,13 @@ public class Validation {
         }
         if (errorflag == false) {
             JOptionPane.showMessageDialog(null, messageDialog);
-            //System.out.println("projekt.helpers.Validation.checkName()");
         }
-
         return errorflag;
     }
 
+    /*
+    Kollar om en epost-sträng är skriven i rätt format, returnerar true eller false.
+     */
     public static boolean emailVerification(String email) {
         boolean result = true;
         try {
@@ -164,6 +198,9 @@ public class Validation {
         return result;
     }
 
+    /*
+    Kollar om ett datum är tomt, returnerar true eller false.
+     */
     public static boolean dateChooserValid(JDateChooser chooser) {
         boolean resultat = true;
         if (((JTextField) chooser.getDateEditor().getUiComponent()).getText().isEmpty()) {
@@ -174,6 +211,9 @@ public class Validation {
 
     }
 
+    /*
+    Kollar om en sträng är tom, returnerar true eller false.
+     */
     public static boolean valideraTid(String string) {
         boolean resultat = true;
         if (string.isEmpty()) {
@@ -183,6 +223,9 @@ public class Validation {
         return resultat;
     }
 
+    /*
+    Kollar om tid-sträng är skriven i rätt format, returnerar true eller false. 
+     */
     public static boolean validTid(String string) {
         boolean resultat = true;
         try {
@@ -194,6 +237,9 @@ public class Validation {
         return resultat;
     }
 
+    /*
+    Kollar om valt datum kommer efter aktuell dag, returnerar true eller false.
+     */
     public static boolean isDateAhead(Date meet) {
 
         boolean resultat = true;
@@ -209,6 +255,9 @@ public class Validation {
 
     }
 
+    /*
+    Kollar om fil är i rätt format, returnerar true eller false.
+     */
     public static boolean isImageValid(String string) {
         boolean resultat = false;
         if (string.endsWith(".jpg") || string.endsWith(".png")) {
@@ -221,6 +270,9 @@ public class Validation {
         return resultat;
     }
 
+    /*
+    Kollar om en sträng inte innehåller siffror, returnerar true eller false.
+     */
     private static boolean noInts(String string) {
         boolean isNotInt = false;
 
@@ -231,6 +283,9 @@ public class Validation {
 
     }
 
+    /*
+    Kollar om en sträng inte innehåller bokstäver, returnerar true eller false.
+     */
     private static boolean isDigit(String string) {
         try {
             int d = Integer.parseInt(string);
@@ -242,6 +297,9 @@ public class Validation {
         return true;
     }
 
+    /*
+    Kollar om en sträng innehåller siffror, returnerar true eller false.
+     */
     public static boolean containsDigit(String string) {
         boolean hasDigits = false;
         for (int i = 0; i < string.length(); i++) {
@@ -249,12 +307,14 @@ public class Validation {
                 hasDigits = true;
                 break;
             }
-            //Process char
         }
 
         return hasDigits;
     }
 
+    /*
+    
+     */
     private static void containsDigitTest(String[] expectedTrue, String[] expectedFalse) {
         for (int i = 0; i < expectedTrue.length; i++) {
             if (!containsDigit(expectedTrue[i])) {
