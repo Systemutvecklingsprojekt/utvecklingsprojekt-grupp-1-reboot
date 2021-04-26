@@ -6,6 +6,8 @@
 package projekt.frames;
 
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import java.io.File;
 import projekt.helpers.Database;
@@ -99,13 +101,9 @@ public class ShowPost extends javax.swing.JFrame {
 
         jspComments.setViewportView(jTableComments);
         jTableComments.setVisible(true);
-        jTableComments.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent event) {
-                // do some actions here, for example
-                // print first column value from selected row
-                if (event.getValueIsAdjusting()) {
-
-                } else {
+        jTableComments.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getClickCount() == 1) {
                     int id = (int) (jTableComments.getValueAt(jTableComments.getSelectedRow(), 0));
                     new ShowComment(id, user).setVisible(true);
                 }
