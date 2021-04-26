@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package projekt.frames;
 
 import java.awt.Image;
@@ -22,7 +17,7 @@ import javax.swing.JFileChooser;
 
 /**
  *
- * @author albin
+ * @author Team1
  */
 public class EditPost extends javax.swing.JFrame {
 
@@ -271,10 +266,12 @@ public class EditPost extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Metod för att kunna ladda upp bilder till inlägg
+     */
     private void jbUploadFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUploadFileActionPerformed
         try {
-            JFileChooser chooser = new JFileChooser();
+            JFileChooser chooser = new JFileChooser(); //skapar en JFileChooser
             chooser.showOpenDialog(null);
             File f = chooser.getSelectedFile();
             if (f != null) {
@@ -293,12 +290,18 @@ public class EditPost extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jbUploadFileActionPerformed
 
+    /**
+     * Metod som kontrollerar så att taggarna inte överstiger maxantalet 5
+     */
     private void checkFullTags() {
         if (maxTags == 3) {
             jBAddTag.setEnabled(false);
         }
     }
 
+    /**
+     * Metod som lägger in vald bild
+     */
     public void fillPicture() {
         try {
             String pathway = Database.fetchSingle("SELECT Picture FROM Post WHERE PostID = " + postId);
@@ -315,20 +318,23 @@ public class EditPost extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Metod som lägger till taggar till inlägget
+     */
     private void jBAddTagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAddTagActionPerformed
-        // TODO add your handling code here:
-        checkFullTags();
+        checkFullTags(); //kontrollerar att det är max 5 taggar
         boolean found = false;
         String tag = "";
         oldTag = "";
         if (jCBTags.isEnabled()) {
-            tag = jCBTags.getSelectedItem().toString();
-            oldTag = jLTags.getText();
+            tag = jCBTags.getSelectedItem().toString(); //Hämtar vald tag från comboboxen
+            oldTag = jLTags.getText(); //Hämtar nuvarande taggar från labeln där valda taggar skrivits in
             if (oldChosenTags.isEmpty()) {
                 oldChosenTags.add(tag);
                 found = true;
                 jLTags.setText(oldTag + "   " + tag);
             } else {
+                //Kontrollerar om vald tag redan finns
                 for (String tagInList : oldChosenTags) {
                     if (tagInList.equalsIgnoreCase(tag)) {
                         found = true;
@@ -337,7 +343,7 @@ public class EditPost extends javax.swing.JFrame {
                 if (!found) {
                     oldChosenTags.add(tag);
                     maxTags++;
-                    jLTags.setText(oldTag + "   " + tag);
+                    jLTags.setText(oldTag + "   " + tag); //Lägger in taggar
                 }
             }
 
@@ -362,18 +368,20 @@ public class EditPost extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jBAddTagActionPerformed
-
+    /**
+     * Metod för att dela det uppdaterade inlägget
+     */
     private void jBUploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBUploadActionPerformed
-
+        //Hämtar text, rubrik, författare av inlägg, evetuella bilder
         String title = jTFTitle.getText();
         String post = jTAPost.getText();
         int userId = user.getUserID();
         String stringPostId = "";
         String image = txt_filename.getText();
-        image = image.replace("\\", "\\\\");
+        image = image.replace("\\", "\\\\"); //Byter ut alla "\\" till "\\\" för att hitta rätt sökväg till bild
         ArrayList<Integer> tagIds = new ArrayList<>();
         if (oldChosenTags.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Vänligen välj minst en tagg!");
+            JOptionPane.showMessageDialog(null, "Vänligen välj minst en tagg!"); //Skickar felmeddelande om inlägget är utan taggar
         } else if (Validation.checkTextField(jTFTitle) && Validation.checkTextArea(jTAPost)) {
             try {
                 insertTagsJosef(oldChosenTags);
@@ -400,7 +408,7 @@ public class EditPost extends javax.swing.JFrame {
             }
 
             try {
-                Database.executeUpdate("DELETE FROM Post_Tag WHERE PostID = " + postId + ";");
+                Database.executeUpdate("DELETE FROM Post_Tag WHERE PostID = " + postId + ";");//Uppdaterar kopplingen mellan inlägg och tagg i databasen så att det uppdaterade inlägget bara är kopplat till aktuella taggar
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -417,10 +425,10 @@ public class EditPost extends javax.swing.JFrame {
                 int intPostType = Integer.parseInt(postType);
                 if (intPostType == 1) {
 
-                    new ShowPost(user,postId).setVisible(true);
+                    new ShowPost(user, postId).setVisible(true);
 
                 } else {
-                    new ShowPost(user,postId).setVisible(true);
+                    new ShowPost(user, postId).setVisible(true);
                 }
                 JOptionPane.showMessageDialog(null, "Ditt inlägg har publicerats");
                 this.dispose();
@@ -446,11 +454,13 @@ public class EditPost extends javax.swing.JFrame {
         this.dispose();
         new ShowPost(user, postId).setVisible(true);
     }//GEN-LAST:event_jBBackActionPerformed
-
+    /**
+     * Metod som tar bort taggar från inlägget
+     */
     private void jBRemoveTagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemoveTagActionPerformed
         // TODO add your handling code here:
         int index;
-        StringBuilder str = new StringBuilder("Taggar: ");
+        StringBuilder str = new StringBuilder("Taggar: "); //Använder oss av en stringBuilder för att komma åt metoden append 
         if (oldChosenTags.isEmpty()) {
             return;
         } else if (oldChosenTags.size() == 1) {
@@ -468,12 +478,19 @@ public class EditPost extends javax.swing.JFrame {
         jLTags.setText(str.toString());
         oldTag = jLTags.getText();
     }//GEN-LAST:event_jBRemoveTagActionPerformed
-
+    /**
+     * Metod för att ta bort filer till inlägg
+     */
     private void jBRemoveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemoveFileActionPerformed
         txt_filename.setText("");
         lbl_image.setVisible(false);
     }//GEN-LAST:event_jBRemoveFileActionPerformed
-
+    /**
+     * Metod för att lägga in taggar i databasen
+     *
+     * @param tagsToCheck
+     * @throws SQLException
+     */
     private void insertTagsJosef(ArrayList<String> tagsToCheck) throws SQLException {
         ArrayList<String> rsTags = new ArrayList<>();
         String querySize = "SELECT TagName FROM Tag";
@@ -501,6 +518,9 @@ public class EditPost extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Metod som fyller upp comboboxen med valbara taggar
+     */
     private void fillTags() {
         ArrayList<String> tags = new ArrayList<>();
         tags.add("Forskning");
@@ -512,6 +532,10 @@ public class EditPost extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Metod som fyller i infon från orginalinlägget, som man sedan kan välja
+     * att ändra
+     */
     private void fillOldInfo() {
 
         StringBuilder str = new StringBuilder(jLTags.getText());
