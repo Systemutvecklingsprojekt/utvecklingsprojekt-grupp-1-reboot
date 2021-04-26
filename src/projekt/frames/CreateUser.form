@@ -124,21 +124,12 @@
       <Properties>
         <Property name="columns" type="int" value="5"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTFFirstNameActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="jTFLastName">
     </Component>
     <Component class="javax.swing.JTextField" name="jTFEmail">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTFEmailActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="jTFPassword">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTFPasswordActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLTitle">
       <Properties>
@@ -177,9 +168,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Ja"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRBAdminJaActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jBSave">
       <Properties>
