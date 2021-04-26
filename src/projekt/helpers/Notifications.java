@@ -5,15 +5,6 @@ import java.awt.TrayIcon.MessageType;
 
 public class Notifications {
 
-    public static void main(String[] args) throws AWTException {
-        if (SystemTray.isSupported()) {
-            Notifications td = new Notifications();
-            td.displayTray();
-        } else {
-            System.err.println("System tray not supported!");
-        }
-    }
-
     public void displayTray() throws AWTException {
         //Obtain only one instance of the SystemTray object
         SystemTray tray = SystemTray.getSystemTray();
