@@ -1,36 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package projekt.frames;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import projekt.User;
 import java.sql.*;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import projekt.helpers.Database;
-import projekt.helpers.Validation;
 import projekt.Refactor;
 
-/**
- *
- * @author Amand
- */
 public class PersonalMeetings extends javax.swing.JFrame {
 
     private User user;
     private ResultSet rs;
     private javax.swing.JTable table2;
 
-    /**
-     * Creates new form PersonalMeetings
-     */
     public PersonalMeetings(User user) {
         initComponents();
 
@@ -40,9 +23,8 @@ public class PersonalMeetings extends javax.swing.JFrame {
         jComboBox1.addItem("Mina inbokade möten");
         jComboBox1.addItem("Mina mötesinbjudningar");
         jComboBox1.addItem("Mina mötesutskick");
-
     }
-
+    
     private void initTableListener() {
         if (table2 != null) {
             table2.addMouseListener(new MouseAdapter() {
@@ -74,8 +56,8 @@ public class PersonalMeetings extends javax.swing.JFrame {
             table2.setVisible(true);
             if (table2 != null) {
                 table2.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    if (e.getClickCount() == 1) {
+                    public void mouseClicked(MouseEvent e) {
+                        if (e.getClickCount() == 1) {
                             int id = (int) (table2.getValueAt(table2.getSelectedRow(), 0));
                             new ShowMeeting(id).setVisible(true);
                         }
