@@ -54,7 +54,11 @@ public class Blog extends javax.swing.JFrame {
         this.user = user;
 
         String searchQuery;
-        searchQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.description, Tag.TagName FROM User JOIN Post ON User.UserID = Post.UserID JOIN Post_Tag ON Post.PostID = Post_Tag.PostID JOIN Tag ON Post_Tag.TagId = Tag.TagId AND (User.firstName LIKE '%" + search + "%'OR User.lastName LIKE '%" + search + "%' OR Post.title LIKE '%" + search + "%'OR Post.description LIKE '%" + search + "%' OR Tag.TagName LIKE '%" + search + "%') GROUP BY Post.PostID;";
+        searchQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.description, Tag.TagName FROM User "
+                + "JOIN Post ON User.UserID = Post.UserID "
+                + "JOIN Post_Tag ON Post.PostID = Post_Tag.PostID JOIN Tag ON Post_Tag.TagId = Tag.TagId "
+                + "AND (User.firstName LIKE '%" + search + "%'OR User.lastName LIKE '%" + search + "%' OR Post.title LIKE '%" + search + "%'OR Post.description LIKE '%" + search + "%' OR Tag.TagName LIKE '%" + search + "%') "
+                + "GROUP BY Post.PostID;";
         try {
             jTable1 = Refactor.populateTable(Database.fetchRows(searchQuery));
         } catch (SQLException ex) {
