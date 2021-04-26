@@ -395,6 +395,9 @@ public class NewMeeting extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(null, "Mötesförslag(en) har skickats till de inbjudna");
         }
+        
+        this.dispose();
+        new PersonalMeetings(user);
 
     }//GEN-LAST:event_jBtnSkickaActionPerformed
 

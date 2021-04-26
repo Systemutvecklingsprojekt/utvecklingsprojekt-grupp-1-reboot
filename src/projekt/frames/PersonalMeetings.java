@@ -114,6 +114,7 @@ public class PersonalMeetings extends javax.swing.JFrame {
                         int id = (int) (table2.getValueAt(table2.getSelectedRow(), 0));
                         System.out.println(id);
                         new ShowMeetingVotes(id, user).setVisible(true);
+                        thisDispose();
                     }
                 }
             });
@@ -123,6 +124,11 @@ public class PersonalMeetings extends javax.swing.JFrame {
         }
     }
 
+    private void thisDispose(){
+        
+        this.dispose();
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

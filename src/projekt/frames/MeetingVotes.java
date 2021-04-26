@@ -233,6 +233,9 @@ public class MeetingVotes extends javax.swing.JFrame {
             System.out.println("Error");
 
         }
+        this.dispose();
+        new PersonalMeetings(user);
+        
     }//GEN-LAST:event_jBSendAvailableActionPerformed
     /**
      * Metod för att ta bort valda mötestider
