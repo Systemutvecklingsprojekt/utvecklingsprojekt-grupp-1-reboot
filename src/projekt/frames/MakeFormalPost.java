@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
+
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import projekt.User;
@@ -448,25 +454,36 @@ public class MakeFormalPost extends javax.swing.JFrame {
      */
     private void notis() {
         ArrayList subs;
-        String dateTime =  LocalDateTime.now().toString();
         int notisID;
         int postID;
+        LocalDateTime now = LocalDateTime.now();    
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
+        String formatDateTime = now.format(format) + ".000"; 
+        
+        
         if(prem()) {
-            try {
-               subs = Database.fetchColumn("Select UserSubscriberID from UserPrem where UserCreatorID= " + user.getUserID() +";");
-               Database.executeUpdate("Insert into Notice (Topic, DateTime, NoticeTypeID) VALUES ('" + jTFTitle.getText() + "','" + dateTime + "', 2)");
-               notisID = Integer.parseInt(Database.fetchSingle("Select NoticeID from Notice Where NoticeID = (Select max(NoticeID) from Notice)"));
-               postID = Integer.parseInt(Database.fetchSingle("Select PostID from Post Where PostID = (Select max(PostID) from Post)"));
-               Database.executeUpdate("Insert into Notice_Post (NID, PID) Values (" + notisID + "," + postID + ")");
+        try {
+           
+           subs = Database.fetchColumn("Select UserSubscriberID from UserPrem where UserCreatorID= " + user.getUserID() +";");
+           Database.executeUpdate("Insert into Notice (Topic, DateTime, NoticeTypeID) VALUES ('" + jTFTitle.getText() + "','" + formatDateTime + "', 2)");
+           notisID = Integer.parseInt(Database.fetchSingle("Select NoticeID from Notice Where NoticeID = (Select max(NoticeID) from Notice)"));
+           postID = Integer.parseInt(Database.fetchSingle("Select PostID from Post Where PostID = (Select max(PostID) from Post)"));
+           Database.executeUpdate("Insert into Notice_Post (NID, PID) Values (" + notisID + "," + postID + ")");
 
-               for(int i = 0; i < subs.size(); i++) {
-                   int subID = Integer.parseInt(subs.get(i).toString());
-                   Database.executeUpdate("Insert into User_Notice (NID, UID) VALUES (" + notisID + "," + subID + ")");
-               }
-            } catch (Exception e) {
-                System.out.println("Något fel med inserts");
-            }
+           
+           for(int i = 0; i < subs.size(); i++) {
+               int subID = Integer.parseInt(subs.get(i).toString());
+               Database.executeUpdate("Insert into User_Notice (NID, UID) VALUES (" + notisID + "," + subID + ")");
+           }
+        
         }
+        catch (Exception e) {
+            System.out.println("Något fel med inserts");
+        
+        }
+
+        
+    }
     }
     
     private boolean prem() {

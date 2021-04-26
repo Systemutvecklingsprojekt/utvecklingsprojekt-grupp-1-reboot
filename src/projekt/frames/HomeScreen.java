@@ -48,20 +48,26 @@ public class HomeScreen extends javax.swing.JFrame {
     }
 
     public void checkStatement() {
+       try {
         if (jTNotifications.getValueAt(jTNotifications.getSelectedRow(), 3).equals("Meeting")) {
             int id = (int) (jTNotifications.getValueAt(jTNotifications.getSelectedRow(), 0));
-            new ShowMeeting(id).setVisible(true);
+           int open = Integer.parseInt(Database.fetchSingle("Select MID from Meeting_Notice where NID =" + id));
+            new ShowMeeting(open).setVisible(true);
         }
 
         if (jTNotifications.getValueAt(jTNotifications.getSelectedRow(), 3).equals("Post")) {
             int id = (int) (jTNotifications.getValueAt(jTNotifications.getSelectedRow(), 0));
-            new ShowPost(this.user, id).setVisible(true);
+            int open = Integer.parseInt(Database.fetchSingle("Select PID from Notice_Post where NID =" + id));
+            new ShowPost(this.user, open).setVisible(true);
         }
 
         if (jTNotifications.getValueAt(jTNotifications.getSelectedRow(), 3).equals("ProposedMeeting")) {
             int id = (int) (jTNotifications.getValueAt(jTNotifications.getSelectedRow(), 0));
             new PersonalMeetings(this.user).setVisible(true);
-        }
+        } }
+       catch (Exception e) {
+           System.out.println("kan ej öppna rätt sak");
+       }
 
     }
 
