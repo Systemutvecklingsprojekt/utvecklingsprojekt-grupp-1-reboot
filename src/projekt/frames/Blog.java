@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package projekt.frames;
 
 import java.awt.event.MouseAdapter;
@@ -12,98 +7,83 @@ import projekt.Refactor;
 import projekt.User;
 import projekt.helpers.Database;
 
-/**
- *
- * @author Josef
- */
-public class Blog extends javax.swing.JFrame
-{
+public class Blog extends javax.swing.JFrame {
 
-	String queryFormal;
-	String queryInformal;
-	String queryAllPosts;
-	User user;
-	boolean isFormal;
+    String queryFormal;
+    String queryInformal;
+    String queryAllPosts;
+    User user;
+    boolean isFormal;
 
-	/**
-	 * Creates new form Blog
-	 */
-	public Blog()
-	{
-		queryFormal = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 1;";
-		queryInformal = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 2;";
-		queryAllPosts = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID";
-		initComponents();
-	}
+    /**
+     * Creates new form Blog
+     */
+    public Blog() {
+        queryFormal = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 1;";
+        queryInformal = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID AND TypeID = 2;";
+        queryAllPosts = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID";
+        initComponents();
+    }
 
-	public Blog(User user, boolean getFormal)
-	{
-		this();
-		this.isFormal = getFormal;
-		this.user = user;
-		if (getFormal && user != null) {
-			try {
-				jTable1 = Refactor.populateTable(Database.fetchRows(queryFormal));
-			} catch (SQLException ex) {
-				ex.printStackTrace();
-			}
+    public Blog(User user, boolean getFormal) {
+        this();
+        this.isFormal = getFormal;
+        this.user = user;
+        if (getFormal && user != null) {
+            try {
+                jTable1 = Refactor.populateTable(Database.fetchRows(queryFormal));
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
 
-		} else {
-			try {
-				jTable1 = Refactor.populateTable(Database.fetchRows(queryInformal));
-			} catch (SQLException ex) {
-				ex.printStackTrace();
-			}
-			if (user == null) {
-				btnMakePost.setVisible(false);
-			}
-		}
-		initTable();
-	}
+        } else {
+            try {
+                jTable1 = Refactor.populateTable(Database.fetchRows(queryInformal));
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            if (user == null) {
+                btnMakePost.setVisible(false);
+            }
+        }
+        initTable();
+    }
 
-	public Blog(String search, User user)
-	{
-		this();
-		this.user = user;
-		
-		String searchQuery;
-		searchQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.description, Tag.TagName FROM User JOIN Post ON User.UserID = Post.UserID JOIN Post_Tag ON Post.PostID = Post_Tag.PostID JOIN Tag ON Post_Tag.TagId = Tag.TagId AND (User.firstName LIKE '%" + search + "%'OR User.lastName LIKE '%" + search + "%' OR Post.title LIKE '%" + search + "%'OR Post.description LIKE '%" + search + "%' OR Tag.TagName LIKE '%" + search + "%') GROUP BY Post.PostID;";
-		try {
-			jTable1 = Refactor.populateTable(Database.fetchRows(searchQuery));
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-		initTable();
-	}
+    public Blog(String search, User user) {
+        this();
+        this.user = user;
 
-	private void initTable()
-	{
+        String searchQuery;
+        searchQuery = "SELECT Post.postID, User.firstName, User.lastName, Post.title, Post.description, Tag.TagName FROM User JOIN Post ON User.UserID = Post.UserID JOIN Post_Tag ON Post.PostID = Post_Tag.PostID JOIN Tag ON Post_Tag.TagId = Tag.TagId AND (User.firstName LIKE '%" + search + "%'OR User.lastName LIKE '%" + search + "%' OR Post.title LIKE '%" + search + "%'OR Post.description LIKE '%" + search + "%' OR Tag.TagName LIKE '%" + search + "%') GROUP BY Post.PostID;";
+        try {
+            jTable1 = Refactor.populateTable(Database.fetchRows(searchQuery));
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        initTable();
+    }
 
-		jScrollPane1.setViewportView(jTable1);
-		jTable1.setVisible(true);
+    private void initTable() {
+
+        jScrollPane1.setViewportView(jTable1);
+        jTable1.setVisible(true);
 //		
-                jTable1.addMouseListener(new MouseAdapter(){
-                    public void mouseClicked(MouseEvent e){
-                        if(e.getClickCount() == 1){
-                            Refactor.showPostByPostID(user, jTable1);
-                            blogDispose();
-                        }
-                    }
-                });
-	}
-        
-    private void blogDispose(){
-        
+        jTable1.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    Refactor.showPostByPostID(user, jTable1);
+                    blogDispose();
+                }
+            }
+        });
+    }
+
+    private void blogDispose() {
+
         this.dispose();
     }
 
-	/**
-	 * This method is called from within the constructor to
-	 * initialize the form.
-	 * WARNING: Do NOT modify this code. The content of this method is
-	 * always regenerated by the Form Editor.
-	 */
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -174,60 +154,18 @@ public class Blog extends javax.swing.JFrame
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
-		this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnMakePostActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnMakePostActionPerformed
     {//GEN-HEADEREND:event_btnMakePostActionPerformed
-		this.dispose();
-		if(isFormal){
-			new MakeFormalPost(user).setVisible(true);
-		}else{
-			new MakeInformalPost(user).setVisible(true);
-		}
+        this.dispose();
+        if (isFormal) {
+            new MakeFormalPost(user).setVisible(true);
+        } else {
+            new MakeInformalPost(user).setVisible(true);
+        }
     }//GEN-LAST:event_btnMakePostActionPerformed
-
-	/**
-	 * @param args the command line arguments
-	 */
-	public static void main(String args[])
-	{
-		/* Set the Nimbus look and feel */
-		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-		 */
-		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(Blog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(Blog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(Blog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(Blog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		}
-		//</editor-fold>
-
-		/* Create and display the form */
-		java.awt.EventQueue.invokeLater(new Runnable()
-		{
-			public void run()
-			{
-				User user = null;
-				new Blog(user, true).setVisible(true);
-				new Blog(user, false).setVisible(true);
-				
-
-			}
-		});
-	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMakePost;
