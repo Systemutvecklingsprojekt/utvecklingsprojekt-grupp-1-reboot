@@ -9,6 +9,7 @@ import projekt.helpers.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -172,17 +173,24 @@ public class ShowMeetingVotes extends javax.swing.JFrame {
     private void notiser() {
         ArrayList invited;
         int dateTimeID = Integer.parseInt(table2.getValueAt(table2.getSelectedRow(), 3).toString());
-        String dateTime =  LocalDateTime.now().toString();
+        LocalDateTime now = LocalDateTime.now();    
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
+        String formatDateTime = now.format(format) + ".000";  
+        
         
         try{
 
             String name = Database.fetchSingle("Select Name from Proposed_Meeting where ProposedMeetingID = (Select ProsedMeetingID from Proposed_Date_Time where DateTimeID = " + dateTimeID + ")");
-            Database.executeUpdate("Insert into Notice (Topic, DateTime, NoticeTypeID) VALUES ('" + name + "','" + dateTime + "', 1)");
+            Database.executeUpdate("Insert into Notice (Topic, DateTime, NoticeTypeID) VALUES ('" + name + "','" + formatDateTime + "', 1)");
             int meetingID = Integer.parseInt(Database.fetchSingle("SELECT MAX(MeetingID) FROM Meeting"));
             int notisID = Integer.parseInt(Database.fetchSingle("Select NoticeID from Notice Where NoticeID = (Select max(NoticeID) from Notice)"));
             Database.executeUpdate("Insert into Meeting_Notice (NID, MID) Values (" + notisID + "," + meetingID + ")");
             invited = Database.fetchColumn("Select UserID from Invites where ProposedMeeting= " + proposedMeetingID +";");
             
+            for(Object string:invited) {
+                String string1 = string.toString();
+                System.out.println(string1);
+            }
             for(int i = 0; i < invited.size(); i++) {
                int invID = Integer.parseInt(invited.get(i).toString());
                Database.executeUpdate("Insert into User_Notice (NID, UID) VALUES (" + notisID + "," + invID + ")");
