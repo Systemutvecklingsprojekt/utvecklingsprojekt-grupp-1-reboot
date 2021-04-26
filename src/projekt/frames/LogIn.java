@@ -1,28 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package projekt.frames;
 
 import javax.swing.JOptionPane;
-import java.util.HashMap;
 import projekt.helpers.Database;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import projekt.helpers.Validation;
 
-/**
- *
- * @author Victor & Noel
- */
 public class LogIn extends javax.swing.JFrame {
-    
-    /**
-     * Creates new form LogIn
-     */
-   
+
     public LogIn() {
         initComponents();
         this.getRootPane().setDefaultButton(jBLogInButton);
@@ -124,39 +108,38 @@ public class LogIn extends javax.swing.JFrame {
             new NotLoggedInHomeScreen().setVisible(true);
             this.dispose();
     }//GEN-LAST:event_jBackButtonActionPerformed
-
-    private void jBLogInButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        // TODO add your handling code here:
-        // Connecta till Databasen typ här
-
+/**
+ * Loggar in användaren, kontrollerar om användaruppgifter stämmer. Skickar med ID från användaren.
+ * @param evt 
+ */
+    private void jBLogInButtonActionPerformed(java.awt.event.ActionEvent evt) {
         String eMail = jTFEmailField.getText();
         String password = jPFPasswordField.getText();
 
-        
         try {
             String userIDQuery = Database.fetchSingle("SELECT USERID FROM User WHERE EMAIL ='" + eMail + "'");
             String eMailQuery = Database.fetchSingle("SELECT EMAIL FROM User WHERE USERID =" + userIDQuery);
-            String passwordQuery = Database.fetchSingle("SELECT PASSWORD FROM User WHERE USERID ="+ userIDQuery);
+            String passwordQuery = Database.fetchSingle("SELECT PASSWORD FROM User WHERE USERID =" + userIDQuery);
             if (Validation.checkTextField(jTFEmailField)) {
-                if(Validation.checkPasswordField(jPFPasswordField)){
-                    if(eMailQuery.equals(eMail)){
-                        if(passwordQuery.equals(password)){
+                if (Validation.checkPasswordField(jPFPasswordField)) {
+                    if (eMailQuery.equals(eMail)) {
+                        if (passwordQuery.equals(password)) {
                             int ID = Integer.parseInt(userIDQuery);
                             new HomeScreen(ID).setVisible(true);
-                            this.dispose(); 
+                            this.dispose();
                         } else {
                             JOptionPane.showMessageDialog(null, "Användarnamn eller lösenord är felaktigt!");
                         }
-                    } 
+                    }
                 }
             }
-        } catch(SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("error");
-            
-        } catch(NullPointerException e){
+
+        } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(null, "Användarnamn eller lösenord är felaktigt!");
-        }    
-    }                                           
+        }
+    }                                       
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBLogInButton;
