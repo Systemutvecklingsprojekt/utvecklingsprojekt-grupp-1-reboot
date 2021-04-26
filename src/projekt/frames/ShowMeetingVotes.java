@@ -11,6 +11,7 @@ import projekt.User;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -182,11 +183,12 @@ public class ShowMeetingVotes extends javax.swing.JFrame {
     private void notiser() {
         ArrayList invited;
         int dateTimeID = Integer.parseInt(table2.getValueAt(table2.getSelectedRow(), 3).toString());
+        String dateTime =  LocalDateTime.now().toString();
         
         try{
-            String time = Database.fetchSingle("Select Time from Proposed_Date_Time where DateTimeID = " + dateTimeID);
+
             String name = Database.fetchSingle("Select Name from Proposed_Meeting where ProposedMeetingID = (Select ProsedMeetingID from Proposed_Date_Time where DateTimeID = " + dateTimeID + ")");
-            Database.executeUpdate("Insert into Notice (Topic, DateTime, NoticeTypeID) VALUES ('" + name + "','" + time + "', 1)");
+            Database.executeUpdate("Insert into Notice (Topic, DateTime, NoticeTypeID) VALUES ('" + name + "','" + dateTime + "', 1)");
             int meetingID = Integer.parseInt(Database.fetchSingle("SELECT MAX(MeetingID) FROM Meeting"));
             int notisID = Integer.parseInt(Database.fetchSingle("Select NoticeID from Notice Where NoticeID = (Select max(NoticeID) from Notice)"));
             Database.executeUpdate("Insert into Meeting_Notice (NID, MID) Values (" + notisID + "," + meetingID + ")");
