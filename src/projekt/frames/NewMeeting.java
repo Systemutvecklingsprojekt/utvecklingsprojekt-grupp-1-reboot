@@ -41,7 +41,7 @@ public class NewMeeting extends javax.swing.JFrame {
         jTimeStart.setText("00.00");
         jTimeStart.setEnableArrowKeys(true);
         
-        
+
         fyllCombo();
         
     }
@@ -50,7 +50,9 @@ public class NewMeeting extends javax.swing.JFrame {
         
         ArrayList<String> pers = null;
         try {
-            pers = Database.fetchColumn("Select email from User WHERE NOT email = 'DELETEDUSER'");
+            String logInMail = Database.fetchSingle("Select email from User WHERE userID = " + creatorID + "");
+
+            pers = Database.fetchColumn("Select email from User WHERE NOT email = 'DELETEDUSER' AND NOT email= '" + logInMail +"'");
             return pers;
         } catch (Exception e) {
             System.out.println("feeeeel arraylist personer");
@@ -301,6 +303,7 @@ public class NewMeeting extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboPersActionPerformed
 
     private void jBAddPersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAddPersActionPerformed
+        
         
         String s = "";
         boolean exists = false;
