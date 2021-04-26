@@ -5,13 +5,13 @@
  */
 package projekt.frames;
 
-import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import projekt.User;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
@@ -38,9 +38,13 @@ public class HomeScreen extends javax.swing.JFrame {
         this.id = id;
         this.user = new User(this.id);
         //checkNotis();
-        fillMeetings(1);
         adminCheck();
         lblWelcome.setText("VÄLKOMMEN: " + user.getFirstName() + " " + user.getLastName() + "!");
+        
+        jComboBox1.removeAllItems();
+        jComboBox1.addItem("Möten");
+        jComboBox1.addItem("Inlägg");
+        jComboBox1.addItem("Föreslagna möten");
     }
 
     public void checkStatement() {
@@ -58,10 +62,7 @@ public class HomeScreen extends javax.swing.JFrame {
             int id = (int) (jTNotifications.getValueAt(jTNotifications.getSelectedRow(), 0));
             new PersonalMeetings(this.user).setVisible(true);
         }
-        jComboBox1.removeAllItems();
-        jComboBox1.addItem("Möten");
-        jComboBox1.addItem("Inlägg");
-
+        
     }
 
     /**
@@ -88,6 +89,8 @@ public class HomeScreen extends javax.swing.JFrame {
         jlblNotiser = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jBCalendar = new javax.swing.JButton();
+        jBclearNotifications = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -197,40 +200,59 @@ public class HomeScreen extends javax.swing.JFrame {
             }
         });
 
+        jBCalendar.setText("Kalender");
+        jBCalendar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBCalendarActionPerformed(evt);
+            }
+        });
+
+        jBclearNotifications.setText("Rensa notiser");
+        jBclearNotifications.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBclearNotificationsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblSearch)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jBclearNotifications)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(lblWelcome)
-                        .addGap(67, 67, 67)
-                        .addComponent(jBSignOut))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jtfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jBsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jBAdminUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jBFormal, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBInformal, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jBProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBMeetings, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jlblNotiser)
-                        .addGap(37, 37, 37)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSearch)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(51, 51, 51)
+                                .addComponent(lblWelcome)
+                                .addGap(67, 67, 67)
+                                .addComponent(jBSignOut))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jtfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jBsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jBAdminUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jBFormal, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jBInformal, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jBProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jBMeetings, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(39, 39, 39)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jlblNotiser)
+                                .addGap(37, 37, 37)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jBCalendar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)))))
                 .addContainerGap(93, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -241,9 +263,14 @@ public class HomeScreen extends javax.swing.JFrame {
                     .addComponent(lblWelcome)
                     .addComponent(jBSignOut)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addComponent(lblSearch)
-                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(lblSearch))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jBCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(3, 3, 3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBsearch))
@@ -266,8 +293,10 @@ public class HomeScreen extends javax.swing.JFrame {
                             .addComponent(jlblNotiser)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBclearNotifications)
+                        .addGap(186, 186, 186))))
         );
 
         pack();
@@ -299,7 +328,7 @@ public class HomeScreen extends javax.swing.JFrame {
 
     private void jBsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsearchActionPerformed
 
-        new SearchResults(jtfSearch.getText().toLowerCase()).setVisible(true);
+        new Blog(jtfSearch.getText().toLowerCase(), user).setVisible(true);
     }//GEN-LAST:event_jBsearchActionPerformed
 
     private void jBSignOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSignOutActionPerformed
@@ -315,13 +344,37 @@ public class HomeScreen extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         if (jComboBox1.getSelectedItem() == ("Möten")) {
-            fillMeetings(1);
+            fillNotifications(1);
         }
         if (jComboBox1.getSelectedItem() == ("Inlägg")) {
             jTNotifications.clearSelection();
-            fillMeetings(2);
+            fillNotifications(2);
+        }
+        if (jComboBox1.getSelectedItem() == ("Föreslagna möten")) {
+            jTNotifications.clearSelection();
+            fillNotifications(3);
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jBCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCalendarActionPerformed
+        new Calendar().setVisible(true);
+    }//GEN-LAST:event_jBCalendarActionPerformed
+
+    private void jBclearNotificationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBclearNotificationsActionPerformed
+        int tempUserId = user.getUserID();
+        int dialog1 = JOptionPane.showConfirmDialog(null, "Vill du rensa alla notiser?");
+
+        if (dialog1 == JOptionPane.YES_OPTION) {
+            String deleteQuery = "DELETE FROM User_Notice WHERE UID = " + tempUserId;
+            try {
+                Database.executeUpdate(deleteQuery);
+                fillNotifications(1);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(HomeScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jBclearNotificationsActionPerformed
 
     private void adminCheck() {
 
@@ -330,7 +383,7 @@ public class HomeScreen extends javax.swing.JFrame {
         }
     }
 
-    public void fillMeetings(int notificationTypeId) {
+    public void fillNotifications(int notificationTypeId) {
         try {
             String check = Database.fetchSingle("Select NID from User_Notice where UID =" + id);
             ResultSet rs;
@@ -451,11 +504,13 @@ public class HomeScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAdminUsers;
+    private javax.swing.JButton jBCalendar;
     private javax.swing.JButton jBFormal;
     private javax.swing.JButton jBInformal;
     private javax.swing.JButton jBMeetings;
     private javax.swing.JButton jBProfile;
     private javax.swing.JButton jBSignOut;
+    private javax.swing.JButton jBclearNotifications;
     private javax.swing.JButton jBsearch;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
