@@ -174,7 +174,7 @@ public class Profile extends javax.swing.JFrame {
     }//GEN-LAST:event_jBBackActionPerformed
 
     private void changeInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeInfoButtonActionPerformed
-        if(Validation.emailVerification(jtfEmail) && Validation.checkPTextField(jtfPassword)) {
+        if(Validation.emailVerification(jtfEmail.getText()) && Validation.checkPTextField(jtfPassword)) {
         String password = jtfPassword.getText();
         String email = jtfEmail.getText();
         String tempId;
