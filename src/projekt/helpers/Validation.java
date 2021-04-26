@@ -331,9 +331,4 @@ public class Validation {
 
     }
 
-    public static void main(String[] args) {
-        String[] expectedFalseNoDigits = {"i", "okej", "Okokasxbaxnksjnuasvv", "qwertyu"}, expectedTrueSomeDigits = {"1", "ok1ej", "Okokasxba8xnksjnuasvv", "qw9ertyu", "1", "99991234567890234567"};
-        containsDigitTest(expectedTrueSomeDigits, expectedFalseNoDigits);
-
-    }
 }
