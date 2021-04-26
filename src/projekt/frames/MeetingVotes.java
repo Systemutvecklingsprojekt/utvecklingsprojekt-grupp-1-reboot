@@ -196,7 +196,7 @@ public class MeetingVotes extends javax.swing.JFrame {
         dateTimes.add(Integer.parseInt(id[0]));
                 String oldLabel = jTAChosenTimes.getText();
                 jTAChosenTimes.setText(oldLabel +id[0] +": " + id[1] + ", " + id[2]+ "\n");
-    }else{
+    } else {
          JOptionPane.showMessageDialog(null, "Du har redan röstat på denna mötestid");
     }
 //        try {
@@ -223,16 +223,28 @@ public class MeetingVotes extends javax.swing.JFrame {
 
     private void jBSendAvailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSendAvailableActionPerformed
 
-//        String alreadyVoted = "SELECT UserID, DateTimeID, COUNT(*)\n" +
-//            " FROM user_votes\n" + 
-//            " WHERE UserID =" + user.getUserID() +"\n" +
-//            " GROUP BY UserID, DateTimeID\n" +
-//            " HAVING COUNT(*) > 1;"
+        ResultSet rs;
+        
+        String alreadyVoted = "SELECT UserID, DateTimeID, COUNT(*)\n" +
+            " FROM user_votes\n" +
+            " WHERE UserID = " + user.getUserID() + " AND DateTimeID = " + proposedMeetingID + "\n" +
+            " GROUP BY UserID, DateTimeID\n" +
+            " HAVING COUNT(*) > 1;";
         try {
-            for (Integer dateTime : dateTimes) {
-                Database.executeUpdate("INSERT INTO user_votes VALUES (" + user.getUserID() + ", " + dateTime + ");");
-
+            rs = Database.fetchRows(alreadyVoted);
+            
+            if(rs.next() == false) {
+                for(Integer dateTime : dateTimes){
+                    Database.executeUpdate("INSERT INTO user_votes (UserID, DateTimeID) VALUES (" + user.getUserID() + ", (SELECT DISTINCT DateTimeID FROM user_votes WHERE DateTimeID = " + dateTime + "));");
+                    
+                }
+                JOptionPane.showMessageDialog(null, "Dina tider är skickade till mötesvärden!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Du har redan anmält dig till detta möte!");
             }
+            rs.beforeFirst();
+            
+
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.out.println("Error");
