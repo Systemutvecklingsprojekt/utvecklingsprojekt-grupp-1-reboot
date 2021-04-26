@@ -38,9 +38,13 @@ public class HomeScreen extends javax.swing.JFrame {
         this.id = id;
         this.user = new User(this.id);
         //checkNotis();
-        fillNotifications(1);
         adminCheck();
         lblWelcome.setText("VÄLKOMMEN: " + user.getFirstName() + " " + user.getLastName() + "!");
+        
+        jComboBox1.removeAllItems();
+        jComboBox1.addItem("Möten");
+        jComboBox1.addItem("Inlägg");
+        jComboBox1.addItem("Föreslagna möten");
     }
 
     public void checkStatement() {
@@ -58,10 +62,7 @@ public class HomeScreen extends javax.swing.JFrame {
             int id = (int) (jTNotifications.getValueAt(jTNotifications.getSelectedRow(), 0));
             new PersonalMeetings(this.user).setVisible(true);
         }
-        jComboBox1.removeAllItems();
-        jComboBox1.addItem("Möten");
-        jComboBox1.addItem("Inlägg");
-
+        
     }
 
     /**
@@ -327,7 +328,7 @@ public class HomeScreen extends javax.swing.JFrame {
 
     private void jBsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsearchActionPerformed
 
-        new Blog(jtfSearch.getText().toLowerCase(),user).setVisible(true);
+        new Blog(jtfSearch.getText().toLowerCase(), user).setVisible(true);
     }//GEN-LAST:event_jBsearchActionPerformed
 
     private void jBSignOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSignOutActionPerformed
@@ -349,6 +350,10 @@ public class HomeScreen extends javax.swing.JFrame {
             jTNotifications.clearSelection();
             fillNotifications(2);
         }
+        if (jComboBox1.getSelectedItem() == ("Föreslagna möten")) {
+            jTNotifications.clearSelection();
+            fillNotifications(3);
+        }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jBCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCalendarActionPerformed
@@ -358,13 +363,13 @@ public class HomeScreen extends javax.swing.JFrame {
     private void jBclearNotificationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBclearNotificationsActionPerformed
         int tempUserId = user.getUserID();
         int dialog1 = JOptionPane.showConfirmDialog(null, "Vill du rensa alla notiser?");
-        
-        if (dialog1 == JOptionPane.YES_OPTION){
+
+        if (dialog1 == JOptionPane.YES_OPTION) {
             String deleteQuery = "DELETE FROM User_Notice WHERE UID = " + tempUserId;
             try {
                 Database.executeUpdate(deleteQuery);
                 fillNotifications(1);
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(HomeScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
