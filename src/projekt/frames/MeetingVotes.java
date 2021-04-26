@@ -188,8 +188,12 @@ public class MeetingVotes extends javax.swing.JFrame {
     String id[] = date.split(",");
     boolean alreadyVoted = false;
     for(String ID: votedTimeID){
-        if(ID.equals(id[0])){
-            alreadyVoted = true;
+        try{
+            if(ID.equals(id[0])){
+                alreadyVoted = true;
+            }
+        } catch(NullPointerException e){
+            e.printStackTrace();
         }
     }
     if(alreadyVoted == false){
@@ -234,15 +238,17 @@ public class MeetingVotes extends javax.swing.JFrame {
             rs = Database.fetchRows(alreadyVoted);
             
             if(rs.next() == false) {
+                
                 for(Integer dateTime : dateTimes){
-                    Database.executeUpdate("INSERT INTO user_votes (UserID, DateTimeID) VALUES (" + user.getUserID() + ", (SELECT DISTINCT DateTimeID FROM user_votes WHERE DateTimeID = " + dateTime + "));");
+                    
+                    Database.executeUpdate("INSERT INTO user_votes (UserID, DateTimeID) VALUES (" + user.getUserID() + ", " + dateTime + ");");
                     
                 }
                 JOptionPane.showMessageDialog(null, "Dina tider är skickade till mötesvärden!");
             } else {
                 JOptionPane.showMessageDialog(null, "Du har redan anmält dig till detta möte!");
             }
-            rs.beforeFirst();
+            Database.executeUpdate("DELETE FROM Invites WHERE UserID = " + user.getUserID() + " AND ProposedMeeting = " + proposedMeetingID + ";");
             
 
         } catch (SQLException ex) {
@@ -261,40 +267,7 @@ public class MeetingVotes extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MeetingVotes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MeetingVotes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MeetingVotes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MeetingVotes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MeetingVotes(1, user).setVisible(true);
-            }
-        });
-    }
+    
 
     private void fillCBDate() {
 
