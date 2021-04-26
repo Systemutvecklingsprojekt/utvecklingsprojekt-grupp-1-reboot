@@ -11,8 +11,6 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -133,29 +131,35 @@ public class ShowMeetingVotes extends javax.swing.JFrame {
     }                                      
 
     private void jBDetermineMeetingActionPerformed(java.awt.event.ActionEvent evt) {                                                   
-
-        int dateTimeID = Integer.parseInt(table2.getValueAt(table2.getSelectedRow(), 3).toString());
-        System.out.println(dateTimeID);
-        ArrayList<Integer> userIDS = new ArrayList<>();
-        String date = table2.getValueAt(table2.getSelectedRow(), 1).toString();
         
-        try {
-            String time = Database.fetchSingle("Select Time from Proposed_Date_Time where DateTimeID = " + dateTimeID);
-            String description = Database.fetchSingle("Select Description from Proposed_Meeting where ProposedMeetingID = (Select ProsedMeetingID from Proposed_Date_Time where DateTimeID = " + dateTimeID + ")");
-            Database.executeUpdate("Insert into Meeting (Date, Time, Description, UserID) values ('" + date + "', '" + time + "', '" + description + "', " + user.getUserID() + ")");
-            int newMeetingID = Integer.parseInt(Database.fetchSingle("SELECT MAX(MeetingID) FROM Meeting"));
-            ResultSet rs = Database.fetchRows("Select UserID from Invites where ProposedMeeting = " + proposedMeetingID);
-            while (rs.next()) {
-                userIDS.add(rs.getInt("UserID"));
+        try{
+            int dateTimeID = Integer.parseInt(table2.getValueAt(table2.getSelectedRow(), 3).toString());
+            System.out.println(dateTimeID);
+            ArrayList<Integer> userIDS = new ArrayList<>();
+            String date = table2.getValueAt(table2.getSelectedRow(), 1).toString();
+
+            try {
+                String time = Database.fetchSingle("Select Time from Proposed_Date_Time where DateTimeID = " + dateTimeID);
+                String description = Database.fetchSingle("Select Description from Proposed_Meeting where ProposedMeetingID = (Select ProsedMeetingID from Proposed_Date_Time where DateTimeID = " + dateTimeID + ")");
+                Database.executeUpdate("Insert into Meeting (Date, Time, Description, UserID) values ('" + date + "', '" + time + "', '" + description + "', " + user.getUserID() + ")");
+                int newMeetingID = Integer.parseInt(Database.fetchSingle("SELECT MAX(MeetingID) FROM Meeting"));
+                ResultSet rs = Database.fetchRows("Select UserID from Invites where ProposedMeeting = " + proposedMeetingID);
+                while (rs.next()) {
+                    userIDS.add(rs.getInt("UserID"));
+                }
+                for (Integer userID : userIDS) {
+                    Database.executeUpdate("Insert into Meeting_Attandence (UserID, MeetingID, IsAttending) values (" + userID + ", " + newMeetingID + ", 'J')");
+                }
+                Database.executeUpdate("INSERT INTO Meeting_Attandence (UserID, MeetingID, IsAttending) VALUES (" + user.getUserID() + ", " + newMeetingID + ", 'J')");
+                
+                notiser();
+                deleteOldMeeting();
+                JOptionPane.showMessageDialog(null, "Möte fastställt!");
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
-            for (Integer userID : userIDS) {
-                Database.executeUpdate("Insert into Meeting_Attandence (UserID, MeetingID, IsAttending) values (" + userID + ", " + newMeetingID + ", 'J')");
-            }
-            notiser();
-            deleteOldMeeting();
-            JOptionPane.showMessageDialog(null, "Möte fastställt!");
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch(ArrayIndexOutOfBoundsException e){
+            JOptionPane.showMessageDialog(null, "Vänligen välj ett möte att fastställa!");
         }
 
     }                                                  
