@@ -5,6 +5,8 @@
  */
 package projekt.frames;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import projekt.User;
 import java.sql.*;
 import java.util.ArrayList;
@@ -43,18 +45,16 @@ public class PersonalMeetings extends javax.swing.JFrame {
 
     private void initTableListener() {
         if (table2 != null) {
-            table2.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-                public void valueChanged(ListSelectionEvent e) {
-                    if (e.getValueIsAdjusting()) {
-
-                    } else {
+            table2.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getClickCount() == 1) {
                         int id = (int) (table2.getValueAt(table2.getSelectedRow(), 0));
                         new MeetingVotes(id, user).setVisible(true);
                     }
                 }
             });
         } else {
-            System.out.println("table2 is Null");
+            System.out.println("projekt.frames.PersonalMeetings.initTableListener(): table2 is Null");
         }
 
     }
@@ -73,11 +73,9 @@ public class PersonalMeetings extends javax.swing.JFrame {
             jScrollPane1.setViewportView(table2);
             table2.setVisible(true);
             if (table2 != null) {
-                table2.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-                    public void valueChanged(ListSelectionEvent e) {
-                        if (e.getValueIsAdjusting()) {
-
-                        } else {
+                table2.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getClickCount() == 1) {
                             int id = (int) (table2.getValueAt(table2.getSelectedRow(), 0));
                             new ShowMeeting(id).setVisible(true);
                         }
@@ -110,11 +108,11 @@ public class PersonalMeetings extends javax.swing.JFrame {
     private void fillHostInvites() {
 
         try {
-            rs = Database.fetchRows("SELECT Proposed_Meeting.ProposedMeetingID, Proposed_Date_Time.Date, Proposed_Date_Time.Time, Proposed_Meeting.Name, Proposed_Meeting.Description \n" +
-                                    " FROM Proposed_Date_Time\n" +
-                                    " JOIN Proposed_Meeting ON Proposed_Date_Time.ProsedMeetingID = Proposed_Meeting.ProposedMeetingID\n" +
-                                    " WHERE UserCreatorID = " + user.getUserID() + "\n" +
-                                    " GROUP BY ProposedMeetingID;");
+            rs = Database.fetchRows("SELECT Proposed_Meeting.ProposedMeetingID, Proposed_Date_Time.Date, Proposed_Date_Time.Time, Proposed_Meeting.Name, Proposed_Meeting.Description \n"
+                    + " FROM Proposed_Date_Time\n"
+                    + " JOIN Proposed_Meeting ON Proposed_Date_Time.ProsedMeetingID = Proposed_Meeting.ProposedMeetingID\n"
+                    + " WHERE UserCreatorID = " + user.getUserID() + "\n"
+                    + " GROUP BY ProposedMeetingID;");
             table2 = new JTable(Refactor.tableModelBuilder(rs));
 
         } catch (Exception ex) {
@@ -123,11 +121,9 @@ public class PersonalMeetings extends javax.swing.JFrame {
         jScrollPane1.setViewportView(table2);
         table2.setVisible(true);
         if (table2 != null) {
-            table2.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-                public void valueChanged(ListSelectionEvent e) {
-                    if (e.getValueIsAdjusting()) {
-
-                    } else {
+            table2.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getClickCount() == 1) {
                         int id = (int) (table2.getValueAt(table2.getSelectedRow(), 0));
                         System.out.println(id);
                         new ShowMeetingVotes(id, user).setVisible(true);
@@ -135,7 +131,7 @@ public class PersonalMeetings extends javax.swing.JFrame {
                 }
             });
         } else {
-            System.out.println("table2 is Null");
+            System.out.println("projekt.frames.PersonalMeetings.fillHostInvites(): table2 is Null");
 
         }
     }
