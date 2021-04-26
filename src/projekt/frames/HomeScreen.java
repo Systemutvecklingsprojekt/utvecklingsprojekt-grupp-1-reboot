@@ -135,7 +135,7 @@ public class HomeScreen extends javax.swing.JFrame {
         });
 
         jBAdminUsers.setBackground(new java.awt.Color(204, 204, 255));
-        jBAdminUsers.setText("Hantera användare och inlägg");
+        jBAdminUsers.setText("Hantera användare");
         jBAdminUsers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBAdminUsersActionPerformed(evt);
