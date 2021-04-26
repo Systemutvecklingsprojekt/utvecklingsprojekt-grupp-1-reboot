@@ -167,7 +167,7 @@ public class Validation {
     public static boolean emailVerification(JTextField textField) {
         boolean result = true;
 
-        if (!textField.getText().matches("[a-zA-Z@.]*")) {
+        if (!textField.getText().matches("[a-zA-Z@.]*")|| !textField.getText().matches("[0-9a-zA-Z@.]*") ) {
             JOptionPane.showMessageDialog(null, "Fel format på inskriven email");
             result = false;
         }
