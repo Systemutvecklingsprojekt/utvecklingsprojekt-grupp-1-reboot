@@ -456,11 +456,12 @@ public class MakeFormalPost extends javax.swing.JFrame {
         ArrayList subs;
         int notisID;
         int postID;
+        //Gör om localdatetimenow (Systemets klocka) till ett godtagbart format för tabellen Notice
         LocalDateTime now = LocalDateTime.now();    
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
         String formatDateTime = now.format(format) + ".000"; 
         
-        
+        //Lägger till notiser i tabellerna om prem ger true
         if(prem()) {
         try {
            
@@ -485,7 +486,7 @@ public class MakeFormalPost extends javax.swing.JFrame {
         
     }
     }
-    
+    //Metod som kollar om det finns prenumerationer hos användaren som skapar ett inlägg, ger en boolean
     private boolean prem() {
         ArrayList test;
         boolean resultat = true;
