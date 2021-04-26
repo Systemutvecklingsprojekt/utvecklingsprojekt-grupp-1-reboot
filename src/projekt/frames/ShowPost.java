@@ -357,6 +357,11 @@ public class ShowPost extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
         this.dispose();
+        try {
+            new Blog(user, getPostTypeID()).setVisible(true);
+        } catch (SQLException ex) {
+            
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jbNewCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNewCommentActionPerformed
@@ -410,6 +415,7 @@ public class ShowPost extends javax.swing.JFrame {
     
     private void jBEditPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditPostActionPerformed
         // TODO add your handling code here:
+        this.dispose();
         new EditPost(user, postID).setVisible(true);
     }//GEN-LAST:event_jBEditPostActionPerformed
 
@@ -438,6 +444,10 @@ public class ShowPost extends javax.swing.JFrame {
             }
             JOptionPane.showMessageDialog(null, "Inlägget är nu borttaget!");
             this.dispose();
+        }
+        
+        else{
+            
         }
     }//GEN-LAST:event_jBDeletePostActionPerformed
 
