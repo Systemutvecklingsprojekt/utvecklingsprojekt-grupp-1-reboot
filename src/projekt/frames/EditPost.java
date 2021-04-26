@@ -518,13 +518,31 @@ public class EditPost extends javax.swing.JFrame {
      * Metod som fyller upp comboboxen med valbara taggar
      */
     private void fillTags() {
-        ArrayList<String> tags = new ArrayList<>();
-        tags.add("Forskning");
-        tags.add("Programmering");
-        tags.add("Utbildning");
+        String typeID = "";
+        try {
+            typeID = Database.fetchSingle("SELECT TypeID FROM Post WHERE PostID = " + postId);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        if(typeID.equals("1")){
+            ArrayList<String> tags = new ArrayList<>();
+            tags.add("Forskning");
+            tags.add("Programmering");
+            tags.add("Utbildning");
 
-        for (String tag : tags) {
-            jCBTags.addItem(tag);
+            for (String tag : tags) {
+                jCBTags.addItem(tag);
+            }
+            
+        } else if(typeID.equals("2")){
+            ArrayList<String> tags = new ArrayList<>();
+            tags.add("AW");
+            tags.add("Solsken");
+            tags.add("Vänner");
+
+            for (String tag : tags) {
+                jCBTags.addItem(tag);
+            }
         }
     }
 
