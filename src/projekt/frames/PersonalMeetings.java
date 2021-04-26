@@ -48,7 +48,7 @@ public class PersonalMeetings extends javax.swing.JFrame {
      */
     private void fillBooked() {
         try {
-            rs = Database.fetchRows("SELECT * from Meeting where MeetingID IN (Select MeetingID from Meeting_Attandence where UserID =" + user.getUserID() + " AND isAttending = 'J')");
+            rs = Database.fetchRows("SELECT DISTINCT * from Meeting where MeetingID IN (Select MeetingID from Meeting_Attandence where UserID =" + user.getUserID() + " AND isAttending = 'J')");
             
             table2 = new JTable(Refactor.tableModelBuilder(rs));
         } catch (Exception ex) {
@@ -95,7 +95,7 @@ public class PersonalMeetings extends javax.swing.JFrame {
      */
     private void fillHostInvites() {
         try {
-            rs = Database.fetchRows("SELECT Proposed_Meeting.ProposedMeetingID, Proposed_Date_Time.Date, Proposed_Date_Time.Time, Proposed_Meeting.Name, Proposed_Meeting.Description \n"
+            rs = Database.fetchRows("SELECT DISTINCT Proposed_Meeting.ProposedMeetingID, Proposed_Date_Time.Date, Proposed_Date_Time.Time, Proposed_Meeting.Name, Proposed_Meeting.Description \n"
                     + " FROM Proposed_Date_Time\n"
                     + " JOIN Proposed_Meeting ON Proposed_Date_Time.ProsedMeetingID = Proposed_Meeting.ProposedMeetingID\n"
                     + " WHERE UserCreatorID = " + user.getUserID() + "\n"
