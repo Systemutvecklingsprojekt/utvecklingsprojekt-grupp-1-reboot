@@ -487,30 +487,26 @@ public class EditPost extends javax.swing.JFrame {
     }//GEN-LAST:event_jBRemoveFileActionPerformed
     /**
      * Metod för att lägga in taggar i databasen
-     *
      * @param tagsToCheck
      * @throws SQLException
      */
     private void insertTagsJosef(ArrayList<String> tagsToCheck) throws SQLException {
-        ArrayList<String> rsTags = new ArrayList<>();
+        ArrayList<String> rsTags = new ArrayList<>(); //skapar en arrayList av taggar 
         String querySize = "SELECT TagName FROM Tag";
         ResultSet rs = Database.fetchRows(querySize);
         while (rs.next()) {
             rsTags.add(rs.getString(1));
 
         }
-        for (String rsTag : rsTags) {
-            System.out.println(rsTag);
-        }
         for (String var : tagsToCheck) {
             boolean flagDuplicate = false;
             for (String rsTag : rsTags) {
-                if (var.equalsIgnoreCase(rsTag)) {
+                if (var.equalsIgnoreCase(rsTag)) { //Loopar genom listan rsTags och kontrollerar om valda taggar redan finns 
                     flagDuplicate = true;
                 }
             }
 
-            if (flagDuplicate == false) {
+            if (flagDuplicate == false) { //Om taggarna ej finns sen tidigare läggs de in i databasen 
                 System.out.println("Inläggs: " + var);
                 Database.executeUpdate("Insert Into Tag (TagName)Values('" + var + "')");
             }
