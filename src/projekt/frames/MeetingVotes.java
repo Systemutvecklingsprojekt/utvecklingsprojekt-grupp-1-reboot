@@ -1,4 +1,3 @@
-
 package projekt.frames;
 
 import java.sql.SQLException;
@@ -37,13 +36,12 @@ public class MeetingVotes extends javax.swing.JFrame {
      */
     private void getUserVotes() {
         this.votedTimeID = new ArrayList<>();
-        try{
-            votedTimeID = Database.fetchColumn("SELECT DateTimeID FROM user_votes where UserID = "+ user.getUserID());
-        }catch(SQLException e){
+        try {
+            votedTimeID = Database.fetchColumn("SELECT DateTimeID FROM user_votes where UserID = " + user.getUserID());
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-        
+
     }
 
     /**
@@ -171,11 +169,13 @@ public class MeetingVotes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jCBDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDateActionPerformed
-        
+
     }//GEN-LAST:event_jCBDateActionPerformed
     /**
-     * Metod som lägger till valda tider från comboboxen i textarean, så att användare ser vilka tider hen valt.
-     * @param evt 
+     * Metod som lägger till valda tider från comboboxen i textarean, så att
+     * användare ser vilka tider hen valt.
+     *
+     * @param evt
      */
     private void jBAddTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAddTimeActionPerformed
         String date = jCBDate.getSelectedItem().toString();
@@ -200,33 +200,33 @@ public class MeetingVotes extends javax.swing.JFrame {
     }//GEN-LAST:event_jBAddTimeActionPerformed
 
     /**
-     *Metod som skickar valda tider till databasen och lagrar info om antal röster på ett visst möte. 
+     * Metod som skickar valda tider till databasen och lagrar info om antal
+     * röster på ett visst möte.
      */
     private void jBSendAvailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSendAvailableActionPerformed
 
         ResultSet rs;
-        
-        String alreadyVoted = "SELECT UserID, DateTimeID, COUNT(*)\n" +
-            " FROM user_votes\n" +
-            " WHERE UserID = " + user.getUserID() + " AND DateTimeID = " + proposedMeetingID + "\n" +
-            " GROUP BY UserID, DateTimeID\n" +
-            " HAVING COUNT(*) > 1;"; //Fråga som lagras i variabel för att hitta vilka möten (DateTimeID)användaren röstat på
+
+        String alreadyVoted = "SELECT UserID, DateTimeID, COUNT(*)\n"
+                + " FROM user_votes\n"
+                + " WHERE UserID = " + user.getUserID() + " AND DateTimeID = " + proposedMeetingID + "\n"
+                + " GROUP BY UserID, DateTimeID\n"
+                + " HAVING COUNT(*) > 1;"; //Fråga som lagras i variabel för att hitta vilka möten (DateTimeID)användaren röstat på
         try {
             rs = Database.fetchRows(alreadyVoted); //FetchRows returnerar ett ResultSet som vi lagrar i variablen rs. 
-            
-            if(rs.next() == false) {
-                
-                for(Integer dateTime : dateTimes){
-                    
+
+            if (rs.next() == false) {
+
+                for (Integer dateTime : dateTimes) {
+
                     Database.executeUpdate("INSERT INTO user_votes (UserID, DateTimeID) VALUES (" + user.getUserID() + ", " + dateTime + ");");
-                    
+
                 }
                 JOptionPane.showMessageDialog(null, "Dina tider är skickade till mötesvärden!");
             } else {
                 JOptionPane.showMessageDialog(null, "Du har redan anmält dig till detta möte!");
             }
             Database.executeUpdate("DELETE FROM Invites WHERE UserID = " + user.getUserID() + " AND ProposedMeeting = " + proposedMeetingID + ";");
-            
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -235,8 +235,9 @@ public class MeetingVotes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBSendAvailableActionPerformed
     /**
-     * Metod för att ta bort valda mötestider 
-     * @param evt 
+     * Metod för att ta bort valda mötestider
+     *
+     * @param evt
      */
     private void jBDeleteTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeleteTimeActionPerformed
         jTAChosenTimes.setText("");
@@ -246,12 +247,12 @@ public class MeetingVotes extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-    
+
     /**
      * Metod som fyller comboboxen med valbara tider för valt möte
      */
     private void fillCBDate() {
-
+        //Skapar en sträng av dateTimeID, Date och time som vi fyller comboboxen med
         String query = "Select CONCAT(DateTimeID,', ',Date,', ',Time) from Proposed_Date_Time where ProsedMeetingID = " + proposedMeetingID;
         ArrayList<String> dates = new ArrayList<>();
         try {
