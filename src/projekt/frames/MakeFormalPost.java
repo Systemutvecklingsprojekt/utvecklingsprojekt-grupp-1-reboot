@@ -251,6 +251,8 @@ public class MakeFormalPost extends javax.swing.JFrame {
     private void checkFullTags() {
         if (maxTags == 3) {
             jBAddTag.setEnabled(false);
+        } else {
+            jBAddTag.setEnabled(true);
         }
     }
 
@@ -375,16 +377,20 @@ public class MakeFormalPost extends javax.swing.JFrame {
 
     private void jBRemoveTagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemoveTagActionPerformed
         // TODO add your handling code here:
+        checkFullTags();
         int index;
-        if (chosenTags.size() == 0) {
+        StringBuilder str = new StringBuilder("Taggar: ");
+        if (chosenTags.isEmpty()) {
             return;
         } else if (chosenTags.size() == 1) {
             chosenTags.remove(0);
-            jLTags.setText("Taggar: ");
+            jLTags.setText(str.toString());
         } else {
             index = chosenTags.size() - 1;
             chosenTags.remove(index);
-            jLTags.setText(oldTag);
+            for (String tag : chosenTags) {
+                jLTags.setText(str.append(tag + "   ").toString());
+            }
         }
     }//GEN-LAST:event_jBRemoveTagActionPerformed
 
