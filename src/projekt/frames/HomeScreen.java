@@ -5,13 +5,10 @@
  */
 package projekt.frames;
 
-import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import projekt.User;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
@@ -299,7 +296,7 @@ public class HomeScreen extends javax.swing.JFrame {
 
     private void jBsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsearchActionPerformed
 
-        new SearchResults(jtfSearch.getText().toLowerCase()).setVisible(true);
+        new Blog(jtfSearch.getText().toLowerCase(),user).setVisible(true);
     }//GEN-LAST:event_jBsearchActionPerformed
 
     private void jBSignOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSignOutActionPerformed
