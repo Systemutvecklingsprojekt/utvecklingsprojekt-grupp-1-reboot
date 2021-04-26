@@ -40,7 +40,7 @@ public class HomeScreen extends javax.swing.JFrame {
         //checkNotis();
         adminCheck();
         lblWelcome.setText("VÄLKOMMEN: " + user.getFirstName() + " " + user.getLastName() + "!");
-        
+
         jComboBox1.removeAllItems();
         jComboBox1.addItem("Möten");
         jComboBox1.addItem("Inlägg");
@@ -62,7 +62,7 @@ public class HomeScreen extends javax.swing.JFrame {
             int id = (int) (jTNotifications.getValueAt(jTNotifications.getSelectedRow(), 0));
             new PersonalMeetings(this.user).setVisible(true);
         }
-        
+
     }
 
     /**
@@ -343,16 +343,19 @@ public class HomeScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        if (jComboBox1.getSelectedItem() == ("Möten")) {
-            fillNotifications(1);
-        }
-        if (jComboBox1.getSelectedItem() == ("Inlägg")) {
-            jTNotifications.clearSelection();
-            fillNotifications(2);
-        }
-        if (jComboBox1.getSelectedItem() == ("Föreslagna möten")) {
-            jTNotifications.clearSelection();
-            fillNotifications(3);
+        try {
+            if (jComboBox1.getSelectedItem() == ("Möten")) {
+                fillNotifications(1);
+            }
+            if (jComboBox1.getSelectedItem() == ("Inlägg")) {
+                jTNotifications.clearSelection();
+                fillNotifications(2);
+            }
+            if (jComboBox1.getSelectedItem() == ("Föreslagna möten")) {
+                jTNotifications.clearSelection();
+                fillNotifications(3);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 

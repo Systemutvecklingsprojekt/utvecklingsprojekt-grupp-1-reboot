@@ -331,23 +331,34 @@ public class NewMeeting extends javax.swing.JFrame {
     }//GEN-LAST:event_jBAddPersActionPerformed
 
     private void jBtnSkapaMöteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSkapaMöteActionPerformed
-        if(Validation.checkName(jTxtNamn) && Validation.checkTextArea(jTxtDesc) && Validation.dateChooserValid(jDateChooser1) && Validation.valideraTid(jTimeStart.getText()) && Validation.validTid(jTimeStart.getText()) && Validation.isDateAhead(jDateChooser1.getDate())) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String meetingDate = dateFormat.format(jDateChooser1.getDate());
-        String beskrivning = jTxtDesc.getText();
-        String name = jTxtNamn.getText();
-        String startTid = jTimeStart.getText() + ".00";
-        
-        
-        
-        
-        
-        
-        DefaultTableModel model = (DefaultTableModel) jTableMeeting.getModel();
-        model.addRow(new Object[]{name, beskrivning, startTid, meetingDate});
-        
-        jTxtDesc.setEnabled(false);
-        jTxtNamn.setEnabled(false);
+        if (Validation.checkName(jTxtNamn) && Validation.checkTextArea(jTxtDesc) && Validation.dateChooserValid(jDateChooser1) && Validation.valideraTid(jTimeStart.getText()) && Validation.validTid(jTimeStart.getText()) && Validation.isDateAhead(jDateChooser1.getDate())) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String meetingDate = dateFormat.format(jDateChooser1.getDate());
+            String beskrivning = jTxtDesc.getText();
+            String name = jTxtNamn.getText();
+            String startTid = jTimeStart.getText() + ".00";
+
+            String t = "";
+            String d = "";
+            boolean exists = false;
+            for (int i = 0; i < jTableMeeting.getRowCount(); i++) {
+                t = jTableMeeting.getValueAt(i, 2).toString().trim();
+                d = jTableMeeting.getValueAt(i, 3).toString().trim();
+                if (startTid.equals(t) && meetingDate.equals(d)) {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if (!exists) {
+                DefaultTableModel model = (DefaultTableModel) jTableMeeting.getModel();
+                model.addRow(new Object[]{name, beskrivning, startTid, meetingDate});
+
+                jTxtDesc.setEnabled(false);
+                jTxtNamn.setEnabled(false);
+            } else {
+                JOptionPane.showMessageDialog(null, "Du har redan gjort ett identiskt mötesförslag.");
+            }
         }
         
     }//GEN-LAST:event_jBtnSkapaMöteActionPerformed
