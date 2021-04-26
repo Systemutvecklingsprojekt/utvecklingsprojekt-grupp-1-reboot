@@ -5,6 +5,8 @@
  */
 package projekt.frames;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -148,16 +150,10 @@ public class Calendar extends javax.swing.JFrame {
 
         jspDates.setViewportView(jTDates);
         jTDates.setVisible(true);
-        jTDates.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-//				String date;
-//				date = (String)jTDates.getValueAt(jTDates.getSelectedRow(), 0);
-
-                if (e.getValueIsAdjusting()) {
-
-                } else {
-
+        
+        jTDates.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
                     Date date = (Date) jTDates.getValueAt(jTDates.getSelectedRow(), 0);
                     SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -193,14 +189,9 @@ public class Calendar extends javax.swing.JFrame {
             jTDates = new JTable(Refactor.tableModelBuilder(rs1));
             jspDates.setViewportView(jTDates);
             jTDates.setVisible(true);
-            jTDates.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-
-                    if (e.getValueIsAdjusting()) {
-
-                    } else {
-
+            jTDates.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getClickCount() == 1) {
                         int meetingId = Refactor.getTableValueFirstColumn(jTDates);
                         new ShowMeeting(meetingId).setVisible(true);
                     }
