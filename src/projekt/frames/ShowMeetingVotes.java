@@ -11,6 +11,7 @@ import projekt.User;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -160,6 +161,7 @@ public class ShowMeetingVotes extends javax.swing.JFrame {
             for (Integer userID : userIDS) {
                 Database.executeUpdate("Insert into Meeting_Attandence (UserID, MeetingID, IsAttending) values (" + userID + ", " + newMeetingID + ", 'J')");
             }
+            notiser();
             deleteOldMeeting();
             JOptionPane.showMessageDialog(null, "Möte fastställt!");
         } catch (SQLException ex) {
@@ -176,6 +178,38 @@ public class ShowMeetingVotes extends javax.swing.JFrame {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+    
+    private void notiser() {
+        ArrayList invited;
+        int dateTimeID = Integer.parseInt(table2.getValueAt(table2.getSelectedRow(), 3).toString());
+        String dateTime =  LocalDateTime.now().toString();
+        
+        try{
+
+            String name = Database.fetchSingle("Select Name from Proposed_Meeting where ProposedMeetingID = (Select ProsedMeetingID from Proposed_Date_Time where DateTimeID = " + dateTimeID + ")");
+            Database.executeUpdate("Insert into Notice (Topic, DateTime, NoticeTypeID) VALUES ('" + name + "','" + dateTime + "', 1)");
+            int meetingID = Integer.parseInt(Database.fetchSingle("SELECT MAX(MeetingID) FROM Meeting"));
+            int notisID = Integer.parseInt(Database.fetchSingle("Select NoticeID from Notice Where NoticeID = (Select max(NoticeID) from Notice)"));
+            Database.executeUpdate("Insert into Meeting_Notice (NID, MID) Values (" + notisID + "," + meetingID + ")");
+            invited = Database.fetchColumn("Select UserID from Invites where ProposedMeeting= " + proposedMeetingID +";");
+            
+            for(int i = 0; i < invited.size(); i++) {
+               int invID = Integer.parseInt(invited.get(i).toString());
+               Database.executeUpdate("Insert into User_Notice (NID, UID) VALUES (" + notisID + "," + invID + ")");
+           }
+            int delNot = Integer.parseInt(Database.fetchSingle("Select NID from Notice_Proposed_Meeting where ProposedID =" + proposedMeetingID));
+            Database.executeUpdate("Delete from Notice_Proposed_Meeting where NID =" + delNot);
+            Database.executeUpdate("Delete from User_Notice where NID =" + delNot);
+            Database.executeUpdate("Delete from Notice where NoticeID =" + delNot);
+            
+            
+        }
+        catch (Exception e) {
+            System.out.println("satans sql notis");
+        
+        }
+        
     }
     /*
     public static void main(String args[]) {
