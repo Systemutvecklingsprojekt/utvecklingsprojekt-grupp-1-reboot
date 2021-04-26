@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package projekt.frames;
 
 import java.sql.SQLException;
@@ -15,7 +10,7 @@ import projekt.User;
 
 /**
  *
- * @author Amand
+ * @author Team 1
  */
 public class MeetingVotes extends javax.swing.JFrame {
 
@@ -36,15 +31,17 @@ public class MeetingVotes extends javax.swing.JFrame {
         getUserVotes();
     }
 
+    /**
+     * Metod som hämtar inloggade användarens alla röster på möten
+     */
     private void getUserVotes() {
         this.votedTimeID = new ArrayList<>();
-        try{
-            votedTimeID = Database.fetchColumn("SELECT DateTimeID FROM user_votes where UserID = "+ user.getUserID());
-        }catch(SQLException e){
+        try {
+            votedTimeID = Database.fetchColumn("SELECT DateTimeID FROM user_votes where UserID = " + user.getUserID());
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-        
+
     }
 
     /**
@@ -60,7 +57,6 @@ public class MeetingVotes extends javax.swing.JFrame {
         jBAddTime = new javax.swing.JButton();
         jBSendAvailable = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jCBTime = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTAChosenTimes = new javax.swing.JTextArea();
@@ -135,12 +131,9 @@ public class MeetingVotes extends javax.swing.JFrame {
                                 .addComponent(jBSendAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jCBDate, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCBTime, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jCBDate, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jBDeleteTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jBAddTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -154,8 +147,7 @@ public class MeetingVotes extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCBDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBAddTime)
-                    .addComponent(jCBTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBAddTime))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(5, 5, 5)
@@ -177,79 +169,64 @@ public class MeetingVotes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jCBDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDateActionPerformed
-        jCBTime.removeAllItems();
-        fillCBTime();
 
     }//GEN-LAST:event_jCBDateActionPerformed
-
+    /**
+     * Metod som lägger till valda tider från comboboxen i textarean, så att
+     * användare ser vilka tider hen valt.
+     *
+     * @param evt
+     */
     private void jBAddTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAddTimeActionPerformed
         String date = jCBDate.getSelectedItem().toString();
-//        String time = jCBTime.getSelectedItem().toString();
-    String id[] = date.split(",");
-    boolean alreadyVoted = false;
-    for(String ID: votedTimeID){
-        try{
-            if(ID.equals(id[0])){
-                alreadyVoted = true;
+        String id[] = date.split(",");
+        boolean alreadyVoted = false; //Variabel som håller koll om användaren redan röstat
+        for (String ID : votedTimeID) {
+            try {
+                if (ID.equals(id[0])) {
+                    alreadyVoted = true;
+                }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
-        } catch(NullPointerException e){
-            e.printStackTrace();
         }
-    }
-    if(alreadyVoted == false){
-        dateTimes.add(Integer.parseInt(id[0]));
-                String oldLabel = jTAChosenTimes.getText();
-                jTAChosenTimes.setText(oldLabel +id[0] +": " + id[1] + ", " + id[2]+ "\n");
-    } else {
-         JOptionPane.showMessageDialog(null, "Du har redan röstat på denna mötestid");
-    }
-//        try {
-//            String dateTime = Database.fetchSingle("Select DateTimeID from Proposed_Date_Time where Time = '" + time + "' and Date = '" + date + "'");
-//            String query = "Select UserID, DateTimeID from user_votes where UserID = " + user.getUserID() + " and DateTimeID = " + dateTime;
-//            query = Database.fetchSingle(query);
-//            System.out.println(query);
-//            if (query == null) {
-//                dateTimes.add(Integer.parseInt(dateTime));
-//                String oldLabel = jTAChosenTimes.getText();
-//                jTAChosenTimes.setText(oldLabel + " " + date + " " + time + "\n");
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Du har redan röstat på denna mötestid");
-//
-//            }
-//
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//            System.out.println("errr");
-//        }
-
-
+        if (alreadyVoted == false) {
+            dateTimes.add(Integer.parseInt(id[0]));
+            String oldLabel = jTAChosenTimes.getText();
+            jTAChosenTimes.setText(oldLabel + id[0] + ": " + id[1] + ", " + id[2] + "\n");
+        } else {
+            JOptionPane.showMessageDialog(null, "Du har redan röstat på denna mötestid");
+        }
     }//GEN-LAST:event_jBAddTimeActionPerformed
 
+    /**
+     * Metod som skickar valda tider till databasen och lagrar info om antal
+     * röster på ett visst möte.
+     */
     private void jBSendAvailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSendAvailableActionPerformed
 
         ResultSet rs;
-        
-        String alreadyVoted = "SELECT UserID, DateTimeID, COUNT(*)\n" +
-            " FROM user_votes\n" +
-            " WHERE UserID = " + user.getUserID() + " AND DateTimeID = " + proposedMeetingID + "\n" +
-            " GROUP BY UserID, DateTimeID\n" +
-            " HAVING COUNT(*) > 1;";
+
+        String alreadyVoted = "SELECT UserID, DateTimeID, COUNT(*)\n"
+                + " FROM user_votes\n"
+                + " WHERE UserID = " + user.getUserID() + " AND DateTimeID = " + proposedMeetingID + "\n"
+                + " GROUP BY UserID, DateTimeID\n"
+                + " HAVING COUNT(*) > 1;"; //Fråga som lagras i variabel för att hitta vilka möten (DateTimeID)användaren röstat på
         try {
-            rs = Database.fetchRows(alreadyVoted);
-            
-            if(rs.next() == false) {
-                
-                for(Integer dateTime : dateTimes){
-                    
+            rs = Database.fetchRows(alreadyVoted); //FetchRows returnerar ett ResultSet som vi lagrar i variablen rs. 
+
+            if (rs.next() == false) {
+
+                for (Integer dateTime : dateTimes) {
+
                     Database.executeUpdate("INSERT INTO user_votes (UserID, DateTimeID) VALUES (" + user.getUserID() + ", " + dateTime + ");");
-                    
+
                 }
                 JOptionPane.showMessageDialog(null, "Dina tider är skickade till mötesvärden!");
             } else {
                 JOptionPane.showMessageDialog(null, "Du har redan anmält dig till detta möte!");
             }
             Database.executeUpdate("DELETE FROM Invites WHERE UserID = " + user.getUserID() + " AND ProposedMeeting = " + proposedMeetingID + ";");
-            
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -257,7 +234,11 @@ public class MeetingVotes extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jBSendAvailableActionPerformed
-
+    /**
+     * Metod för att ta bort valda mötestider
+     *
+     * @param evt
+     */
     private void jBDeleteTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeleteTimeActionPerformed
         jTAChosenTimes.setText("");
         dateTimes.removeAll(dateTimes);
@@ -267,10 +248,11 @@ public class MeetingVotes extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    
-
+    /**
+     * Metod som fyller comboboxen med valbara tider för valt möte
+     */
     private void fillCBDate() {
-
+        //Skapar en sträng av dateTimeID, Date och time som vi fyller comboboxen med
         String query = "Select CONCAT(DateTimeID,', ',Date,', ',Time) from Proposed_Date_Time where ProsedMeetingID = " + proposedMeetingID;
         ArrayList<String> dates = new ArrayList<>();
         try {
@@ -287,33 +269,12 @@ public class MeetingVotes extends javax.swing.JFrame {
 
     }
 
-    private void fillCBTime() {
-        String date = jCBDate.getSelectedItem().toString();
-        String query = "Select Distinct Time from Proposed_Date_Time where ProsedMeetingID = " + proposedMeetingID + " and Date = '" + date + "'";
-
-        ArrayList<String> times = new ArrayList<>();
-        try {
-            ResultSet rs = Database.fetchRows(query);
-            while (rs.next()) {
-                times.add(rs.getString(1));
-            }
-            for (String time : times) {
-                jCBTime.addItem(time);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAddTime;
     private javax.swing.JButton jBDeleteTime;
     private javax.swing.JButton jBSendAvailable;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jCBDate;
-    private javax.swing.JComboBox<String> jCBTime;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

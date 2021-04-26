@@ -51,11 +51,10 @@ public class NewMeeting extends javax.swing.JFrame {
         ArrayList<String> pers = null;
         try {
             String logInMail = Database.fetchSingle("Select email from User WHERE userID = " + creatorID + "");
-
-            pers = Database.fetchColumn("Select email from User WHERE NOT email = 'DELETEDUSER' AND NOT email= '" + logInMail +"'");
+            pers = Database.fetchColumn("Select email from User WHERE NOT email = 'DELETEDUSER' AND NOT email= '" + logInMail + "'");
             return pers;
         } catch (Exception e) {
-            System.out.println("feeeeel arraylist personer");
+            System.out.println("fel arraylist personer");
         }
         return pers;
     }
@@ -301,10 +300,12 @@ public class NewMeeting extends javax.swing.JFrame {
     private void jComboPersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPersActionPerformed
 
     }//GEN-LAST:event_jComboPersActionPerformed
-
+/**
+ * Lägger in Personer i tabell som man vill bjuda in
+ * @param evt 
+ */
     private void jBAddPersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAddPersActionPerformed
-        
-        
+        //Kontrollerar att man inte bjuder in samma person mer än en gång.
         String s = "";
         boolean exists = false;
         for (int i = 0; i < jTablePers.getRowCount(); i++) {
@@ -329,7 +330,10 @@ public class NewMeeting extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jBAddPersActionPerformed
-
+    /**
+     * Skapa förslag gällande tid/datum för ett möte
+     * @param evt 
+     */
     private void jBtnSkapaMöteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSkapaMöteActionPerformed
         if (Validation.checkName(jTxtNamn) && Validation.checkTextArea(jTxtDesc) && Validation.dateChooserValid(jDateChooser1) && Validation.valideraTid(jTimeStart.getText()) && Validation.validTid(jTimeStart.getText()) && Validation.isDateAhead(jDateChooser1.getDate())) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -341,6 +345,7 @@ public class NewMeeting extends javax.swing.JFrame {
             String t = "";
             String d = "";
             boolean exists = false;
+            //Kontrollera vilka värden som finns i tabellen för förslag
             for (int i = 0; i < jTableMeeting.getRowCount(); i++) {
                 t = jTableMeeting.getValueAt(i, 2).toString().trim();
                 d = jTableMeeting.getValueAt(i, 3).toString().trim();
@@ -349,7 +354,7 @@ public class NewMeeting extends javax.swing.JFrame {
                     break;
                 }
             }
-
+            //Om datum och tid tillsammans inte är lika som tidigare förslag fyll tabell
             if (!exists) {
                 DefaultTableModel model = (DefaultTableModel) jTableMeeting.getModel();
                 model.addRow(new Object[]{name, beskrivning, startTid, meetingDate});
@@ -362,141 +367,149 @@ public class NewMeeting extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jBtnSkapaMöteActionPerformed
-
+/**
+ * Skickar information till databas om vilka förslag på möte som gjorts
+ * @param evt 
+ */
     private void jBtnSkickaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSkickaActionPerformed
         
-        if(checkList()) {
-        int i = 0;
-        String beskrivning;
-        String name;
-        name = jTableMeeting.getValueAt(i, 0).toString();
-        beskrivning = jTableMeeting.getValueAt(i, 1).toString();
-        int propMeet = 0;
-        
-        
-        try {
-            Database.executeUpdate("Insert into Proposed_Meeting (Name, Description, UserCreatorID) VALUES ('" + name + "', '" + beskrivning + "'," + creatorID + ")");
-            propMeet = Integer.parseInt(Database.fetchSingle("Select ProposedMeetingID from Proposed_Meeting Where ProposedMeetingID = (Select max(ProposedMeetingID) from Proposed_Meeting)"));
-        } catch (Exception e) {
-            System.out.println("kunde ej inserta i proposed meeting");
-            return;
+        if (checkList()) {
+            int i = 0;
+            String beskrivning;
+            String name;
+            name = jTableMeeting.getValueAt(i, 0).toString();
+            beskrivning = jTableMeeting.getValueAt(i, 1).toString();
+            int propMeet = 0;
+
+            try {
+                Database.executeUpdate("Insert into Proposed_Meeting (Name, Description, UserCreatorID) VALUES ('" + name + "', '" + beskrivning + "'," + creatorID + ")");
+                propMeet = Integer.parseInt(Database.fetchSingle("Select ProposedMeetingID from Proposed_Meeting Where ProposedMeetingID = (Select max(ProposedMeetingID) from Proposed_Meeting)"));
+            } catch (Exception e) {
+                System.out.println("kunde ej inserta i proposed meeting");
+                return;
+            }
+
+            meeting(propMeet);
+            notis(propMeet);
+            personer(propMeet);
+
+            JOptionPane.showMessageDialog(null, "Mötesförslag(en) har skickats till de inbjudna");
         }
-        
-        meeting(propMeet);
-        notis(propMeet);
-        personer(propMeet);
-        
-        JOptionPane.showMessageDialog(null, "Mötesförslag(en) har skickats till de inbjudna");}
 
     }//GEN-LAST:event_jBtnSkickaActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-
+/**
+ * Knapp tar bort vald person från tabell i program som visar vilka man vill bjuda in
+ * @param evt 
+ */
     private void jBRemovePersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemovePersActionPerformed
         DefaultTableModel tblModel = (DefaultTableModel) jTablePers.getModel();
-        if(jTablePers.getSelectedRowCount() == 1){
+        if (jTablePers.getSelectedRowCount() == 1) {
             tblModel.removeRow(jTablePers.getSelectedRow());
-        }else{
-            if(jTablePers.getRowCount()==0){
+        } else {
+            //Användare måste markera exakt en person att ta bort.
+            if (jTablePers.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(null, "Det finns inga valda personer.");
-            }else{
-             JOptionPane.showMessageDialog(null, "Vänligen välj en person att ta bort från listan.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Vänligen välj en person att ta bort från listan.");
             }
         }
     }//GEN-LAST:event_jBRemovePersActionPerformed
-    
+    /**
+     * Metod som sätter värden om tid och datum i databas gällande mötesförslag
+     * @param propMeet 
+     */
     private void meeting(int propMeet) {
         int i = 0;
         String startTid;
         String date;
-        
-       
-        
+
+        //Hämtar värden från tabell 
         for (i = 0; i < jTableMeeting.getRowCount(); i++) {
             startTid = jTableMeeting.getValueAt(i, 2).toString();
             date = jTableMeeting.getValueAt(i, 3).toString();
-            
+
             try {
                 Database.executeUpdate("Insert into Proposed_Date_Time (Date, Time, ProsedMeetingID) VALUES ('" + date + "','" + startTid + "', " + propMeet + ")");
-                
+
             } catch (Exception e) {
                 System.out.println("kunde ej sätta in i databasen");
             }
         }
     }
-    
+    /**
+     * Hanterar lagring av personer och dess inbjudning till det förslagna mötet
+     * @param propMeet 
+     */
     private void personer(int propMeet) {
-        
+  
         int i = 0;
         String email;
         int userID;
         int notisID;
-        
+
         for (i = 0; i < jTablePers.getRowCount(); i++) {
-            
+
             email = jTablePers.getValueAt(i, 0).toString();
-            
+
             try {
                 userID = Integer.parseInt(Database.fetchSingle("Select UserID from User Where Email = '" + email + "'"));
                 Database.executeUpdate("Insert into Invites (ProposedMeeting, UserID) VALUES (" + propMeet + "," + userID + ")");
                 notisID = Integer.parseInt(Database.fetchSingle("Select NoticeID from Notice Where NoticeID = (Select max(NoticeID) from Notice)"));
                 Database.executeUpdate("Insert into User_Notice (NID, UID) VALUES (" + notisID + "," + userID + ")");
-                
+
             } catch (Exception e) {
                 System.out.println("kunde ej sätta in i databasen");
             }
-            
+
         }
         
     }
     
     private void notis(int propMeet) {
     
-       
-        String email;
+           String email;
         String topic;
         String time;
         String date;
         int userID;
         int notisID;
-        
+
         email = jTablePers.getValueAt(0, 0).toString();
         topic = jTableMeeting.getValueAt(0, 0).toString();
         time = jTableMeeting.getValueAt(0, 2).toString() + "000";
         date = jTableMeeting.getValueAt(0, 3).toString() + " " + time;
 
-            try {
-                userID = Integer.parseInt(Database.fetchSingle("Select UserID from User Where Email = '" + email + "'"));
-                Database.executeUpdate("Insert into Notice (Topic, DateTime, NoticeTypeID) VALUES ('" + topic + "','" + date + "', 3)");
-                notisID = Integer.parseInt(Database.fetchSingle("Select NoticeID from Notice Where NoticeID = (Select max(NoticeID) from Notice)"));
-                Database.executeUpdate("Insert into Notice_Proposed_Meeting (NID,ProposedID) VALUES (" + notisID + "," + propMeet + ") ");
-               
-                
-                
-            } catch (Exception e) {
-                System.out.println("kunde ej sätta in i databasen");
-            }
+        try {
+            userID = Integer.parseInt(Database.fetchSingle("Select UserID from User Where Email = '" + email + "'"));
+            Database.executeUpdate("Insert into Notice (Topic, DateTime, NoticeTypeID) VALUES ('" + topic + "','" + date + "', 3)");
+            notisID = Integer.parseInt(Database.fetchSingle("Select NoticeID from Notice Where NoticeID = (Select max(NoticeID) from Notice)"));
+            Database.executeUpdate("Insert into Notice_Proposed_Meeting (NID,ProposedID) VALUES (" + notisID + "," + propMeet + ") ");
+
+        } catch (Exception e) {
+            System.out.println("kunde ej sätta in i databasen");
+        }
             
     }
     
     private boolean checkList() {
-    boolean resultat = true;    
-    try {
-    String koll2 = jTableMeeting.getValueAt(0, 0).toString();
-    String koll = jTablePers.getValueAt(0, 0).toString();
-    
-        return resultat;
-    
-    }
-    catch(Exception e){
-    JOptionPane.showMessageDialog(null, "Vänligen fyll i all informatin och minst en deltagare");
-    resultat = false;
-    return resultat;
-    }
-    
-    
+        boolean resultat = true;
+        try {
+            String koll2 = jTableMeeting.getValueAt(0, 0).toString();
+            String koll = jTablePers.getValueAt(0, 0).toString();
+
+            return resultat;
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Vänligen fyll i all informatin och minst en deltagare");
+            resultat = false;
+            return resultat;
+        }
+
+
     }
 
     
