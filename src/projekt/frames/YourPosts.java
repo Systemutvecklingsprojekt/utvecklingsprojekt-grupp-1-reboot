@@ -16,7 +16,7 @@ import projekt.helpers.Database;
 
 /**
  *
- * @author vilma
+ * @author Team1
  */
 public class YourPosts extends javax.swing.JFrame {
 
@@ -29,12 +29,13 @@ public class YourPosts extends javax.swing.JFrame {
 
         this.user = user;
         int id = user.getUserID();
-
+        //Hämtar inlägg med användarens ID och tillhörnade Namn, efternamn, titel och tidpunkt från databasen
         String query = "Select Post.postID, User.firstName, User.lastName, Post.title, Post.timeStamp FROM User, Post WHERE Post.UserID = User.UserID and User.UserID =" + id;
         initComponents();
 
         try {
-            jTable1 = Refactor.populateTable(Database.fetchRows(query));
+            jTable1 = Refactor.populateTable(Database.fetchRows(query));//Lägger in den hämtade datan från databasen i tabellen 
+            
 
         } catch (SQLException e) {
             e.printStackTrace();
