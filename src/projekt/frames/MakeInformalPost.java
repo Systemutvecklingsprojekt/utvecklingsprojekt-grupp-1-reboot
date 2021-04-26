@@ -307,9 +307,7 @@ public class MakeInformalPost extends javax.swing.JFrame {
             rsTags.add(rs.getString(1));
 
         }
-        for (String rsTag : rsTags) {
-            System.out.println(rsTag);
-        }
+     
         for (String var : tagsToCheck) {
             boolean flagDuplicate = false;
             for (String rsTag : rsTags) {
@@ -318,7 +316,7 @@ public class MakeInformalPost extends javax.swing.JFrame {
                 }
             }
             if (flagDuplicate == false) {
-                System.out.println("Inläggs: " + var);
+              
                 Database.executeUpdate("Insert Into Tag (TagName)Values('" + var + "')");
             }
         }
@@ -346,11 +344,9 @@ public class MakeInformalPost extends javax.swing.JFrame {
                     stringPostId = Database.fetchSingle("SELECT MAX(PostID) FROM Post;");
                     notis();
                 } else {
-                    System.out.println("den går till else");
+                    
                     String image = txt_filename.getText();
                     image = image.replace("\\", "\\\\");
-
-                    System.out.println(image);
 
                     Database.executeUpdate("INSERT into Post (UserID, timeStamp, title, description, typeID, Picture) "
                             + "VALUES (" + userId + ", CURRENT_TIMESTAMP, '" + title + "','" + post + "', 2, '" + image + "')");
@@ -365,7 +361,7 @@ public class MakeInformalPost extends javax.swing.JFrame {
 
             } catch (SQLException e) {
                 e.printStackTrace();
-                System.out.println("error");
+               
             }
             int postId = Integer.parseInt(stringPostId);
             try {
@@ -375,7 +371,7 @@ public class MakeInformalPost extends javax.swing.JFrame {
 
             } catch (SQLException e) {
                 e.printStackTrace();
-                System.out.println("fel i dela");
+               
             }
             JOptionPane.showMessageDialog(null, "Ditt inlägg har publicerats");
 
@@ -459,7 +455,7 @@ public class MakeInformalPost extends javax.swing.JFrame {
         
         }
         catch (Exception e) {
-            System.out.println("Något fel med inserts");
+            e.printStackTrace();
         }
         }
     
