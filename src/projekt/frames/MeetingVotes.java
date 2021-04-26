@@ -226,7 +226,7 @@ public class MeetingVotes extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "Du har redan anmält dig till detta möte!");
             }
-            Database.executeUpdate("DELETE FROM Invites WHERE UserID = " + user.getUserID() + " AND ProposedMeeting = " + proposedMeetingID + ";");
+            
 
         } catch (SQLException ex) {
             ex.printStackTrace();
