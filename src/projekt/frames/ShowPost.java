@@ -399,13 +399,16 @@ public class ShowPost extends javax.swing.JFrame {
         try{
         String typeID = Database.fetchSingle("Select typeID from Post where PostID = " + postID);
         int typeIDint = Integer.parseInt(typeID);
-        
+        System.out.println(typeID);
         if(typeIDint == 1){
         typFormal = true;
+        
         }}
         catch (SQLException e) {
 
         }
+        
+        System.out.println(typFormal);
         return typFormal;
     }
     
@@ -416,6 +419,13 @@ public class ShowPost extends javax.swing.JFrame {
     }//GEN-LAST:event_jBEditPostActionPerformed
 
     private void jBDeletePostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeletePostActionPerformed
+        boolean typeID = false;
+        try {
+            typeID = getPostTypeID();
+        } catch (SQLException ex) {
+            
+        }
+        
         int n = JOptionPane.showConfirmDialog(
                 null,
                 "Vill du verkligen ta bort inlägget?",
@@ -432,19 +442,13 @@ public class ShowPost extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(ShowPost.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            try {
-                new Blog(user, getPostTypeID()).setVisible(true);
-                
-            } catch (SQLException ex) {
-            }
-            JOptionPane.showMessageDialog(null, "Inlägget är nu borttaget!");
-            this.dispose();
-        }
-        
-        else{
-            
-        }
+           
+          
+        new Blog(user, typeID).setVisible(true);
+        JOptionPane.showMessageDialog(null, "Inlägget är nu borttaget!");
+        this.dispose();
+}
+    
     }//GEN-LAST:event_jBDeletePostActionPerformed
 
 

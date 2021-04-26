@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package projekt.frames;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -11,10 +7,7 @@ import javax.swing.JOptionPane;
 import projekt.User;
 import projekt.helpers.Database;
 import projekt.helpers.Validation;
-/**
- *
- * @author Amand
- */
+
 public class Profile extends javax.swing.JFrame {
     
     private User user;
@@ -172,31 +165,34 @@ public class Profile extends javax.swing.JFrame {
     private void jBBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBackActionPerformed
         this.dispose();
     }//GEN-LAST:event_jBBackActionPerformed
-
+    /**
+     * Ändrar personuppgifter
+     * @param evt 
+     */
     private void changeInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeInfoButtonActionPerformed
-        if(Validation.emailVerification(jtfEmail.getText()) && Validation.checkPTextField(jtfPassword)) {
-        String password = jtfPassword.getText();
-        String email = jtfEmail.getText();
-        String tempId;
-        
-        try {
-            String sqlEmail = Database.fetchSingle("SELECT eMail FROM User WHERE eMail = '" + email + "';");
-            tempId = Database.fetchSingle("SELECT UserID FROM User WHERE eMail = '" + email + "';");
-            
-            if(sqlEmail != null){
-                if(id != Integer.parseInt(tempId)){
-                    JOptionPane.showMessageDialog(null, "Denna Email används redan!");
-                    return;
+        if (Validation.emailVerification(jtfEmail.getText()) && Validation.checkPTextField(jtfPassword)) {
+            String password = jtfPassword.getText();
+            String email = jtfEmail.getText();
+            String tempId;
+
+            try {
+                String sqlEmail = Database.fetchSingle("SELECT eMail FROM User WHERE eMail = '" + email + "';");
+                tempId = Database.fetchSingle("SELECT UserID FROM User WHERE eMail = '" + email + "';");
+
+                if (sqlEmail != null) {
+                    if (id != Integer.parseInt(tempId)) {
+                        JOptionPane.showMessageDialog(null, "Denna Email används redan!");
+                        return;
+                    }
                 }
+
+                Database.executeUpdate("UPDATE User SET Password ='" + password + "' WHERE UserID =" + id);
+                Database.executeUpdate("UPDATE User SET eMail ='" + email + "' WHERE UserID =" + id);
+
+                JOptionPane.showMessageDialog(null, "Dina användaruppgifter är nu uppdaterade!");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            
-            Database.executeUpdate("UPDATE User SET Password ='" + password +"' WHERE UserID =" + id);
-            Database.executeUpdate("UPDATE User SET eMail ='" + email +"' WHERE UserID =" + id);
-            
-            JOptionPane.showMessageDialog(null, "Dina användaruppgifter är nu uppdaterade!");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         }
     }//GEN-LAST:event_changeInfoButtonActionPerformed
 
