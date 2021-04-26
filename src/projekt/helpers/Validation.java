@@ -147,7 +147,7 @@ public class Validation {
             messageDialog = messageDialog +"Du har inte angivit något namn.\n";
             errorflag = false;
         }
-        if (textField.getText().length() > 20 && textField.getText().length() < 2) {
+        if (textField.getText().length() > 20 || textField.getText().length() < 2) {
             messageDialog = messageDialog +"Max 20 tecken och minst 2!\n";
             errorflag = false;
         }
