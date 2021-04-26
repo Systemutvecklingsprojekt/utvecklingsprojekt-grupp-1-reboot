@@ -5,13 +5,11 @@
  */
 package projekt.frames;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import projekt.User;
-import projekt.Refactor;
 import projekt.Refactor;
 import projekt.User;
 import projekt.helpers.Database;
@@ -85,18 +83,14 @@ public class Blog extends javax.swing.JFrame
 
 		jScrollPane1.setViewportView(jTable1);
 		jTable1.setVisible(true);
-		jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener()
-		{
-			@Override
-			public void valueChanged(ListSelectionEvent e)
-			{
-				if (e.getValueIsAdjusting()) {
-
-				} else {
-					Refactor.showPostByPostID(user, jTable1);
-				}
-			}
-		});
+//		
+                jTable1.addMouseListener(new MouseAdapter(){
+                    public void mouseClicked(MouseEvent e){
+                        if(e.getClickCount() == 1){
+                            Refactor.showPostByPostID(user, jTable1);
+                        }
+                    }
+                });
 	}
 
 	/**
