@@ -168,6 +168,7 @@ public class Validation {
         boolean result = true;
 
         if (!textField.getText().matches("[a-zA-Z@.]*")) {
+            JOptionPane.showMessageDialog(null, "Fel format på inskriven email");
             result = false;
         }
         return result;
