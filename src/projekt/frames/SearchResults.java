@@ -5,7 +5,8 @@
  */
 package projekt.frames;
 
-import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import projekt.helpers.Database;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -13,10 +14,6 @@ import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import projekt.Refactor;
 
 /**
@@ -150,9 +147,9 @@ public class SearchResults extends javax.swing.JFrame {
         
         jScrollPane1.setViewportView(jTable2);
         jTable2.setVisible(true);
-        jTable2.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent event) {
-                if (event.getValueIsAdjusting()) {
+        jTable2.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getClickCount() == 1) {
                     int id = Refactor.getTableValueFirstColumn(jTable2);
                     new ShowPost(null, id).setVisible(true);
                 }
