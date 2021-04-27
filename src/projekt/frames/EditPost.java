@@ -142,6 +142,8 @@ public class EditPost extends javax.swing.JFrame {
             }
         });
 
+        txt_filename.setEditable(false);
+
         jBRemoveFile.setBackground(new java.awt.Color(204, 204, 255));
         jBRemoveFile.setText("Ta bort fil");
         jBRemoveFile.addActionListener(new java.awt.event.ActionListener() {
