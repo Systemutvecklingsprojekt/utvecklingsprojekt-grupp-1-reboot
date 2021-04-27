@@ -131,6 +131,8 @@ public class LogIn extends javax.swing.JFrame {
                         } else {
                             JOptionPane.showMessageDialog(null, "Användarnamn eller lösenord är felaktigt!");
                         }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Användarnamn eller lösenord är felaktigt!");
                     }
                 }
             }
