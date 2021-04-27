@@ -28,7 +28,7 @@ public class FollowUser extends javax.swing.JFrame {
         userSubscriberId = user.getUserID();
 
         try {
-            String allQuery = "SELECT UserID, firstName, lastName FROM User";
+            String allQuery = "SELECT UserID, firstName, lastName FROM User where UserID <>  11 AND UserID <> " + userSubscriberId;
             String followQuery = "SELECT UserCreatorID, firstName, lastName FROM UserPrem JOIN User ON UserPrem.UserCreatorID = User.UserID WHERE UserSubscriberID = " + userSubscriberId;
 
             fillAllUsers(Database.fetchRows(allQuery));
