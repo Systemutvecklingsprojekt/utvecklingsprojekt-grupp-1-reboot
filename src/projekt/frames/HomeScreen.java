@@ -142,7 +142,8 @@ public class HomeScreen extends javax.swing.JFrame {
             }
         });
 
-        lblSearch.setText("Sök på nyckelord i inlägg på bloggar");
+        lblSearch.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        lblSearch.setText("*Sök efter nyckelord i inlägg");
 
         jBsearch.setBackground(new java.awt.Color(204, 204, 255));
         jBsearch.setText("Sök");
@@ -292,9 +293,9 @@ public class HomeScreen extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblWelcome)
-                .addGap(33, 33, 33)
+                .addGap(36, 36, 36)
                 .addComponent(lblSearch)
-                .addGap(9, 9, 9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBsearch))

@@ -94,7 +94,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="24" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Mina m&#xf6;ten"/>
+        <Property name="text" type="java.lang.String" value="Mina inl&#xe4;gg"/>
       </Properties>
     </Component>
   </SubComponents>
