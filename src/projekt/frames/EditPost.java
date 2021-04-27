@@ -527,7 +527,6 @@ public class EditPost extends javax.swing.JFrame {
         if(typeID.equals("1")){
             ArrayList<String> tags = new ArrayList<>();
             tags.add("Forskning");
-            tags.add("Programmering");
             tags.add("Utbildning");
 
             for (String tag : tags) {

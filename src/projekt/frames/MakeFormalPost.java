@@ -488,7 +488,6 @@ public class MakeFormalPost extends javax.swing.JFrame {
     private void fillTags() {
         ArrayList<String> tags = new ArrayList<>();
         tags.add("Forskning");
-        tags.add("Programmering");
         tags.add("Utbildning");
 
         for (String tag : tags) {
