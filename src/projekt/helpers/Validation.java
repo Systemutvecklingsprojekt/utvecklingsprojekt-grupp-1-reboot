@@ -50,7 +50,7 @@ public class Validation {
         boolean result = true;
         String pattern = "[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]";
         if (!textFalt.getText().matches(pattern)) {
-            JOptionPane.showMessageDialog(null, "V?nligen ange datum i f?ljande format: yyyy-mm-dd");
+            JOptionPane.showMessageDialog(null, "Vänligen ange datum i följande format: yyyy-mm-dd");
             result = false;
         }
         return result;
@@ -63,7 +63,7 @@ public class Validation {
         boolean result = true;
         String pattern = "[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]";
         if (!string.matches(pattern)) {
-            JOptionPane.showMessageDialog(null, "V?nligen ange datum i f?ljande format: yyyy-mm-dd");
+            JOptionPane.showMessageDialog(null, "Vänligen ange datum i följande format: yyyy-mm-dd");
             result = false;
         }
         return result;
@@ -91,11 +91,11 @@ public class Validation {
         boolean result = true;
         if (!textField.getText().isEmpty()) {
             if (textField.getText().length() > 20 || textField.getText().length() < 5) {
-                JOptionPane.showMessageDialog(null, "L?senordet får max vara 20 karaktärer långt och minst 5 karaktärer!");
+                JOptionPane.showMessageDialog(null, "Lösenordet får max vara 20 karaktärer långt och minst 5 karaktärer!");
                 result = false;
             }
         } else {
-            JOptionPane.showMessageDialog(null, "L?senordsrutan ?r tom!");
+            JOptionPane.showMessageDialog(null, "Lösenordsrutan är tom!");
             result = false;
         }
         return result;

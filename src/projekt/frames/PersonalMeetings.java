@@ -76,7 +76,7 @@ public class PersonalMeetings extends javax.swing.JFrame {
      */
     private void fillInvites() {
         try {
-            rs = Database.fetchRows("SELECT Proposed_Date_Time.ProsedMeetingID, Proposed_Meeting.Description \n"
+            rs = Database.fetchRows("SELECT Distinct Proposed_Date_Time.ProsedMeetingID, Proposed_Meeting.Description \n"
                     + "FROM Proposed_Date_Time\n"
                     + "JOIN Proposed_Meeting ON Proposed_Date_Time.ProsedMeetingID = Proposed_Meeting.ProposedMeetingID\n"
                     + "JOIN Invites ON Proposed_Meeting.ProposedMeetingID = Invites.ProposedMeeting\n"
